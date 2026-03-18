@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hk.simba.license.service.mapper.ViolationTypeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hk.simba.license.service.entity.ViolationType">
+        <id column="id" property="id"/>
+        <result column="code" property="code"/>
+        <result column="name" property="name"/>
+        <result column="description" property="description"/>
+        <result column="score" property="score"/>
+        <result column="deduct_type" property="deductType"/>
+        <result column="fee" property="fee"/>
+        <result column="type" property="type"/>
+        <result column="department_type" property="departmentType"/>
+        <result column="detail" property="detail"/>
+        <result column="event_type" property="eventType"/>
+        <result column="status" property="status"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_by" property="modifyBy"/>
+        <result column="modify_time" property="modifyTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, code, name, description, score, deduct_type, fee, type, department_type, detail, event_type , status ,
+        create_by,version_id,publish_status, effective_time, failure_time,
+        create_time, modify_by, modify_time
+    </sql>
+
+
+    <select id="getPageList" resultType="com.hk.simba.license.api.vo.ViolationTypeVO"
+            parameterType="com.hk.simba.license.api.request.violation.ViolationTypeRequest">
+        select <include refid="Base_Column_List"></include> from violation_type
+        where is_show = 1 AND `deleted` = 0
+
+        <if test="code != null and code != ''">
+            and code = #{code}
+        </if>
+
+        <if test="name != null and name != ''">
+            and name like CONCAT('%', #{name}, '%')
+        </if>
+
+        <if test="type != null and type != ''">
+            and type = #{type}
+        </if>
+
+        <if test="detail != null and detail != ''">
+            and detail = #{detail}
+        </if>
+
+        <if test="eventType != null">
+            and event_type =#{eventType}
+        </if>
+
+        <if test="deductType != null">
+            and deduct_type =#{deductType}
+        </if>
+
+        <if test="departmentType != null">
+            and department_type =#{departmentType}
+        </if>
+
+        <if test="status != null">
+            and status =#{status}
+        </if>
+        order by create_time DESC
+
+    </select>
+
+
+    <select id="findAllType" resultType="java.lang.String">
+        SELECT DISTINCT(v.type) from violation_type v
+    </select>
+
+    <select id="findAllDetail" resultType="java.lang.String">
+        SELECT DISTINCT(v.detail) from violation_type v
+    </select>
+
+    <select id="findDetailByType" resultType="java.lang.String">
+        SELECT DISTINCT(v.detail) from violation_type v WHERE v.type = #{type}
+    </select>
+
+    <select id="findByDeductType" resultType="java.lang.String">
+        SELECT DISTINCT(v.type) from violation_type v where v.deduct_type =#{deductType}
+    </select>
+
+    <select id="findVersionPage" resultType="com.hk.simba.license.api.vo.ViolationTypeVersionPageVO"
+            parameterType="com.hk.simba.license.api.request.violation.ViolationTypeVersionPageRequest">
+        SELECT `id`,
+               `version`,
+               `publish_status`,
+               `title`,
+               `effective_time`,
+               `failure_time`,
+               `modify_by`,
+               `modify_time`
+        FROM `violation_type`
+        WHERE `version_id` = #{versionId}
+          <if test="publishStatus != null">
+              and publish_status = #{publishStatus}
+          </if>
+          AND `deleted` = 0
+        ORDER BY `create_time` DESC
+    </select>
+
+    <select id="findVersionList" resultType="com.hk.simba.license.api.vo.ViolationTypeVersionPageVO"
+            parameterType="com.hk.simba.license.api.request.violation.ViolationTypeVersionPageRequest">
+        SELECT `id`,
+        `version`,
+        `publish_status`,
+        `title`,
+        `effective_time`,
+        `failure_time`,
+        `modify_by`,
+        `modify_time`
+        FROM `violation_type`
+        WHERE `version_id` = #{versionId}
+        <if test="publishStatus != null">
+            and publish_status = #{publishStatus}
+        </if>
+        <if test="isShow != null">
+            and `is_show` = #{isShow}
+        </if>
+        AND `deleted` = 0
+    </select>
+
+    <select id="deleteViolationType">
+        update `violation_type`
+        set deleted       = 1,
+            `modify_time` = #{modifyTime},
+            `modify_by`   = #{modifyBy}
+        where id = #{id}
+    </select>
+
+    <select id="updatePublishStatus"
+            parameterType="com.hk.simba.license.api.request.violation.ViolationTypeStatusRequest">
+        update `violation_type`
+        set `publish_status` = #{publishStatus},
+        <if test="failureTime != null">
+            `failure_time` = #{failureTime},
+        </if>
+        <if test="isShow != null">
+            `is_show` = #{isShow},
+        </if>
+        `modify_time` = #{modifyTime},
+        `modify_by` = #{modifyBy}
+        where id = #{id}
+    </select>
+
+    <select id="invalidViolationType"
+            parameterType="com.hk.simba.license.api.request.violation.ViolationTypeStatusRequest">
+        update `violation_type`
+        set `publish_status` = 2,
+            `is_show`        = 0,
+            `failure_time` = #{failureTime},
+            `modify_time`    = now(),
+            `modify_by`      = #{modifyBy}
+        where version_id = #{versionId}
+          and id != #{id}
+    </select>
+</mapper>

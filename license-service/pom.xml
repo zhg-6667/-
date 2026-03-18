@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.hk.simba.license</groupId>
+        <artifactId>service-license</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <artifactId>license-service</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>license-service</name>
+    <packaging>jar</packaging>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <license-api.version>0.0.1-SNAPSHOT</license-api.version>
+        <simba-base.version>1.0.0-SNAPSHOT</simba-base.version>
+        <sisyphus-java-sdk-hk-staff.version>3.0.0-SNAPSHOT</sisyphus-java-sdk-hk-staff.version>
+        <sisyphus-java-sdk-hk-quarkmdds.version>3.0.0-SNAPSHOT</sisyphus-java-sdk-hk-quarkmdds.version>
+        <sisyphus-java-sdk-hk-sas.version>3.0.0-SNAPSHOT</sisyphus-java-sdk-hk-sas.version>
+        <sisyphus-java-sdk-hk-mpworkorder.version>3.0.0-SNAPSHOT</sisyphus-java-sdk-hk-mpworkorder.version>
+        <sisyphus-java-sdk-hk-contract.version>3.0.0-SNAPSHOT</sisyphus-java-sdk-hk-contract.version>
+        <sisyphus-java-sdk-client-messagebox.version>1.0.0-SNAPSHOT</sisyphus-java-sdk-client-messagebox.version>
+        <curator.version>2.12.0</curator.version>
+        <mybatisplus-spring-boot-starter.version>1.0.5</mybatisplus-spring-boot-starter.version>
+        <mybatis-plus.version>2.1.4</mybatis-plus.version>
+        <mysql.version>5.1.45</mysql.version>
+        <druid.version>1.1.10</druid.version>
+        <com.github.ltsopensource.version>1.7.0</com.github.ltsopensource.version>
+        <org.mapdb.version>2.0-beta10</org.mapdb.version>
+        <start-class>com.hk.simba.license.service.LicenseServiceApplication</start-class>
+        <apollo.version>1.6.0</apollo.version>
+        <archive.version>1.0.0-SNAPSHOT</archive.version>
+        <exam.version>1.0.0-SNAPSHOT</exam.version>
+        <workflow-client.version>1.0.0-SNAPSHOT</workflow-client.version>
+        <dict-exam-version>1.0.0-SNAPSHOT</dict-exam-version>
+        <sisyphus-java-sdk-client-account.version>1.11.0-SNAPSHOT</sisyphus-java-sdk-client-account.version>
+        <lark-api.version>1.0.0-SNAPSHOT</lark-api.version>
+        <!--Skip deploying this module to maven repository-->
+        <maven.deploy.skip>true</maven.deploy.skip>
+        <!--Skip installing this module to maven repository-->
+        <maven.install.skip>true</maven.install.skip>
+    </properties>
+
+    <dependencies>
+
+        <!--HK BEGIN-->
+        <dependency>
+            <groupId>com.hk.simba.license</groupId>
+            <artifactId>license-api</artifactId>
+            <version>${license-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.hk.base</groupId>
+            <artifactId>base-util</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>servlet-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.hk.simba.base</groupId>
+            <artifactId>simba-base-dubbo-starter</artifactId>
+            <version>${simba-base.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.hk.simba.base</groupId>
+            <artifactId>simba-base-validation</artifactId>
+        </dependency>
+        <!--员工中心-->
+        <dependency>
+            <groupId>com.hk.simba.staff</groupId>
+            <artifactId>staff-event</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.hk.simba.staff</groupId>
+            <artifactId>staff-api</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- 档案中心 -->
+        <dependency>
+            <groupId>com.hk.simba.archive</groupId>
+            <artifactId>archive-api</artifactId>
+            <version>${archive.version}</version>
+        </dependency>
+        <!--数据字典-->
+        <dependency>
+            <groupId>com.hk.dict</groupId>
+            <artifactId>dict-exam</artifactId>
+            <version>${dict-exam-version}</version>
+        </dependency>
+        <!--HK END-->
+
+        <!-- monitoring -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ctrip.framework.apollo</groupId>
+            <artifactId>apollo-client</artifactId>
+            <version>${apollo.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.curator/curator-framework -->
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-framework</artifactId>
+            <version>${curator.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>zookeeper</artifactId>
+                    <groupId>org.apache.zookeeper</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.curator/curator-recipes -->
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-recipes</artifactId>
+            <version>${curator.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatisplus-spring-boot-starter</artifactId>
+            <version>${mybatisplus-spring-boot-starter.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus</artifactId>
+            <version>${mybatis-plus.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-engine-core</artifactId>
+            <version>2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>${druid.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>${druid.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-freemarker -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- redis相关 -->
+        <!--    分布式锁    -->
+        <dependency>
+            <groupId>com.hk.simba.base</groupId>
+            <artifactId>simba-base-distributed-lock-starter</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.hk.tbs</groupId>
+            <artifactId>tbs-api</artifactId>
+            <version>0.1-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.alibaba</groupId>
+                    <artifactId>dubbo</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.hk.common.tools</groupId>
+                    <artifactId>dubbo-filter</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.alibaba.csp</groupId>
+                    <artifactId>sentinel-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.alibaba.csp</groupId>
+                    <artifactId>sentinel-annotation-aspectj</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.alibaba.csp</groupId>
+                    <artifactId>sentinel-transport-simple-http</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.alibaba.csp</groupId>
+                    <artifactId>sentinel-dubbo-adapter</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.alibaba.csp</groupId>
+                    <artifactId>sentinel-web-servlet</artifactId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>zookeeper</artifactId>
+                    <groupId>org.apache.zookeeper</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>zkclient</artifactId>
+                    <groupId>com.github.sgroschupf</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.aliyun.openservices</groupId>
+            <artifactId>ons-client</artifactId>
+            <version>1.8.0.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>com.hk.cargo</groupId>
+            <artifactId>cargo-api</artifactId>
+            <version>0.1-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.alibaba</groupId>
+                    <artifactId>dubbo</artifactId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>egg-mongo</artifactId>
+                    <groupId>com.hk.egg</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>zookeeper</artifactId>
+                    <groupId>org.apache.zookeeper</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!--公共平台start-->
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>4.8.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.hk.sisyphus</groupId>
+            <artifactId>sisyphus-java-sdk-hk-starter</artifactId>
+            <version>3.5.0-SNAPSHOT</version>
+        </dependency>
+        <!-- flash -->
+        <dependency>
+            <groupId>com.hk.sisyphus</groupId>
+            <artifactId>sisyphus-java-sdk-hk-flash</artifactId>
+            <version>3.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.hk.sisyphus</groupId>
+            <artifactId>sisyphus-java-sdk-client-messagebox</artifactId>
+            <version>${sisyphus-java-sdk-client-messagebox.version}</version>
+        </dependency>
+        <!-- 员工中心 -->
+        <dependency>
+            <groupId>com.hk.sisyphus</groupId>
+            <artifactId>sisyphus-java-sdk-hk-staff</artifactId>
+            <version>${sisyphus-java-sdk-hk-staff.version}</version>
+        </dependency>
+        <!-- 元数据中心 -->
+        <dependency>
+            <groupId>com.hk.sisyphus</groupId>
+            <artifactId>sisyphus-java-sdk-hk-quarkmdds</artifactId>
+            <version>${sisyphus-java-sdk-hk-quarkmdds.version}</version>
+        </dependency>
+        <!--销售上下文-->
+        <dependency>
+            <groupId>com.hk.sisyphus</groupId>
+            <artifactId>sisyphus-java-sdk-hk-sas</artifactId>
+            <version>${sisyphus-java-sdk-hk-sas.version}</version>
+        </dependency>
+        <!-- 中台服务领域工单中心 -->
+        <dependency>
+            <groupId>com.hk.sisyphus</groupId>
+            <artifactId>sisyphus-java-sdk-hk-mpworkorder</artifactId>
+            <version>${sisyphus-java-sdk-hk-mpworkorder.version}</version>
+        </dependency>
+        <!--合约中心-->
+        <dependency>
+            <groupId>com.hk.sisyphus</groupId>
+            <artifactId>sisyphus-java-sdk-hk-contract</artifactId>
+            <version>${sisyphus-java-sdk-hk-contract.version}</version>
+        </dependency>
+        <!--公共平台end-->
+
+        <dependency>
+            <groupId>com.hk.simba.workorder</groupId>
+            <artifactId>workorder-api</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- lts dependency start-->
+        <dependency>
+            <groupId>com.github.ltsopensource</groupId>
+            <artifactId>lts</artifactId>
+            <version>${com.github.ltsopensource.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.hk.simba.base</groupId>
+            <artifactId>simba-base-xxljob-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mapdb</groupId>
+            <artifactId>mapdb</artifactId>
+            <version>${org.mapdb.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.hk.ubs</groupId>
+            <artifactId>hk-ubs-api</artifactId>
+            <version>2.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.hk.simba.x.exam</groupId>
+            <artifactId>exam-event</artifactId>
+            <version>${exam.version}</version>
+        </dependency>
+        <!-- 工作流引擎 -->
+        <dependency>
+            <groupId>com.hk.simba.workflow</groupId>
+            <artifactId>workflow-client</artifactId>
+            <version>${workflow-client.version}</version>
+        </dependency>
+        <!-- 4A账号 -->
+        <dependency>
+            <groupId>com.hk.sisyphus</groupId>
+            <artifactId>sisyphus-java-sdk-client-account</artifactId>
+            <version>${sisyphus-java-sdk-client-account.version}</version>
+        </dependency>
+        <!-- 飞书api -->
+        <dependency>
+            <groupId>com.hk.simba.x.lark</groupId>
+            <artifactId>lark-api</artifactId>
+            <version>${lark-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.hk.simba.staff</groupId>
+            <artifactId>staff-api</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.hk.simba.base</groupId>
+            <artifactId>simba-base-util</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <configuration>
+                        <skip>true</skip>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>repackage</id>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>com.hk.simba.license.service.LicenseServiceApplication</mainClass>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

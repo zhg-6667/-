@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hk.simba.license.service.mapper.ViolationMessageMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hk.simba.license.service.entity.ViolationMessage">
+        <id column="id" property="id"/>
+        <result column="violation_id" property="violationId"/>
+        <result column="violation_code" property="violationCode"/>
+        <result column="staff_id" property="staffId"/>
+        <result column="staff_phone" property="staffPhone"/>
+        <result column="template_name" property="templateName"/>
+        <result column="message_key" property="messageKey"/>
+        <result column="try_times" property="tryTimes"/>
+        <result column="type" property="type"/>
+        <result column="content" property="content"/>
+        <result column="status" property="status"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_by" property="modifyBy"/>
+        <result column="modify_time" property="modifyTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, violation_code,violation_id, staff_id, staff_phone, template_name, message_id, try_times, type, content,
+        status,
+        create_by, create_time, modify_by, modify_time
+    </sql>
+
+</mapper>

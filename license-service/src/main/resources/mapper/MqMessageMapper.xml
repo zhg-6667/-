@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hk.simba.license.service.mapper.MqMessageMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hk.simba.license.service.entity.MqMessage">
+        <id column="id" property="id"/>
+        <result column="msg_id" property="msgId"/>
+        <result column="topic" property="topic"/>
+        <result column="tag" property="tag"/>
+        <result column="body" property="body"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_by" property="modifyBy"/>
+        <result column="modify_time" property="modifyTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, msg_id, topic, tag, body, create_by, create_time, modify_by, modify_time
+    </sql>
+
+</mapper>

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hk.simba.license.service.mapper.ViolationMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hk.simba.license.service.entity.Violation">
+        <id column="id" property="id"/>
+        <result column="code" property="code"/>
+        <result column="order_id" property="orderId"/>
+        <result column="order_type" property="orderType"/>
+        <result column="staff_id" property="staffId"/>
+        <result column="user_id" property="userId"/>
+        <result column="name" property="name"/>
+        <result column="gender" property="gender"/>
+        <result column="id_card" property="idCard"/>
+        <result column="is_cooker" property="cooker"/>
+        <result column="position" property="position"/>
+        <result column="phone" property="phone"/>
+        <result column="city_name" property="cityName"/>
+        <result column="city_code" property="cityCode"/>
+        <result column="site_name" property="siteName"/>
+        <result column="site_id" property="siteId"/>
+        <result column="site_leader_id" property="siteLeaderId"/>
+        <result column="site_leader_name" property="siteLeaderName"/>
+        <result column="site_leader_phone" property="siteLeaderPhone"/>
+        <result column="site_leader_work_num" property="siteLeaderWorkNum"/>
+        <result column="happen_time" property="happenTime"/>
+        <result column="service_time" property="serviceTime"/>
+        <result column="type" property="type"/>
+        <result column="detail" property="detail"/>
+        <result column="violation_type" property="violationType"/>
+        <result column="score" property="score"/>
+        <result column="deduct_type" property="deductType"/>
+        <result column="department_type" property="departmentType"/>
+        <result column="trade_order_code" property="tradeOrderCode"/>
+        <result column="event_type" property="eventType"/>
+        <result column="total_amount" property="totalAmount"/>
+        <result column="description" property="description"/>
+        <result column="department" property="department"/>
+        <result column="annex" property="annex"/>
+        <result column="deadline_time" property="deadlineTime"/>
+        <result column="pay_status" property="payStatus"/>
+        <result column="status" property="status"/>
+        <result column="appeal_status" property="appealStatus"/>
+        <result column="reason" property="reason"/>
+        <result column="remark" property="remark"/>
+        <result column="employment_type" property="workType"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_by" property="modifyBy"/>
+        <result column="modify_time" property="modifyTime"/>
+    </resultMap>
+
+    <!-- 后台查询映射结果 -->
+    <resultMap id="resultMap" extends="BaseResultMap" type="com.hk.simba.license.api.vo.ViolationVO">
+        <result column="appeal_remark" property="appealRemark"/>
+        <result column="appeal_instance_id" property="appealInstanceId"/>
+        <result column="appeal_id" property="appealId"/>
+    </resultMap>
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, code, order_id,order_type,staff_id, user_id, name, gender, id_card, is_cooker, phone, city_name, city_code,
+        position,
+        site_name, site_id, site_leader_id, site_leader_name, site_leader_phone, site_leader_work_num, happen_time,
+        service_time, type,
+        detail, violation_type, score, deduct_type, department_type, trade_order_code, event_type, total_amount, description,
+        department, annex,
+        deadline_time, pay_status, status,
+        appeal_status,reason, remark, create_by, create_time, modify_by, modify_time
+    </sql>
+
+
+    <select id="pageViolationList" resultType="com.hk.simba.license.api.vo.ViolationVO"
+            parameterType="com.hk.simba.license.api.request.violation.ViolationQueryRequest">
+        SELECT
+        v.id, v.code, v.happen_time, v.staff_id, v.`name`, v.gender, v.phone, v.description, v.department,
+        v.deadline_time as
+        deadlineTime,
+        v.position, v.city_name, v.site_name, v.site_leader_name, v.site_leader_work_num, v.order_id, v.service_time,
+        v.`status`,
+        v.appeal_status,v.reason, v.remark , v.type, department_type, v.detail, v.pay_status, v.score, v.deduct_type,
+        v.total_amount,
+        v.create_by,
+        v.create_time, v.event_type, v.employment_type as workType,
+        v.modify_by, v.modify_time, max(a.id) as appeal_id, max(a.instance_id) as appeal_instance_id
+        FROM
+        violation v
+        LEFT JOIN appeal a ON v.id = a.violation_id
+        WHERE 1 = 1
+        <if test="cityCode != null and cityCode != ''">
+            AND v.city_code = #{cityCode}
+        </if>
+        <if test="siteIds != null and siteIds.size() > 0">
+            AND v.site_id in
+            <foreach item="item" index="index" collection="siteIds" open="(" separator="," close=")">
+                #{siteIds[${index}],jdbcType=BIGINT}
+            </foreach>
+        </if>
+
+        <if test="type != null and type != ''">
+            AND v.type = #{type}
+        </if>
+        <if test="detail != null and detail != ''">
+            AND v.detail = #{detail}
+        </if>
+        <if test="department != null and department != ''">
+            AND v.department = #{department}
+        </if>
+        <if test="deductType != null">
+            AND v.deduct_type = #{deductType}
+        </if>
+        <if test="code != null and code != ''">
+            AND v.code = #{code}
+        </if>
+        <if test="orderId != null and orderId != ''">
+            AND v.order_id = #{orderId}
+        </if>
+        <if test="status != null">
+            AND v.status = #{status}
+        </if>
+        <if test="payStatus != null">
+            AND v.pay_status = #{payStatus}
+        </if>
+        <if test="position != null and position != ''">
+            AND v.position = #{position}
+        </if>
+        <if test="appealStatus != null and appealStatus.size() > 0">
+            AND v.appeal_status in
+            <foreach item="item" index="index" collection="appealStatus" open="(" separator="," close=")">
+                #{appealStatus[${index}],jdbcType=INTEGER}
+            </foreach>
+
+        </if>
+        <if test="staffId != null">
+            AND v.staff_id = #{staffId}
+        </if>
+        <if test="startHappenTime != null">
+            AND v.happen_time &gt;= #{startHappenTime}
+        </if>
+        <if test="endHappenTime != null">
+            AND v.happen_time &lt;= #{endHappenTime}
+        </if>
+        <if test="startJudgmentTime != null">
+            AND v.create_time &gt;= #{startJudgmentTime}
+        </if>
+        <if test="endJudgmentTime != null">
+            AND v.create_time &lt;= #{endJudgmentTime}
+        </if>
+        <if test="startServiceTime != null">
+            AND v.service_time &gt;= #{startServiceTime}
+        </if>
+        <if test="endServiceTime != null">
+            AND v.service_time &lt;= #{endServiceTime}
+        </if>
+
+        GROUP BY v.id ORDER BY id DESC
+
+    </select>
+
+    <select id="pageTimoutPayList" resultMap="BaseResultMap">
+        SELECT
+        v.id, v.code, v.happen_time, v.staff_id, v.`name`, v.gender, v.phone,v.create_time
+        FROM
+        violation v
+        WHERE v.status=1 AND v.pay_status=0 AND DATE_ADD(v.create_time,INTERVAL #{timeoutPay} DAY) &lt; CURDATE()
+    </select>
+
+    <!-- 查询违规列表里的部门 -->
+    <select id="findAllDepartment" resultType="java.lang.String">
+        SELECT DISTINCT(v.department) from violation v
+    </select>
+
+    <select id="pageByCreateTimeAndDeDuctType" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"></include> from violation v
+        <where>
+            v.status = 1
+            <if test="deductType != null">
+                AND v.deduct_type = #{deductType}
+            </if>
+            <if test="startTime != null">
+                AND v.create_time &gt;= #{startTime}
+            </if>
+            <if test="endTime != null">
+                AND v.create_time &lt;= #{endTime}
+            </if>
+        </where>
+    </select>
+
+    <select id="findListByCondition" resultMap="BaseResultMap"
+            parameterType="com.hk.simba.license.api.request.violation.ViolationQueryRequest">
+        SELECT <include refid="Base_Column_List"></include> from violation v
+        <where>
+            <if test="deductType != null">
+                AND v.deduct_type = #{deductType}
+            </if>
+            <if test="code != null and code != ''">
+                AND v.code = #{code}
+            </if>
+            <if test="statusList != null and statusList.size() > 0">
+                AND v.status in
+                <foreach item="item" index="index" collection="statusList" open="(" separator="," close=")">
+                    #{statusList[${index}],jdbcType=INTEGER}
+                </foreach>
+            </if>
+        </where>
+    </select>
+</mapper>

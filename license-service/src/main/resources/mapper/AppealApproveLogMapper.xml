@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hk.simba.license.service.mapper.AppealApproveLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hk.simba.license.service.entity.AppealApproveLog">
+        <id column="id" property="id"/>
+        <result column="appeal_id" property="appealId"/>
+        <result column="violation_id" property="violationId"/>
+        <result column="approve_type" property="approveType"/>
+        <result column="status" property="status"/>
+        <result column="remark" property="remark"/>
+        <result column="user_complaint_analysis" property="userComplaintAnalysis"/>
+        <result column="site_leader_appeal_analysis" property="siteLeaderAppealAnalysis"/>
+        <result column="improve_advice" property="improveAdvice"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, appeal_id, violation_id , approve_type, status, remark, user_complaint_analysis,
+        site_leader_appeal_analysis, improve_advice, create_by, create_time
+    </sql>
+
+
+    <resultMap id="AppealApproveLogVO" type="com.hk.simba.license.api.vo.AppealApproveLogVO">
+        <id column="id" property="id"/>
+        <result column="appeal_id" property="appealId"/>
+        <result column="violation_id" property="violationId"/>
+        <result column="approve_type" property="approveType"/>
+        <result column="status" property="status"/>
+        <result column="remark" property="remark"/>
+        <result column="user_complaint_analysis" property="userComplaintAnalysis"/>
+        <result column="site_leader_appeal_analysis" property="siteLeaderAppealAnalysis"/>
+        <result column="improve_advice" property="improveAdvice"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <!-- 查询审核日志，撤回的不显示 -->
+    <select id="getAppealApproveLogList" resultMap="AppealApproveLogVO">
+        select <include refid="Base_Column_List"></include> from appeal_approve_log
+        where 1 = 1 and status !=14
+        <if test="appealId != null">
+            <![CDATA[
+				and appeal_id =#{appealId}
+			]]>
+        </if>
+
+        <if test="approveType != null">
+            <![CDATA[
+				and approve_type =#{approveType}
+			]]>
+        </if>
+        ORDER BY create_time DESC
+
+    </select>
+
+
+    <!-- 根据状态、审核类型、申诉id查找记录 -->
+    <select id="getAppealApproveLogsByCondition" resultMap="AppealApproveLogVO">
+        select <include refid="Base_Column_List"></include> from appeal_approve_log
+        where 1 = 1
+
+        <if test="status != null">
+            <![CDATA[
+				and status =#{status}
+			]]>
+        </if>
+
+        <if test="appealId != null">
+            <![CDATA[
+				and appeal_id =#{appealId}
+			]]>
+        </if>
+
+        <if test="approveType != null">
+            <![CDATA[
+				and approve_type =#{approveType}
+			]]>
+        </if>
+        ORDER BY create_time DESC
+
+    </select>
+
+</mapper>

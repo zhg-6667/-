@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hk.simba.license.service.mapper.LicenseScoreLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hk.simba.license.service.entity.LicenseScoreLog">
+        <id column="id" property="id"/>
+        <result column="staff_id" property="staffId"/>
+        <result column="license_id" property="licenseId"/>
+        <result column="deduct_score" property="deductScore"/>
+        <result column="reason" property="reason"/>
+        <result column="violation_id" property="violationId"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="modify_by" property="modifyBy"/>
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, staff_id, license_id, deduct_score, reason,violation_id, create_by, create_time, modify_by, modify_time
+    </sql>
+
+    <!-- LicenseScoreLogVO通用查询映射结果 -->
+    <resultMap id="LicenseScoreLogVO" type="com.hk.simba.license.api.vo.LicenseScoreLogVO">
+        <id column="id" property="id"/>
+        <result column="staff_id" property="staffId"/>
+        <result column="license_id" property="licenseId"/>
+        <result column="deduct_score" property="deductScore"/>
+        <result column="reason" property="reason"/>
+        <result column="violation_id" property="violationId"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_by" property="modifyBy"/>
+        <result column="modify_time" property="modifyTime"/>
+    </resultMap>
+
+</mapper>

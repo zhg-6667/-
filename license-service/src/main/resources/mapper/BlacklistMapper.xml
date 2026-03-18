@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hk.simba.license.service.mapper.BlacklistMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hk.simba.license.service.entity.Blacklist">
+        <id column="id" property="id"/>
+        <result column="staff_id" property="staffId"/>
+        <result column="type" property="type"/>
+        <result column="name" property="name"/>
+        <result column="gender" property="gender"/>
+        <result column="phone" property="phone"/>
+        <result column="id_card" property="idCard"/>
+        <result column="remark" property="remark"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, staff_id as staffId, type, name ,gender,phone, id_card as idCard, remark, create_by as createBy, create_time
+        as createTime
+    </sql>
+
+    <select id="getPageList" resultType="com.hk.simba.license.api.vo.BlacklistVO"
+            parameterType="com.hk.simba.license.api.request.black.BlackQueryRequest">
+        select b.id , b.staff_id as staffId, b.type, b.name, b.gender, b.phone, b.id_card as idCard, b.remark,b.reason,
+        b.create_by as createBy,
+        b.create_time as createTime from blacklist b where 1 = 1
+        <if test="staffId != null">
+            and b.staff_id =#{staffId}
+        </if>
+
+        <if test="type != null">
+            and b.type =#{type}
+        </if>
+
+        <if test="name != null and name != ''">
+            <![CDATA[
+				and b.name like CONCAT('%', #{name}, '%')
+			]]>
+        </if>
+
+        <if test="phone != null and phone != ''">
+            and b.phone = #{phone}
+        </if>
+
+        <if test="idCard != null and idCard != ''">
+            and b.id_card = #{idCard}
+        </if>
+        order by b.create_time DESC
+
+    </select>
+
+</mapper>

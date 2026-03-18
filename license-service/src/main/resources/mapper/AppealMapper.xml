@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hk.simba.license.service.mapper.AppealMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hk.simba.license.service.entity.Appeal">
+        <id column="id" property="id"/>
+        <result column="violation_id" property="violationId"/>
+        <result column="instance_id" property="instanceId"/>
+        <result column="appeal_time" property="appealTime"/>
+        <result column="remark" property="remark"/>
+        <result column="site_leader_remark" property="siteLeaderRemark"/>
+        <result column="deal_time" property="dealTime"/>
+        <result column="status" property="status"/>
+        <result column="annex" property="annex"/>
+        <result column="recall_time" property="recallTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_by" property="modifyBy"/>
+        <result column="modify_time" property="modifyTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, violation_id, instance_id, appeal_time, remark, site_leader_remark, deal_time, status, annex ,recall_time ,create_by,
+        create_time, modify_by, modify_time
+    </sql>
+
+    <select id="selectPageList" resultType="com.hk.simba.license.api.vo.AppealVO"
+            parameterType="com.hk.simba.license.api.request.appeal.AppealQueryRequest">
+        SELECT a.id ,a.violation_id as violationId, a.instance_id as instanceId, v.code, v.order_id as orderId,v.staff_id as staffId , v.name
+        ,v.gender, v.is_cooker as cooker,v.status as violationStatus,
+        v.position , v.phone, v.happen_time as happenTime, v.service_time as serviceTime,v.type,v.score,
+        v.total_amount as totalAmount, v.pay_status as payStatus, a.status,v.city_name as cityName,v.city_code as
+        cityCode, v.department,
+        v.site_name as siteName,v.site_id as siteId,v.site_leader_id as siteLeaderId, v.site_leader_name as
+        siteLeaderName, v.site_leader_work_num as siteLeaderWorkNum,
+        v.site_leader_phone as siteLeaderPhone,v.deadline_time as deadlineTime,a.create_by as createBy,a.create_time as
+        createTime, v.deduct_type as deductType, v.detail,
+        a.modify_by as modifyBy, a.modify_time as modifyTime,v.employment_type as workType
+        from appeal a LEFT JOIN violation v on a.violation_id=v.id
+
+        where 1 = 1
+
+        <if test="status != null">
+            AND a.status = #{status}
+        </if>
+
+        <if test="violationStatus != null">
+            AND v.status = #{violationStatus}
+        </if>
+
+        <if test="payStatus != null">
+            AND v.pay_status = #{payStatus}
+        </if>
+        <if test="position != null and position != ''">
+            AND v.position = #{position}
+        </if>
+
+        <if test="code != null and code != ''">
+            AND v.code = #{code}
+        </if>
+
+        <if test="staffId != null">
+            AND v.staff_id = #{staffId}
+        </if>
+
+        <if test="orderId != null and orderId != ''">
+            AND v.order_id = #{orderId}
+        </if>
+
+        <if test="cityCode != null and cityCode != ''">
+            AND v.city_code = #{cityCode}
+        </if>
+
+        <if test="siteIds != null and siteIds.size() > 0">
+            AND v.site_id in
+            <foreach item="item" index="index" collection="siteIds" open="(" separator="," close=")">
+                #{siteIds[${index}],jdbcType=BIGINT}
+            </foreach>
+        </if>
+
+        <if test="type != null and type != ''">
+            AND v.type = #{type}
+        </if>
+
+        <if test="deductType != null">
+            AND v.deduct_type = #{deductType}
+        </if>
+        <if test="detail != null and detail != ''">
+            AND v.detail = #{detail}
+        </if>
+
+        <if test="department != null and department != ''">
+            AND v.department = #{department}
+        </if>
+
+        <if test="startHappenTime != null">
+            AND v.happen_time &gt;= #{startHappenTime}
+        </if>
+
+        <if test="endHappenTime != null">
+            AND v.happen_time &lt;= #{endHappenTime}
+        </if>
+
+        <if test="startServiceTime != null">
+            AND v.service_time &gt;= #{startServiceTime}
+        </if>
+        <if test="endServiceTime != null">
+            AND v.service_time &lt;= #{endServiceTime}
+        </if>
+
+        order by a.create_time DESC
+
+    </select>
+
+    <select id="waitRegionApprovePageList" resultType="com.hk.simba.license.service.entity.Appeal">
+        select a.id as id , a.violation_id as violationId, a.instance_id as instanceId, a.appeal_time as appealTime, a.remark, a.deal_time as
+        dealTime, a.status, a.annex ,
+        a.recall_time as recallTime, a.create_by as createBy, a.create_time as createTime, a.modify_by as modifyBy,
+        a.modify_time as modifyTime from appeal a left JOIN violation v on a.violation_id = v.id
+        where a.status=11 and v.status = 1 and a.instance_id is null AND DATE_ADD(a.appeal_time,INTERVAL #{timeoutAppeal} DAY) &lt; CURDATE();
+    </select>
+
+    <select id="timeoutAppealApprove" resultType="com.hk.simba.license.service.entity.Appeal">
+        select a.id as id , a.violation_id as violationId, a.instance_id as instanceId, a.appeal_time as appealTime, a.remark, a.deal_time as
+        dealTime, a.status, a.annex ,
+        a.recall_time as recallTime, a.create_by as createBy, a.create_time as createTime, a.modify_by as modifyBy,
+        a.modify_time as modifyTime from appeal a left JOIN violation v on a.violation_id = v.id
+        where v.status = 1 and a.instance_id is not null and a.status in(11, 15, 17, 19) AND DATE_ADD(a.modify_time,INTERVAL #{timeoutAppeal} DAY) &lt; CURDATE();
+    </select>
+</mapper>

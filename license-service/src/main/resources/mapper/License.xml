@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hk.simba.license.service.mapper.LicenseMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hk.simba.license.service.entity.License">
+        <id column="id" property="id"/>
+        <result column="staff_id" property="staffId"/>
+        <result column="third_user_id" property="thirdUserId"/>
+        <result column="name" property="name"/>
+        <result column="gender" property="gender"/>
+        <result column="id_card" property="idCard"/>
+        <result column="phone" property="phone"/>
+        <result column="position_type" property="positionType"/>
+        <result column="city_code" property="cityCode"/>
+        <result column="city_name" property="cityName"/>
+        <result column="site_id" property="siteId"/>
+        <result column="site_name" property="siteName"/>
+        <result column="is_cooker" property="cooker"/>
+        <result column="black" property="black"/>
+        <result column="remain_score" property="remainScore"/>
+        <result column="reason" property="reason"/>
+        <result column="status" property="status"/>
+        <result column="effective_time" property="effectiveTime" jdbcType="TIMESTAMP"/>
+        <result column="expire_time" property="expireTime" jdbcType="TIMESTAMP"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="modify_by" property="modifyBy"/>
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, staff_id as staffId, third_user_id as thirdUserId ,name, gender, id_card as idCard, phone,position_type as
+        positionType,
+        city_code as cityCode, city_name as cityName, site_id as siteId, site_name as siteName, is_cooker as cooker,
+        expire_time as expireTime,
+        black ,remain_score as remainScore, reason, status, effective_time as effectiveTime ,
+        create_by as createBy, create_time as createTime, modify_by as modifyBy, modify_time as modifyTime
+
+    </sql>
+
+
+    <!-- LicenseVO通用查询映射结果 -->
+    <resultMap id="LicenseVO" type="com.hk.simba.license.api.vo.LicenseVO">
+        <id column="id" property="id"/>
+        <result column="staff_id" property="staffId"/>
+        <result column="third_user_id" property="thirdUserId"/>
+        <result column="name" property="name"/>
+        <result column="gender" property="gender"/>
+        <result column="id_card" property="idCard"/>
+        <result column="phone" property="phone"/>
+        <result column="position_type" property="positionType"/>
+        <result column="city_code" property="cityCode"/>
+        <result column="city_name" property="cityName"/>
+        <result column="site_id" property="siteId"/>
+        <result column="site_name" property="siteName"/>
+        <result column="is_cooker" property="cooker"/>
+        <result column="black" property="black"/>
+        <result column="remain_score" property="remainScore"/>
+        <result column="reason" property="reason"/>
+        <result column="status" property="status"/>
+        <result column="effective_time" property="effectiveTime"/>
+        <result column="expire_time" property="expireTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_by" property="modifyBy"/>
+        <result column="modify_time" property="modifyTime"/>
+    </resultMap>
+
+    <select id="getPageList" resultType="com.hk.simba.license.api.vo.LicenseVO"
+            parameterType="com.hk.simba.license.api.request.license.LicenseQueryRequest">
+        select <include refid="Base_Column_List"></include> from license
+        where 1 = 1
+
+        <if test="staffId != null">
+            <![CDATA[
+				and staff_id =#{staffId}
+			]]>
+        </if>
+
+        <if test="name != null and name != ''">
+            <![CDATA[
+				and name like CONCAT('%', #{name}, '%')
+			]]>
+        </if>
+        <if test="minScore != null ">
+            AND remain_score &gt;= #{minScore}
+        </if>
+
+        <if test="maxScore != null">
+            AND remain_score &lt;= #{maxScore}
+        </if>
+
+        <if test="positionType != null">
+            <![CDATA[
+				and position_type =#{positionType}
+			]]>
+        </if>
+
+        <if test="cityCode != null and cityCode != ''">
+            <![CDATA[
+				and city_code=#{cityCode}
+			]]>
+        </if>
+
+        <if test="siteIds != null and siteIds.size() > 0">
+            AND site_id in
+            <foreach item="item" index="index" collection="siteIds" open="(" separator="," close=")">
+                #{siteIds[${index}],jdbcType=BIGINT}
+            </foreach>
+        </if>
+
+        <if test="status != null">
+            <![CDATA[
+				and status =#{status}
+			]]>
+        </if>
+        order by create_time ASC
+
+    </select>
+
+
+    <select id="findLicenseList" resultType="com.hk.simba.license.api.vo.LicenseInfoVO">
+        select id , staff_id as staffId ,name , position_type as positionType, site_id as siteId , site_name as
+        siteName,
+        remain_score as remainScore , status , effective_time as effectiveTime , expire_time as expireTime from license
+        where 1 = 1
+
+        <if test="param.staffId != null">
+            <![CDATA[
+				and staff_id =#{param.staffId}
+			]]>
+        </if>
+
+        <if test="param.positionType != null">
+            <![CDATA[
+				and position_type =#{param.positionType}
+			]]>
+        </if>
+
+        <if test="param.siteId != null">
+            <![CDATA[
+				and site_id=#{param.siteId}
+			]]>
+        </if>
+
+        <if test="param.siteIds != null and param.siteIds.size() > 0">
+            AND site_id in
+            <foreach collection="param.siteIds" item="siteId" open="(" separator="," close=")">
+                #{siteId}
+            </foreach>
+        </if>
+
+        <if test="param.staffIds != null and param.staffIds.size() > 0">
+            AND staff_id in
+            <foreach collection="param.staffIds" item="staffId" open="(" separator="," close=")">
+                #{staffId}
+            </foreach>
+        </if>
+
+        <if test="param.status != null">
+            <![CDATA[
+				and status =#{param.status}
+			]]>
+        </if>
+        order by id ASC
+
+    </select>
+
+
+    <select id="findListByStaffIds" resultMap="BaseResultMap">
+        select * from license
+        where 1 = 1
+
+        <if test="staffIds != null and staffIds.size() > 0">
+            AND staff_id in
+            <foreach collection="staffIds" item="staffId" open="(" separator="," close=")">
+                #{staffId}
+            </foreach>
+        </if>
+        order by id ASC
+
+    </select>
+
+</mapper>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hk.simba.license.service.mapper.RetrainMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hk.simba.license.service.entity.Retrain">
+        <id column="id" property="id"/>
+        <result column="staff_id" property="staffId"/>
+        <result column="name" property="name"/>
+        <result column="phone" property="phone"/>
+        <result column="gender" property="gender"/>
+        <result column="position_type" property="positionType"/>
+        <result column="city_code" property="cityCode"/>
+        <result column="city_name" property="cityName"/>
+        <result column="site_id" property="siteId"/>
+        <result column="site_name" property="siteName"/>
+        <result column="site_leader_id" property="siteLeaderId"/>
+        <result column="site_leader_name" property="siteLeaderName"/>
+        <result column="site_leader_phone" property="siteLeaderPhone"/>
+        <result column="violation_id" property="violationId"/>
+        <result column="score" property="score"/>
+        <result column="remain_score_type" property="remainScoreType"/>
+        <result column="status" property="status"/>
+        <result column="type" property="type"/>
+        <result column="id_card" property="idCard"/>
+        <result column="annex" property="annex"/>
+        <result column="content" property="content"/>
+        <result column="reason" property="reason"/>
+        <result column="start_time" property="startTime" jdbcType="TIMESTAMP"/>
+        <result column="end_time" property="endTime" jdbcType="TIMESTAMP"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="modify_by" property="modifyBy"/>
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+        <result column="status_change_time" property="statusChangeTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, staff_id, name, phone, gender, position_type ,city_code, city_name,
+        site_id, site_name, site_leader_id ,site_leader_name, site_leader_phone,violation_id, score,remain_score_type,
+        status, type,
+        id_card, annex,content, reason, start_time, end_time, create_by, create_time,
+        modify_by, modify_time , status_change_time
+    </sql>
+
+
+    <!-- LicenseVO通用查询映射结果 -->
+    <resultMap id="RetrainVO" type="com.hk.simba.license.api.vo.RetrainVO">
+        <id column="id" property="id"/>
+        <result column="staff_id" property="staffId"/>
+        <result column="name" property="name"/>
+        <result column="phone" property="phone"/>
+        <result column="gender" property="gender"/>
+        <result column="position_type" property="positionType"/>
+        <result column="city_code" property="cityCode"/>
+        <result column="city_name" property="cityName"/>
+        <result column="site_id" property="siteId"/>
+        <result column="site_name" property="siteName"/>
+        <result column="site_leader_id" property="siteLeaderId"/>
+        <result column="site_leader_name" property="siteLeaderName"/>
+        <result column="site_leader_phone" property="siteLeaderPhone"/>
+        <result column="violation_id" property="violationId"/>
+        <result column="score" property="score"/>
+        <result column="remain_score_type" property="remainScoreType"/>
+        <result column="status" property="status"/>
+        <result column="type" property="type"/>
+        <result column="id_card" property="idCard"/>
+        <result column="annex" property="annex"/>
+        <result column="content" property="content"/>
+        <result column="reason" property="reason"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_by" property="modifyBy"/>
+        <result column="modify_time" property="modifyTime"/>
+        <result column="status_change_time" property="statusChangeTime"/>
+    </resultMap>
+
+    <select id="getPageList" resultMap="RetrainVO"
+            parameterType="com.hk.simba.license.api.request.retrain.RetrainQueryRequest">
+        select <include refid="Base_Column_List"></include> from retrain
+        where 1 = 1
+
+        <if test="staffId != null">
+            <![CDATA[
+				and staff_id =#{staffId}
+			]]>
+        </if>
+
+        <if test="name != null and name != ''">
+            <![CDATA[
+				and name like CONCAT('%', #{name}, '%')
+			]]>
+        </if>
+
+        <if test="positionType != null">
+            <![CDATA[
+				and position_type =#{positionType}
+			]]>
+        </if>
+
+        <if test="type != null">
+            and type =#{type}
+        </if>
+
+        <if test="cityCode != null and cityCode != ''">
+            <![CDATA[
+				and city_code=#{cityCode}
+			]]>
+        </if>
+
+        <if test="siteIds != null and siteIds.size() > 0">
+            AND site_id in
+            <foreach item="item" index="index" collection="siteIds" open="(" separator="," close=")">
+                #{siteIds[${index}],jdbcType=BIGINT}
+            </foreach>
+        </if>
+
+        <if test="status != null">
+            <![CDATA[
+				and status =#{status}
+			]]>
+        </if>
+
+        <if test="startCreateTime != null">
+            AND create_time &gt;= #{startCreateTime}
+        </if>
+        <if test="endCreateTime != null">
+            AND create_time &lt;= #{endCreateTime}
+        </if>
+        order by create_time DESC
+
+    </select>
+
+
+    <select id="findRetrainByCondition" resultMap="RetrainVO"
+            parameterType="com.hk.simba.license.api.request.retrain.RetrainDetailRequest">
+        select <include refid="Base_Column_List"></include> from retrain
+        where status!=4
+        <if test="staffId != null">
+            <![CDATA[
+				and staff_id =#{staffId}
+			]]>
+        </if>
+
+        <if test="violationId != null">
+            <![CDATA[
+				and violation_id =#{violationId}
+			]]>
+        </if>
+
+        <if test="remainScoreType != null">
+            <![CDATA[
+				and remain_score_type =#{remainScoreType}
+			]]>
+        </if>
+
+        <if test="startCreateTime != null">
+            and create_time &gt;= #{startCreateTime}
+        </if>
+
+        <if test="endCreateTime != null">
+            and create_time &lt;= #{endCreateTime}
+        </if>
+        order by create_time ASC
+
+    </select>
+
+    <select id="pageTimeoutRetrainList" resultMap="BaseResultMap">
+        SELECT * FROM retrain r WHERE r.status=1 AND DATE_ADD(r.create_time,INTERVAL #{timeoutPay} DAY) &lt; CURDATE()
+    </select>
+
+
+</mapper>
