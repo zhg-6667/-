@@ -83,41 +83,13 @@ input,select,textarea{outline:none;font-family:inherit;font-size:14px;border:non
 
 <div class="phone-frame"><div class="phone-notch"></div><div class="phone-inner" id="app">
 
-<!-- ========== P1: HOME ========== -->
-<div class="page active" id="pg-home">
-  <div style="background:var(--grad);padding:40px 20px 24px;position:relative;overflow:hidden;">
+<!-- ========== P1: PRACTICE HOME (Tab - 练习题库, Default) ========== -->
+<div class="page active" id="pg-practice">
+  <div style="background:var(--grad);padding:40px 20px 16px;position:relative;overflow:hidden;">
     <div style="position:absolute;top:8px;right:8px;width:80px;height:80px;border:3px solid rgba(255,255,255,.1);border-radius:50%;"></div>
-    <div style="text-align:center;color:rgba(255,255,255,.85);font-size:12px;letter-spacing:2px;margin-bottom:12px;">HOMEKING · 执照认证</div>
-    <div style="text-align:center;color:#FFF;font-size:20px;font-weight:700;">职业技能认证平台</div>
-    <div style="text-align:center;color:rgba(255,255,255,.7);font-size:13px;margin-top:4px;">学习 · 考试 · 认证 一站式服务</div>
+    <div style="text-align:center;color:rgba(255,255,255,.85);font-size:12px;letter-spacing:2px;margin-bottom:8px;">HOMEKING · 执照认证</div>
+    <div style="text-align:center;color:#FFF;font-size:16px;font-weight:600;">练习题库</div>
   </div>
-  <div class="content" style="margin-top:-8px;position:relative;z-index:2;">
-    <div class="entry-card" onclick="navTo('pg-practice')">
-      <div class="cell-icon" style="background:#EBF5FF;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 19.5A2.5 2.5 0 016.5 17H20" stroke="#3B82F6" stroke-width="1.5"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" stroke="#3B82F6" stroke-width="1.5"/><path d="M8 7h8M8 11h5" stroke="#3B82F6" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-      <div style="flex:1;"><div style="font-size:16px;font-weight:600;">练习题库</div><div style="font-size:12px;color:var(--text3);margin-top:2px;">免登录，随时随地刷题</div></div>
-      <span style="color:#ccc;font-size:18px;">›</span>
-    </div>
-    <div class="entry-card" onclick="requireLogin('pg-skills')">
-      <div class="cell-icon" style="background:#FFF7E6;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 15l-3 3h6l-3-3z" fill="#FAAD14"/><rect x="4" y="3" width="16" height="14" rx="2" stroke="#FAAD14" stroke-width="1.5"/><path d="M9 10l2 2 4-4" stroke="#FAAD14" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-      <div style="flex:1;"><div style="font-size:16px;font-weight:600;">技能报考认证</div><div style="font-size:12px;color:var(--text3);margin-top:2px;">在线报考，科目考试</div></div>
-      <span style="color:#ccc;font-size:18px;">›</span>
-    </div>
-    <div class="entry-card" onclick="requireLogin('pg-license')">
-      <div class="cell-icon" style="background:#F0FFF0;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z" stroke="#52C41A" stroke-width="1.5"/><path d="M9 12l2 2 4-4" stroke="#52C41A" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-      <div style="flex:1;"><div style="font-size:16px;font-weight:600;">执照申领</div><div style="font-size:12px;color:var(--text3);margin-top:2px;">申领电子/实体执照</div></div>
-      <span style="color:#ccc;font-size:18px;">›</span>
-    </div>
-  </div>
-  <div class="bottom-tab" id="tab-home">
-    <div class="tab-item active" onclick="switchTab('pg-home')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 12l9-8 9 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M5 10v10h14V10" stroke="currentColor" stroke-width="1.5"/></svg>首页</div>
-    <div class="tab-item" onclick="switchTab('pg-records')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M8 7h8M8 12h8M8 17h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>考试记录</div>
-    <div class="tab-item" onclick="switchTab('pg-my')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="currentColor" stroke-width="1.5"/></svg>我的</div>
-  </div>
-</div>
-
-<!-- ========== P2: PRACTICE HOME ========== -->
-<div class="page" id="pg-practice">
-  <div class="nav-bar"><div class="back" onclick="goBack()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="#333" stroke-width="2" stroke-linecap="round"/></svg></div><div class="nav-title">练习题库</div></div>
   <div style="background:var(--grad);padding:20px;margin:0 16px 12px;border-radius:12px;color:#FFF;position:relative;overflow:hidden;">
     <div style="position:absolute;top:5px;right:5px;width:70px;height:70px;border:2px solid rgba(255,255,255,.1);border-radius:50%;"></div>
     <div style="display:flex;align-items:center;gap:16px;">
@@ -157,6 +129,12 @@ input,select,textarea{outline:none;font-family:inherit;font-size:14px;border:non
         <div style="font-size:11px;color:var(--text3);margin-top:4px;">清洁方法与工具使用</div>
       </div>
     </div>
+  </div>
+  <div class="bottom-tab">
+    <div class="tab-item active" onclick="switchTab('pg-practice')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 19.5A2.5 2.5 0 016.5 17H20" stroke="currentColor" stroke-width="1.5"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" stroke="currentColor" stroke-width="1.5"/></svg>练习题库</div>
+    <div class="tab-item" onclick="switchTab('pg-skills')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="16" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M9 10l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M12 15l-3 3h6l-3-3z" fill="currentColor"/></svg>技能认证</div>
+    <div class="tab-item" onclick="switchTab('pg-license')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z" stroke="currentColor" stroke-width="1.5"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>我的执照</div>
+    <div class="tab-item" onclick="switchTab('pg-my')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="currentColor" stroke-width="1.5"/></svg>个人中心</div>
   </div>
 </div>
 
@@ -271,10 +249,19 @@ input,select,textarea{outline:none;font-family:inherit;font-size:14px;border:non
   <div class="content" id="onboardBody" style="padding-top:8px;"></div>
 </div>
 
-<!-- ========== P8: SKILL SELECT ========== -->
+<!-- ========== P7: SKILL SELECT (Tab - 技能认证) ========== -->
 <div class="page" id="pg-skills">
-  <div class="nav-bar"><div class="back" onclick="goBack()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="#333" stroke-width="2" stroke-linecap="round"/></svg></div><div class="nav-title">技能报考认证</div></div>
-  <div class="content" id="skillList"></div>
+  <div style="background:var(--grad);padding:40px 20px 16px;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:8px;right:8px;width:80px;height:80px;border:3px solid rgba(255,255,255,.1);border-radius:50%;"></div>
+    <div style="text-align:center;color:#FFF;font-size:18px;font-weight:600;">技能报考认证</div>
+  </div>
+  <div class="content" id="skillList" style="padding-bottom:70px;"></div>
+  <div class="bottom-tab">
+    <div class="tab-item" onclick="switchTab('pg-practice')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 19.5A2.5 2.5 0 016.5 17H20" stroke="currentColor" stroke-width="1.5"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" stroke="currentColor" stroke-width="1.5"/></svg>练习题库</div>
+    <div class="tab-item active" onclick="switchTab('pg-skills')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="16" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M9 10l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M12 15l-3 3h6l-3-3z" fill="currentColor"/></svg>技能认证</div>
+    <div class="tab-item" onclick="switchTab('pg-license')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z" stroke="currentColor" stroke-width="1.5"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>我的执照</div>
+    <div class="tab-item" onclick="switchTab('pg-my')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="currentColor" stroke-width="1.5"/></svg>个人中心</div>
+  </div>
 </div>
 
 <!-- ========== P9: PAYMENT ========== -->
@@ -301,7 +288,7 @@ input,select,textarea{outline:none;font-family:inherit;font-size:14px;border:non
 <div class="page" id="pg-subjects">
   <div class="nav-bar"><div class="back" onclick="goBack()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="#333" stroke-width="2" stroke-linecap="round"/></svg></div><div class="nav-title" id="subSkillName">家庭保洁</div></div>
   <div class="content" id="subjectList"></div>
-  <div style="position:absolute;bottom:0;left:0;right:0;padding:10px 16px;background:var(--bg);text-align:center;font-size:12px;color:var(--text3);">科目一与科目四通过后即可获得执照</div>
+  <div style="position:absolute;bottom:0;left:0;right:0;padding:10px 16px;background:var(--bg);text-align:center;font-size:12px;color:var(--text3);">科目一~四全部通过后即可申领执照</div>
 </div>
 
 <!-- ========== P11: EXAM ========== -->
@@ -342,24 +329,28 @@ input,select,textarea{outline:none;font-family:inherit;font-size:14px;border:non
   <div style="padding:10px 16px;border-top:1px solid var(--border);background:#FFF;text-align:center;font-size:15px;font-weight:600;">本次总分：<span id="detailScore" style="color:var(--blue);">0</span> 分</div>
 </div>
 
-<!-- ========== P14: LICENSE ========== -->
+<!-- ========== P13: LICENSE (Tab - 我的执照) ========== -->
 <div class="page" id="pg-license">
-  <div class="nav-bar"><div class="back" onclick="goBack()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="#333" stroke-width="2" stroke-linecap="round"/></svg></div><div class="nav-title">执照申领</div></div>
-  <div class="content" id="licenseBody"></div>
-</div>
-
-<!-- ========== P15: RECORDS ========== -->
-<div class="page" id="pg-records">
-  <div style="background:var(--grad);padding:40px 20px 20px;"><div style="text-align:center;color:#FFF;font-size:18px;font-weight:600;">考试记录</div></div>
-  <div class="content" id="recordsBody" style="padding-top:16px;"></div>
+  <div style="background:var(--grad);padding:40px 20px 16px;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:8px;right:8px;width:80px;height:80px;border:3px solid rgba(255,255,255,.1);border-radius:50%;"></div>
+    <div style="text-align:center;color:#FFF;font-size:18px;font-weight:600;">我的执照</div>
+  </div>
+  <div class="content" id="licenseBody" style="padding-bottom:70px;"></div>
   <div class="bottom-tab">
-    <div class="tab-item" onclick="switchTab('pg-home')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 12l9-8 9 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M5 10v10h14V10" stroke="currentColor" stroke-width="1.5"/></svg>首页</div>
-    <div class="tab-item active" onclick="switchTab('pg-records')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M8 7h8M8 12h8M8 17h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>考试记录</div>
-    <div class="tab-item" onclick="switchTab('pg-my')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="currentColor" stroke-width="1.5"/></svg>我的</div>
+    <div class="tab-item" onclick="switchTab('pg-practice')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 19.5A2.5 2.5 0 016.5 17H20" stroke="currentColor" stroke-width="1.5"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" stroke="currentColor" stroke-width="1.5"/></svg>练习题库</div>
+    <div class="tab-item" onclick="switchTab('pg-skills')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="16" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M9 10l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M12 15l-3 3h6l-3-3z" fill="currentColor"/></svg>技能认证</div>
+    <div class="tab-item active" onclick="switchTab('pg-license')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z" stroke="currentColor" stroke-width="1.5"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>我的执照</div>
+    <div class="tab-item" onclick="switchTab('pg-my')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="currentColor" stroke-width="1.5"/></svg>个人中心</div>
   </div>
 </div>
 
-<!-- ========== P16: MY ========== -->
+<!-- ========== P14: RECORDS (sub-page from 个人中心) ========== -->
+<div class="page" id="pg-records">
+  <div class="nav-bar"><div class="back" onclick="goBack()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="#333" stroke-width="2" stroke-linecap="round"/></svg></div><div class="nav-title">考试记录</div></div>
+  <div class="content" id="recordsBody" style="padding-top:8px;"></div>
+</div>
+
+<!-- ========== P15: MY (Tab - 个人中心) ========== -->
 <div class="page" id="pg-my">
   <div style="background:var(--grad);padding:36px 20px 24px;position:relative;overflow:hidden;min-height:170px;">
     <div style="position:absolute;top:10px;right:10px;width:80px;height:80px;border:3px solid rgba(255,255,255,.12);border-radius:50%;"></div>
@@ -370,24 +361,21 @@ input,select,textarea{outline:none;font-family:inherit;font-size:14px;border:non
     </div>
   </div>
   <div style="margin:-14px 16px 0;position:relative;z-index:10;">
-    <div class="card" style="display:flex;justify-content:space-around;padding:18px 10px;">
-      <div style="text-align:center;"><div style="position:relative;display:inline-block;"><div style="width:44px;height:44px;border-radius:12px;background:#EBF5FF;display:flex;align-items:center;justify-content:center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="2" stroke="#3B82F6" stroke-width="1.5"/><circle cx="12" cy="10" r="2.5" stroke="#3B82F6" stroke-width="1.5"/><path d="M8 16c0-2 1.8-3 4-3s4 1 4 3" stroke="#3B82F6" stroke-width="1.5"/></svg></div><div style="position:absolute;bottom:-2px;right:-2px;width:14px;height:14px;background:var(--green);border-radius:50%;border:2px solid #FFF;display:flex;align-items:center;justify-content:center;"><svg width="7" height="7" viewBox="0 0 12 12" fill="none"><path d="M3 6l2.5 2.5L9.5 4" stroke="#FFF" stroke-width="2" stroke-linecap="round"/></svg></div></div><div style="font-size:12px;color:var(--text2);margin-top:5px;">身份认证</div></div>
-      <div style="text-align:center;"><div style="position:relative;display:inline-block;"><div style="width:44px;height:44px;border-radius:12px;background:#EBF5FF;display:flex;align-items:center;justify-content:center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z" stroke="#3B82F6" stroke-width="1.5"/></svg></div><div style="position:absolute;bottom:-2px;right:-2px;width:14px;height:14px;background:var(--green);border-radius:50%;border:2px solid #FFF;display:flex;align-items:center;justify-content:center;"><svg width="7" height="7" viewBox="0 0 12 12" fill="none"><path d="M3 6l2.5 2.5L9.5 4" stroke="#FFF" stroke-width="2" stroke-linecap="round"/></svg></div></div><div style="font-size:12px;color:var(--text2);margin-top:5px;">服务保险</div></div>
-      <div style="text-align:center;"><div style="position:relative;display:inline-block;"><div style="width:44px;height:44px;border-radius:12px;background:#EBF5FF;display:flex;align-items:center;justify-content:center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M9 2h6v3H9V2z" stroke="#3B82F6" stroke-width="1.5"/><rect x="4" y="5" width="16" height="16" rx="2" stroke="#3B82F6" stroke-width="1.5"/><path d="M9 12h6M12 9v6" stroke="#3B82F6" stroke-width="1.5" stroke-linecap="round"/></svg></div><div style="position:absolute;bottom:-2px;right:-2px;width:14px;height:14px;background:var(--green);border-radius:50%;border:2px solid #FFF;display:flex;align-items:center;justify-content:center;"><svg width="7" height="7" viewBox="0 0 12 12" fill="none"><path d="M3 6l2.5 2.5L9.5 4" stroke="#FFF" stroke-width="2" stroke-linecap="round"/></svg></div></div><div style="font-size:12px;color:var(--text2);margin-top:5px;">健康证</div></div>
+    <div class="card" style="display:flex;justify-content:space-around;padding:18px 10px;" id="myCertIcons">
     </div>
   </div>
   <div style="padding:12px 16px 70px;">
     <div class="cell-list">
       <div class="cell-item" onclick="requireLogin('pg-account')"><div class="cell-icon" style="background:#EBF5FF;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#3B82F6" stroke-width="1.5"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#3B82F6" stroke-width="1.5"/></svg></div><span class="cell-label">账号信息</span><span class="cell-arrow">›</span></div>
-      <div class="cell-item" onclick="requireLogin('pg-cert')"><div class="cell-icon" style="background:#FFF7E6;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2" stroke="#FAAD14" stroke-width="1.5"/><path d="M3 9h18" stroke="#FAAD14" stroke-width="1.5"/></svg></div><span class="cell-label">证件信息</span><span class="cell-arrow">›</span></div>
-      <div class="cell-item" onclick="requireLogin('pg-materials')"><div class="cell-icon" style="background:#F0FFF0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="#52C41A" stroke-width="1.5"/><path d="M9 15l2 2 4-4" stroke="#52C41A" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="cell-label">认证材料</span><span class="cell-arrow">›</span></div>
+      <div class="cell-item" onclick="navTo('pg-records')"><div class="cell-icon" style="background:#F3F0FF;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="#7C3AED" stroke-width="1.5"/><path d="M8 7h8M8 12h8M8 17h5" stroke="#7C3AED" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="cell-label">考试记录</span><span class="cell-arrow">›</span></div>
       <div class="cell-item" onclick="doLogout()"><div class="cell-icon" style="background:#FFF0F0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" stroke="#FF4D4F" stroke-width="1.5"/><path d="M16 17l5-5-5-5M21 12H9" stroke="#FF4D4F" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="cell-label" style="color:var(--red);">退出登录</span><span class="cell-arrow">›</span></div>
     </div>
   </div>
   <div class="bottom-tab">
-    <div class="tab-item" onclick="switchTab('pg-home')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 12l9-8 9 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M5 10v10h14V10" stroke="currentColor" stroke-width="1.5"/></svg>首页</div>
-    <div class="tab-item" onclick="switchTab('pg-records')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M8 7h8M8 12h8M8 17h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>考试记录</div>
-    <div class="tab-item active" onclick="switchTab('pg-my')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="currentColor" stroke-width="1.5"/></svg>我的</div>
+    <div class="tab-item" onclick="switchTab('pg-practice')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 19.5A2.5 2.5 0 016.5 17H20" stroke="currentColor" stroke-width="1.5"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" stroke="currentColor" stroke-width="1.5"/></svg>练习题库</div>
+    <div class="tab-item" onclick="switchTab('pg-skills')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="16" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M9 10l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M12 15l-3 3h6l-3-3z" fill="currentColor"/></svg>技能认证</div>
+    <div class="tab-item" onclick="switchTab('pg-license')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z" stroke="currentColor" stroke-width="1.5"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>我的执照</div>
+    <div class="tab-item active" onclick="switchTab('pg-my')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="currentColor" stroke-width="1.5"/></svg>个人中心</div>
   </div>
 </div>
 
@@ -410,7 +398,7 @@ input,select,textarea{outline:none;font-family:inherit;font-size:14px;border:non
 <div class="page" id="pg-cert">
   <div class="nav-bar"><div class="back" onclick="goBack()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="#333" stroke-width="2" stroke-linecap="round"/></svg></div><div class="nav-title">证件信息</div></div>
   <div class="content">
-    <div class="sec-title">身份证</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;"><div class="sec-title" style="margin-bottom:0;">身份证</div><span id="certIdReviewTag" class="tag tag-gray">未上传</span></div>
     <div class="card"><div style="display:flex;gap:10px;margin-bottom:12px;">
       <div style="flex:1;"><div class="upload-area" id="idF" onclick="ocrSim('idF')" style="height:90px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#ccc" stroke-width="2" stroke-linecap="round"/></svg><span style="font-size:11px;">人像面</span></div></div>
       <div style="flex:1;"><div class="upload-area" id="idB" onclick="ocrSim('idB')" style="height:90px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#ccc" stroke-width="2" stroke-linecap="round"/></svg><span style="font-size:11px;">国徽面</span></div></div>
@@ -419,7 +407,7 @@ input,select,textarea{outline:none;font-family:inherit;font-size:14px;border:non
       <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);"><span style="color:var(--text3);">证件号</span><span>3501****1234</span></div>
       <div style="display:flex;justify-content:space-between;padding:8px 0;"><span style="color:var(--text3);">有效期</span><span>2020.01-2030.01 <span class="tag tag-green" style="font-size:11px;">有效</span></span></div>
     </div></div>
-    <div class="sec-title">健康证</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;"><div class="sec-title" style="margin-bottom:0;">健康证</div><span id="certHealthReviewTag" class="tag tag-gray">未上传</span></div>
     <div class="card"><div class="upload-area" id="healthUp" onclick="ocrSim('health')" style="height:90px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#ccc" stroke-width="2" stroke-linecap="round"/></svg><span style="font-size:11px;">点击上传健康证</span></div>
     <div id="healthOcr" style="display:none;margin-top:10px;"><div style="display:flex;justify-content:space-between;padding:8px 0;"><span style="color:var(--text3);">有效期</span><span>2025.06-2026.06 <span class="tag tag-green" style="font-size:11px;">有效</span></span></div></div></div>
   </div>
@@ -431,12 +419,20 @@ input,select,textarea{outline:none;font-family:inherit;font-size:14px;border:non
   <div class="content">
     <div class="sec-title">体检报告</div>
     <div class="card"><div style="display:flex;align-items:center;margin-bottom:10px;"><span style="flex:1;">上传状态</span><span id="matExamSt" class="tag tag-gray">未上传</span></div><div class="upload-area" id="matExam" onclick="uploadMat('exam')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#ccc" stroke-width="2" stroke-linecap="round"/></svg><span style="font-size:11px;">点击上传体检报告</span></div></div>
-    <div class="sec-title">背调报告</div>
-    <div class="card"><div style="display:flex;align-items:center;margin-bottom:10px;"><span style="flex:1;">上传状态</span><span id="matBgSt" class="tag tag-gray">未上传</span></div><div class="upload-area" id="matBg" onclick="uploadMat('bg')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#ccc" stroke-width="2" stroke-linecap="round"/></svg><span style="font-size:11px;">点击上传背调报告</span></div></div>
+    <div class="sec-title">背调验证</div>
+    <div class="card" id="bgCheckCard">
+      <div style="display:flex;align-items:center;margin-bottom:10px;"><span style="flex:1;">验证状态</span><span id="matBgSt" class="tag tag-gray">未验证</span></div>
+      <div id="bgCheckForm">
+        <div style="margin-bottom:10px;"><label style="font-size:13px;color:var(--text2);display:block;margin-bottom:4px;">姓名</label><input class="input-field" id="bgName" placeholder="请输入姓名"></div>
+        <div style="margin-bottom:12px;"><label style="font-size:13px;color:var(--text2);display:block;margin-bottom:4px;">身份证号</label><input class="input-field" id="bgIdNo" placeholder="请输入身份证号"></div>
+        <button class="btn-primary" style="height:40px;font-size:14px;border-radius:20px;" onclick="startBgCheck()">开始验证</button>
+      </div>
+      <div id="bgCheckResult" style="display:none;"></div>
+    </div>
     <div class="sec-title">审核记录</div>
     <div class="card" style="padding:10px 16px;">
-      <div style="display:flex;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);"><div style="flex:1;"><div style="font-size:13px;">体检报告 - 第1次提交</div><div style="font-size:11px;color:var(--text3);margin-top:2px;">2026-03-15 10:30</div></div><span class="tag tag-green">通过</span></div>
-      <div style="display:flex;align-items:center;padding:8px 0;"><div style="flex:1;"><div style="font-size:13px;">背调报告 - 第1次提交</div><div style="font-size:11px;color:var(--text3);margin-top:2px;">2026-03-14 14:20</div></div><span class="tag tag-yellow">待审核</span></div>
+      <div style="display:flex;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);"><div style="flex:1;"><div style="font-size:13px;">体检报告 - AI自动审核</div><div style="font-size:11px;color:var(--text3);margin-top:2px;">2026-03-15 10:30</div></div><span class="tag tag-green">自动通过</span></div>
+      <div style="display:flex;align-items:center;padding:8px 0;"><div style="flex:1;"><div style="font-size:13px;">背调验证 - 第三方接口</div><div style="font-size:11px;color:var(--text3);margin-top:2px;">2026-03-14 14:20</div></div><span class="tag tag-green">自动通过</span></div>
     </div>
   </div>
 </div>
@@ -464,24 +460,56 @@ const QBANK=[
 ];
 
 // ====== STATE ======
-let user=null,stack=['pg-home'],captchaCode='',agreed=false,smsTimer=null,loginTarget=null;
+let user=null,stack=['pg-practice'],captchaCode='',agreed=false,smsTimer=null,loginTarget=null;
+const TAB_PAGES=['pg-practice','pg-skills','pg-license','pg-my'];
 let curSkill=0,curSubject=0;
 let quiz={qs:[],ans:[],cur:0,ok:0,err:0,mode:'practice',timer:null,timeLeft:1800,answered:[]};
 let records=[];
+
+// ====== MATERIALS STATE ======
+const DEFAULT_MATERIALS={
+  photo:{uploaded:true,reviewStatus:'passed'},
+  idcard:{uploaded:true,reviewStatus:'passed'},
+  health:{uploaded:true,reviewStatus:'passed'},
+  medical:{uploaded:true,reviewStatus:'passed'},
+  background:{uploaded:true,reviewStatus:'passed'}
+};
+let materials=JSON.parse(JSON.stringify(DEFAULT_MATERIALS));
+const MAT_VERSION='v3';
+function loadMaterials(){let v=localStorage.getItem('h5_mat_ver');let s=localStorage.getItem('h5_materials');if(v===MAT_VERSION&&s){materials=JSON.parse(s);Object.keys(DEFAULT_MATERIALS).forEach(k=>{if(!materials[k])materials[k]=JSON.parse(JSON.stringify(DEFAULT_MATERIALS[k]));});}else{materials=JSON.parse(JSON.stringify(DEFAULT_MATERIALS));localStorage.setItem('h5_mat_ver',MAT_VERSION);saveMaterials();}}
+function saveMaterials(){localStorage.setItem('h5_materials',JSON.stringify(materials));}
+function allMaterialsUploaded(){return materials.photo.uploaded&&materials.idcard.uploaded&&materials.health.uploaded&&materials.medical.uploaded&&materials.background.uploaded;}
+function allMaterialsApproved(){return materials.photo.reviewStatus==='passed'&&materials.idcard.reviewStatus==='passed'&&materials.health.reviewStatus==='passed'&&materials.medical.reviewStatus==='passed'&&materials.background.reviewStatus==='passed';}
+function materialStatusDot(reviewStatus){
+  if(reviewStatus==='passed')return '<div style="width:14px;height:14px;background:var(--green);border-radius:50%;border:2px solid #FFF;display:flex;align-items:center;justify-content:center;position:absolute;bottom:-2px;right:-2px;"><svg width="7" height="7" viewBox="0 0 12 12" fill="none"><path d="M3 6l2.5 2.5L9.5 4" stroke="#FFF" stroke-width="2" stroke-linecap="round"/></svg></div>';
+  if(reviewStatus==='pending')return '<div style="width:14px;height:14px;background:var(--yellow);border-radius:50%;border:2px solid #FFF;position:absolute;bottom:-2px;right:-2px;"></div>';
+  if(reviewStatus==='rejected')return '<div style="width:14px;height:14px;background:var(--red);border-radius:50%;border:2px solid #FFF;position:absolute;bottom:-2px;right:-2px;"></div>';
+  return '<div style="width:14px;height:14px;background:#D1D5DB;border-radius:50%;border:2px solid #FFF;position:absolute;bottom:-2px;right:-2px;"></div>';
+}
+function getMissingMaterials(){
+  let missing=[];
+  if(!materials.photo.uploaded)missing.push('个人照片');
+  if(!materials.idcard.uploaded)missing.push('身份证');
+  if(!materials.health.uploaded)missing.push('健康证');
+  if(!materials.medical.uploaded)missing.push('体检报告');
+  if(!materials.background.uploaded)missing.push('背调验证');
+  return missing;
+}
 
 // ====== INIT ======
 function init(){
   let s=localStorage.getItem('h5_user');if(s)user=JSON.parse(s);
   let r=localStorage.getItem('h5_records');if(r)records=JSON.parse(r);
   let sk=localStorage.getItem('h5_skills');if(sk)SKILLS=JSON.parse(sk);
+  loadMaterials();
   genCaptcha();updateMyPage();
 }
 
 // ====== NAV ======
 function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));let p=document.getElementById(id);if(p)p.classList.add('active');}
-function navTo(id,p){stack.push(id);showPage(id);if(id==='pg-skills')renderSkills();if(id==='pg-subjects')renderSubjects();if(id==='pg-records')renderRecords();if(id==='pg-my')updateMyPage();if(id==='pg-license')renderLicense();if(id==='pg-account')fillAccount();}
+function navTo(id,p){stack.push(id);showPage(id);if(id==='pg-skills')renderSkills();if(id==='pg-subjects')renderSubjects();if(id==='pg-records')renderRecords();if(id==='pg-my')updateMyPage();if(id==='pg-license')renderLicense();if(id==='pg-account')fillAccount();if(id==='pg-cert')renderCertReviewTags();if(id==='pg-materials')fillBgCheck();}
 function goBack(){if(stack.length>1){stack.pop();showPage(stack[stack.length-1]);let c=stack[stack.length-1];if(c==='pg-subjects')renderSubjects();if(c==='pg-skills')renderSkills();if(c==='pg-my')updateMyPage();}}
-function switchTab(id){stack=[id];showPage(id);if(id==='pg-records')renderRecords();if(id==='pg-my')updateMyPage();}
+function switchTab(id){if((id==='pg-skills'||id==='pg-license')&&!user){loginTarget=id;navTo('pg-login');return;}stack=[id];showPage(id);if(id==='pg-records')renderRecords();if(id==='pg-my')updateMyPage();if(id==='pg-skills')renderSkills();if(id==='pg-license')renderLicense();}
 function requireLogin(target){if(user){navTo(target);}else{loginTarget=target;navTo('pg-login');}}
 
 // ====== TOAST & MODAL ======
@@ -500,29 +528,65 @@ function showAgreement(){showModal('用户服务协议','<div style="text-align:
 function doLogin(){let ph=document.getElementById('loginPhone').value.trim(),sms=document.getElementById('loginSms').value.trim();if(!ph||ph.length<11){toast('请输入正确的手机号');return;}if(!sms||sms.length<4){toast('请输入验证码');return;}if(!agreed){showModal('提示','请确认勾选协议后继续','确认',()=>{toggleAgree();closeModal();});return;}
   let u=USERS.find(x=>x.phone===ph);let isNew=!u;if(!u)u={phone:ph,name:'用户'+ph.slice(-4),nick:'用户'+ph.slice(-4)};
   user={...u};localStorage.setItem('h5_user',JSON.stringify(user));toast('登录成功');
-  setTimeout(()=>{if(isNew){stack.push('pg-onboard');showPage('pg-onboard');initOnboard();}else{stack.pop();if(loginTarget){navTo(loginTarget);loginTarget=null;}else{switchTab('pg-home');}}updateMyPage();},500);}
-function doLogout(){showModal('确认退出','确定退出登录吗？','确认退出',()=>{user=null;localStorage.removeItem('h5_user');closeModal();switchTab('pg-home');updateMyPage();});}
-function updateMyPage(){if(!user){document.getElementById('myName').textContent='未登录';document.getElementById('myPhone').textContent='';return;}document.getElementById('myName').textContent=user.name;document.getElementById('myPhone').textContent=user.phone.replace(/(\d{3})\d{4}(\d{4})/,'$1****$2');}
-function fillAccount(){if(!user)return;document.getElementById('accNick').value=user.nick||user.name;document.getElementById('accPhone').textContent=user.phone.replace(/(\d{3})\d{4}(\d{4})/,'$1****$2');}
+  setTimeout(()=>{if(isNew){stack.push('pg-onboard');showPage('pg-onboard');initOnboard('new');}else{stack.pop();if(loginTarget){if(TAB_PAGES.includes(loginTarget)){switchTab(loginTarget);}else{navTo(loginTarget);}loginTarget=null;}else{switchTab('pg-practice');}}updateMyPage();},500);}
+function doLogout(){showModal('确认退出','确定退出登录吗？','确认退出',()=>{user=null;localStorage.removeItem('h5_user');closeModal();switchTab('pg-practice');updateMyPage();});}
+function updateMyPage(){if(!user){document.getElementById('myName').textContent='未登录';document.getElementById('myPhone').textContent='';renderMyCertIcons();return;}document.getElementById('myName').textContent=user.name;document.getElementById('myPhone').textContent=user.phone.replace(/(\d{3})\d{4}(\d{4})/,'$1****$2');renderMyCertIcons();}
+function renderMyCertIcons(){
+  let el=document.getElementById('myCertIcons');if(!el)return;
+  let icons=[
+    {label:'身份认证',key:'idcard',page:'pg-cert',svg:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="2" stroke="#3B82F6" stroke-width="1.5"/><circle cx="12" cy="10" r="2.5" stroke="#3B82F6" stroke-width="1.5"/><path d="M8 16c0-2 1.8-3 4-3s4 1 4 3" stroke="#3B82F6" stroke-width="1.5"/></svg>'},
+    {label:'健康证',key:'health',page:'pg-cert',svg:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M9 2h6v3H9V2z" stroke="#3B82F6" stroke-width="1.5"/><rect x="4" y="5" width="16" height="16" rx="2" stroke="#3B82F6" stroke-width="1.5"/><path d="M9 12h6M12 9v6" stroke="#3B82F6" stroke-width="1.5" stroke-linecap="round"/></svg>'},
+    {label:'体检报告',key:'medical',page:'pg-materials',svg:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="#3B82F6" stroke-width="1.5"/><path d="M9 15l2 2 4-4" stroke="#3B82F6" stroke-width="1.5" stroke-linecap="round"/></svg>'},
+    {label:'背调验证',key:'background',page:'pg-materials',svg:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z" stroke="#3B82F6" stroke-width="1.5"/></svg>'}
+  ];
+  let h='';icons.forEach(ic=>{
+    let rs=materials[ic.key].reviewStatus;
+    h+=`<div style="text-align:center;cursor:pointer;" onclick="navTo('${ic.page}')"><div style="position:relative;display:inline-block;"><div style="width:44px;height:44px;border-radius:12px;background:#EBF5FF;display:flex;align-items:center;justify-content:center;">${ic.svg}</div>${materialStatusDot(rs)}</div><div style="font-size:12px;color:var(--text2);margin-top:5px;">${ic.label}</div></div>`;
+  });el.innerHTML=h;
+}
+function fillAccount(){if(!user)return;document.getElementById('accNick').value=user.nick||user.name;document.getElementById('accPhone').textContent=user.phone.replace(/(\d{3})\d{4}(\d{4})/,'$1****$2');renderPhotoReviewStatus();if(materials.photo.uploaded){let e=document.getElementById('photoUp');e.classList.add('done');e.innerHTML='<svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="#52C41A" stroke-width="2.5" stroke-linecap="round"/></svg><span style="font-size:12px;color:var(--green);">已上传</span>';}}
 function saveUser(){if(!user)return;user.nick=document.getElementById('accNick').value;user.name=user.nick;localStorage.setItem('h5_user',JSON.stringify(user));toast('已保存');}
-function simulateAI(){let e=document.getElementById('photoUp'),s=document.getElementById('aiStatus');e.innerHTML='<div style="color:var(--blue);font-size:13px;">AI 人像验证中...</div>';s.className='tag tag-blue';s.textContent='验证中';setTimeout(()=>{e.classList.add('done');e.innerHTML='<svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="#52C41A" stroke-width="2.5" stroke-linecap="round"/></svg><span style="font-size:12px;color:var(--green);">验证通过</span>';s.className='tag tag-green';s.textContent='已验证';toast('AI人像验证通过');},1500);}
-function ocrSim(t){let e=document.getElementById(t);e.classList.add('done');e.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="#52C41A" stroke-width="2.5" stroke-linecap="round"/></svg><span style="font-size:11px;color:var(--green);">已上传</span>';if(t==='idF'||t==='idB')document.getElementById('idOcr').style.display='block';if(t==='health')document.getElementById('healthOcr').style.display='block';toast('识别成功');}
-function uploadMat(t){let id=t==='exam'?'matExam':'matBg',st=t==='exam'?'matExamSt':'matBgSt';document.getElementById(id).classList.add('done');document.getElementById(id).innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="#52C41A" stroke-width="2.5" stroke-linecap="round"/></svg><span style="font-size:11px;color:var(--green);">已上传</span>';document.getElementById(st).className='tag tag-yellow';document.getElementById(st).textContent='待审核';toast('上传成功');}
+function simulateAI(){let e=document.getElementById('photoUp'),s=document.getElementById('aiStatus');e.innerHTML='<div style="color:var(--blue);font-size:13px;">AI 人像验证中...</div>';s.className='tag tag-blue';s.textContent='验证中';setTimeout(()=>{e.classList.add('done');e.innerHTML='<svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="#52C41A" stroke-width="2.5" stroke-linecap="round"/></svg><span style="font-size:12px;color:var(--green);">验证通过</span>';materials.photo.uploaded=true;materials.photo.reviewStatus='pending';saveMaterials();s.className='tag tag-yellow';s.textContent='审核中';toast('AI验证通过，照片审核中');renderPhotoReviewStatus();},1500);}
+function renderPhotoReviewStatus(){let s=document.getElementById('aiStatus');if(!s)return;let rs=materials.photo.reviewStatus;if(rs==='passed'){s.className='tag tag-green';s.textContent='审核通过';}else if(rs==='pending'){s.className='tag tag-yellow';s.textContent='审核中';}else if(rs==='rejected'){s.className='tag tag-red';s.textContent='审核不通过';}else{s.className='tag tag-gray';s.textContent='未上传';}}
+function ocrSim(t){let e=document.getElementById(t);e.classList.add('done');e.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="#52C41A" stroke-width="2.5" stroke-linecap="round"/></svg><span style="font-size:11px;color:var(--green);">已上传</span>';if(t==='idF'||t==='idB'){document.getElementById('idOcr').style.display='block';materials.idcard.uploaded=true;if(materials.idcard.reviewStatus==='none')materials.idcard.reviewStatus='pending';saveMaterials();renderCertReviewTags();}if(t==='health'){document.getElementById('healthOcr').style.display='block';materials.health.uploaded=true;materials.health.reviewStatus='pending';saveMaterials();renderCertReviewTags();toast('识别成功，AI审核中...');setTimeout(()=>{if(Math.random()<0.9){materials.health.reviewStatus='passed';saveMaterials();renderCertReviewTags();toast('健康证AI审核通过');}else{materials.health.reviewStatus='rejected';saveMaterials();renderCertReviewTags();toast('健康证AI审核不通过，请重新上传');}},1500);return;}toast('识别成功');}
+function renderCertReviewTags(){let idTag=document.getElementById('certIdReviewTag');let hTag=document.getElementById('certHealthReviewTag');if(idTag){let rs=materials.idcard.reviewStatus;if(rs==='passed'){idTag.className='tag tag-green';idTag.textContent='审核通过';}else if(rs==='pending'){idTag.className='tag tag-yellow';idTag.textContent='审核中';}else if(rs==='rejected'){idTag.className='tag tag-red';idTag.textContent='审核不通过';}else{idTag.className='tag tag-gray';idTag.textContent='未上传';}}if(hTag){let rs=materials.health.reviewStatus;if(rs==='passed'){hTag.className='tag tag-green';hTag.textContent='审核通过';}else if(rs==='pending'){hTag.className='tag tag-yellow';hTag.textContent='审核中';}else if(rs==='rejected'){hTag.className='tag tag-red';hTag.textContent='审核不通过';}else{hTag.className='tag tag-gray';hTag.textContent='未上传';}}}
+function uploadMat(t){if(t==='exam'){let id='matExam',st='matExamSt';document.getElementById(id).classList.add('done');document.getElementById(id).innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="#52C41A" stroke-width="2.5" stroke-linecap="round"/></svg><span style="font-size:11px;color:var(--green);">已上传</span>';document.getElementById(st).className='tag tag-yellow';document.getElementById(st).textContent='AI审核中';materials.medical.uploaded=true;materials.medical.reviewStatus='pending';saveMaterials();toast('上传成功，AI审核中...');setTimeout(()=>{if(Math.random()<0.9){materials.medical.reviewStatus='passed';saveMaterials();document.getElementById(st).className='tag tag-green';document.getElementById(st).textContent='审核通过';toast('体检报告AI审核通过');}else{materials.medical.reviewStatus='rejected';saveMaterials();document.getElementById(st).className='tag tag-red';document.getElementById(st).textContent='审核不通过';toast('体检报告AI审核不通过，请重新上传');}},1500);}}
+function startBgCheck(){let name=document.getElementById('bgName').value.trim(),idNo=document.getElementById('bgIdNo').value.trim();if(!name||!idNo){toast('请输入姓名和身份证号');return;}let form=document.getElementById('bgCheckForm'),res=document.getElementById('bgCheckResult');form.style.display='none';res.style.display='block';res.innerHTML='<div style="text-align:center;padding:20px 0;"><div style="color:var(--blue);font-size:14px;font-weight:500;">背调查询中...</div><div style="margin-top:8px;font-size:12px;color:var(--text3);">正在调用第三方接口验证</div></div>';setTimeout(()=>{if(Math.random()<0.9){materials.background.uploaded=true;materials.background.reviewStatus='passed';saveMaterials();document.getElementById('matBgSt').className='tag tag-green';document.getElementById('matBgSt').textContent='已通过';res.innerHTML='<div style="text-align:center;padding:16px 0;"><svg width="40" height="40" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#52C41A" stroke-width="1.5"/><path d="M9 12l2 2 4-4" stroke="#52C41A" stroke-width="2.5" stroke-linecap="round"/></svg><div style="color:var(--green);font-size:15px;font-weight:600;margin-top:8px;">背调验证通过</div></div>';toast('背调验证通过');}else{res.innerHTML='<div style="text-align:center;padding:16px 0;"><svg width="40" height="40" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#FF4D4F" stroke-width="1.5"/><path d="M15 9l-6 6M9 9l6 6" stroke="#FF4D4F" stroke-width="2" stroke-linecap="round"/></svg><div style="color:var(--red);font-size:15px;font-weight:600;margin-top:8px;">背调验证不通过</div><div style="font-size:12px;color:var(--text3);margin-top:4px;">原因：查询到不良记录，请核实信息后重试</div><button style="margin-top:12px;padding:8px 24px;border-radius:18px;background:var(--grad);color:#FFF;font-size:13px;" onclick="resetBgCheck()">重新验证</button></div>';}},1500);}
+function resetBgCheck(){document.getElementById('bgCheckForm').style.display='block';document.getElementById('bgCheckResult').style.display='none';}
+function fillBgCheck(){let nameEl=document.getElementById('bgName'),idEl=document.getElementById('bgIdNo');if(nameEl&&user&&user.name)nameEl.value=user.name;if(materials.background.uploaded&&materials.background.reviewStatus==='passed'){document.getElementById('bgCheckForm').style.display='none';document.getElementById('bgCheckResult').style.display='block';document.getElementById('bgCheckResult').innerHTML='<div style="text-align:center;padding:16px 0;"><svg width="40" height="40" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#52C41A" stroke-width="1.5"/><path d="M9 12l2 2 4-4" stroke="#52C41A" stroke-width="2.5" stroke-linecap="round"/></svg><div style="color:var(--green);font-size:15px;font-weight:600;margin-top:8px;">背调验证已通过</div></div>';document.getElementById('matBgSt').className='tag tag-green';document.getElementById('matBgSt').textContent='已通过';}else{document.getElementById('bgCheckForm').style.display='block';document.getElementById('bgCheckResult').style.display='none';document.getElementById('matBgSt').className='tag tag-gray';document.getElementById('matBgSt').textContent='未验证';}}
+function obBgCheck(){let name=document.getElementById('obBgName').value.trim(),idNo=document.getElementById('obBgId').value.trim();if(!name||!idNo){toast('请输入姓名和身份证号');return;}let res=document.getElementById('obBgResult');res.innerHTML='<div style="color:var(--blue);font-size:13px;text-align:center;">背调查询中...</div>';setTimeout(()=>{res.innerHTML='<div style="color:var(--green);font-size:13px;text-align:center;">✓ 背调验证通过</div>';materials.background.uploaded=true;materials.background.reviewStatus='passed';saveMaterials();toast('背调验证通过');},1500);}
 
 // ====== ONBOARDING ======
-let obStep=0;
-function initOnboard(){obStep=0;renderOBStep();}
-function renderOBStep(){let bar=document.getElementById('stepBar');bar.innerHTML='';for(let i=0;i<5;i++)bar.innerHTML+=`<div class="step-dot ${i===obStep?'active':i<obStep?'done':''}"></div>`;
-  let b=document.getElementById('onboardBody');const titles=['账号信息录入','身份证上传','健康证上传','体检报告上传','背调报告上传'];
-  let h=`<div style="font-size:16px;font-weight:600;margin-bottom:4px;">${titles[obStep]}</div><div style="font-size:13px;color:var(--text3);margin-bottom:16px;">步骤 ${obStep+1}/5</div>`;
-  if(obStep===0)h+=`<div class="card"><div class="upload-area" style="height:80px;border-radius:50%;width:80px;margin:0 auto 12px;" onclick="toast('头像上传成功')"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#ccc" stroke-width="2" stroke-linecap="round"/></svg></div><div style="margin-bottom:12px;"><label style="font-size:13px;color:var(--text2);display:block;margin-bottom:4px;">昵称</label><input class="input-field" placeholder="请输入昵称" value="${user?user.nick:''}"></div><div><label style="font-size:13px;color:var(--text2);display:block;margin-bottom:4px;">个人照片</label><div class="upload-area" style="height:80px;" onclick="toast('照片上传成功，AI验证通过')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#ccc" stroke-width="2" stroke-linecap="round"/></svg><span style="font-size:11px;">点击上传</span></div></div></div>`;
-  else if(obStep===1)h+=`<div class="card"><div style="display:flex;gap:10px;"><div style="flex:1;"><div class="upload-area" style="height:90px;" onclick="toast('人像面识别成功')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#ccc" stroke-width="2" stroke-linecap="round"/></svg><span style="font-size:11px;">人像面</span></div></div><div style="flex:1;"><div class="upload-area" style="height:90px;" onclick="toast('国徽面识别成功')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#ccc" stroke-width="2" stroke-linecap="round"/></svg><span style="font-size:11px;">国徽面</span></div></div></div></div>`;
-  else if(obStep===2)h+=`<div class="card"><div class="upload-area" style="height:90px;" onclick="toast('健康证识别成功')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#ccc" stroke-width="2" stroke-linecap="round"/></svg><span style="font-size:11px;">点击上传健康证</span></div></div>`;
-  else h+=`<div class="card"><div class="upload-area" style="height:90px;" onclick="this.classList.add('done');this.innerHTML='<span style=color:var(--green);font-size:12px>已上传</span>';toast('上传成功')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#ccc" stroke-width="2" stroke-linecap="round"/></svg><span style="font-size:11px;">点击上传</span></div></div>`;
-  h+=`<div style="display:flex;gap:10px;margin-top:20px;"><button class="btn-outline" style="flex:1;" onclick="obNext()">跳过</button><button class="btn-primary" style="flex:1;" onclick="obNext()">下一步</button></div>`;
+let obStep=0,obMode='new',obActiveSteps=[],obReturnSkill=-1;
+const ALL_STEPS=[
+  {key:'photo',title:'账号信息录入',materialKey:'photo'},
+  {key:'idcard',title:'身份证上传',materialKey:'idcard'},
+  {key:'health',title:'健康证上传',materialKey:'health'},
+  {key:'medical',title:'体检报告上传',materialKey:'medical'},
+  {key:'background',title:'背调验证',materialKey:'background'}
+];
+function initOnboard(mode,returnSkill){obMode=mode||'new';obReturnSkill=returnSkill>=0?returnSkill:-1;obStep=0;
+  if(obMode==='fix'){obActiveSteps=[];ALL_STEPS.forEach((s,i)=>{if(!materials[s.materialKey].uploaded)obActiveSteps.push(i);});
+    document.querySelector('#pg-onboard .nav-title').textContent='补全材料';
+  }else{obActiveSteps=[0,1,2,3,4];document.querySelector('#pg-onboard .nav-title').textContent='完善信息';}
+  renderOBStep();}
+function renderOBStep(){let bar=document.getElementById('stepBar');bar.innerHTML='';let total=obActiveSteps.length;for(let i=0;i<total;i++)bar.innerHTML+=`<div class="step-dot ${i===obStep?'active':i<obStep?'done':''}"></div>`;
+  let realIdx=obActiveSteps[obStep];let step=ALL_STEPS[realIdx];
+  let b=document.getElementById('onboardBody');
+  let h=`<div style="font-size:16px;font-weight:600;margin-bottom:4px;">${step.title}</div><div style="font-size:13px;color:var(--text3);margin-bottom:16px;">步骤 ${obStep+1}/${total}</div>`;
+  if(realIdx===0)h+=`<div class="card"><div class="upload-area" style="height:80px;border-radius:50%;width:80px;margin:0 auto 12px;" onclick="toast('头像上传成功')"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#ccc" stroke-width="2" stroke-linecap="round"/></svg></div><div style="margin-bottom:12px;"><label style="font-size:13px;color:var(--text2);display:block;margin-bottom:4px;">昵称</label><input class="input-field" placeholder="请输入昵称" value="${user?user.nick:''}"></div><div><label style="font-size:13px;color:var(--text2);display:block;margin-bottom:4px;">个人照片</label><div class="upload-area" style="height:80px;" onclick="obUploadPhoto(this)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#ccc" stroke-width="2" stroke-linecap="round"/></svg><span style="font-size:11px;">点击上传</span></div></div></div>`;
+  else if(realIdx===1)h+=`<div class="card"><div style="display:flex;gap:10px;"><div style="flex:1;"><div class="upload-area" style="height:90px;" onclick="obUploadId(this,'front')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#ccc" stroke-width="2" stroke-linecap="round"/></svg><span style="font-size:11px;">人像面</span></div></div><div style="flex:1;"><div class="upload-area" style="height:90px;" onclick="obUploadId(this,'back')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#ccc" stroke-width="2" stroke-linecap="round"/></svg><span style="font-size:11px;">国徽面</span></div></div></div></div>`;
+  else if(realIdx===2)h+=`<div class="card"><div class="upload-area" style="height:90px;" onclick="obUploadSimple(this,'health')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#ccc" stroke-width="2" stroke-linecap="round"/></svg><span style="font-size:11px;">点击上传健康证</span></div></div>`;
+  else if(realIdx===3)h+=`<div class="card"><div class="upload-area" style="height:90px;" onclick="obUploadSimple(this,'medical')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#ccc" stroke-width="2" stroke-linecap="round"/></svg><span style="font-size:11px;">点击上传体检报告</span></div></div>`;
+  else if(realIdx===4)h+=`<div class="card"><div style="margin-bottom:10px;"><label style="font-size:13px;color:var(--text2);display:block;margin-bottom:4px;">姓名</label><input class="input-field" id="obBgName" placeholder="请输入姓名" value="${user?user.name:''}"></div><div style="margin-bottom:12px;"><label style="font-size:13px;color:var(--text2);display:block;margin-bottom:4px;">身份证号</label><input class="input-field" id="obBgId" placeholder="请输入身份证号"></div><button class="btn-primary" style="height:40px;font-size:14px;border-radius:20px;" onclick="obBgCheck()">开始验证</button><div id="obBgResult" style="margin-top:10px;"></div></div>`;
+  let nextLabel=obStep>=total-1?(obMode==='fix'?'完成补全':'完成'):'下一步';
+  h+=`<div style="display:flex;gap:10px;margin-top:20px;"><button class="btn-outline" style="flex:1;" onclick="obNext()">跳过</button><button class="btn-primary" style="flex:1;" onclick="obNext()">${nextLabel}</button></div>`;
   b.innerHTML=h;}
-function obNext(){obStep++;if(obStep>=5){toast('资料提交成功');setTimeout(()=>{stack.pop();if(loginTarget){navTo(loginTarget);loginTarget=null;}else switchTab('pg-home');},500);return;}renderOBStep();}
-function skipOnboard(){toast('可稍后在"我的"中完善');stack.pop();if(loginTarget){navTo(loginTarget);loginTarget=null;}else switchTab('pg-home');}
+function obUploadPhoto(el){el.classList.add('done');el.innerHTML='<span style="color:var(--green);font-size:12px;">AI验证通过</span>';materials.photo.uploaded=true;materials.photo.reviewStatus='pending';saveMaterials();toast('照片上传成功，AI验证通过');}
+function obUploadId(el,side){el.classList.add('done');el.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="#52C41A" stroke-width="2.5" stroke-linecap="round"/></svg><span style="font-size:11px;color:var(--green);">已上传</span>';materials.idcard.uploaded=true;if(materials.idcard.reviewStatus==='none')materials.idcard.reviewStatus='pending';saveMaterials();toast(side==='front'?'人像面识别成功':'国徽面识别成功');}
+function obUploadSimple(el,key){el.classList.add('done');el.innerHTML='<div style="color:var(--blue);font-size:11px;">AI审核中...</div>';materials[key].uploaded=true;materials[key].reviewStatus='pending';saveMaterials();toast('上传成功，AI审核中...');setTimeout(()=>{if(Math.random()<0.9){materials[key].reviewStatus='passed';saveMaterials();el.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="#52C41A" stroke-width="2.5" stroke-linecap="round"/></svg><span style="font-size:11px;color:var(--green);">AI审核通过</span>';toast('AI审核通过');}else{materials[key].reviewStatus='rejected';saveMaterials();el.classList.remove('done');el.innerHTML='<span style="font-size:11px;color:var(--red);">审核不通过，请重新上传</span>';toast('AI审核不通过，请重新上传');}},1500);}
+function obNext(){obStep++;if(obStep>=obActiveSteps.length){let msg=obMode==='fix'?'材料补全完成':'资料提交成功';toast(msg);setTimeout(()=>{stack.pop();if(obMode==='fix'&&obReturnSkill>=0){clickSkill(obReturnSkill);}else if(loginTarget){if(TAB_PAGES.includes(loginTarget)){switchTab(loginTarget);}else{navTo(loginTarget);}loginTarget=null;}else switchTab('pg-practice');},500);return;}renderOBStep();}
+function skipOnboard(){toast('可稍后在"个人中心"中完善');stack.pop();if(loginTarget){if(TAB_PAGES.includes(loginTarget)){switchTab(loginTarget);}else{navTo(loginTarget);}loginTarget=null;}else switchTab('pg-practice');}
 
 // ====== SKILLS ======
 function renderSkills(){let c=document.getElementById('skillList');let h='';SKILLS.forEach((sk,i)=>{let passed=sk.subjects.filter(s=>s.status==='passed').length;let total=sk.subjects.length;let allPass=passed===total;let tag=allPass?'<span class="tag tag-green">已通过</span>':sk.paid?'<span class="tag tag-blue">已报名</span>':'<span class="tag tag-gray">未报名</span>';
@@ -531,7 +595,7 @@ function renderSkills(){let c=document.getElementById('skillList');let h='';SKIL
     <div style="width:50px;height:50px;border-radius:14px;background:${colors[i%2]};display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z" stroke="#FFF" stroke-width="1.5"/><path d="M9 12l2 2 4-4" stroke="#FFF" stroke-width="1.5" stroke-linecap="round"/></svg></div>
     <div style="flex:1;"><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><span style="font-size:16px;font-weight:600;">${sk.name}</span>${tag}</div><div style="font-size:12px;color:var(--text3);">${passed}/${total} 科目已通过</div><div style="margin-top:6px;height:4px;background:#E5E7EB;border-radius:2px;overflow:hidden;"><div style="width:${passed/total*100}%;height:100%;background:${allPass?'var(--green)':'var(--blue)'};border-radius:2px;"></div></div></div>
     <span style="color:#ccc;font-size:18px;">›</span></div>`;});c.innerHTML=h;}
-function clickSkill(i){curSkill=i;if(!SKILLS[i].paid){payTarget='cert';paySkill=i;document.getElementById('payDesc').textContent=SKILLS[i].name+' · 认证费';document.getElementById('payAmount').textContent='¥199';document.getElementById('payNote').textContent='含科目一~四考试各1次机会，重考另收费';document.getElementById('payBtn').textContent='确认支付 ¥199';document.getElementById('payTitle').textContent='确认支付';navTo('pg-pay');}else{navTo('pg-subjects');}}
+function clickSkill(i){curSkill=i;if(!SKILLS[i].paid){if(!allMaterialsUploaded()){navTo('pg-onboard');initOnboard('fix',i);return;}payTarget='cert';paySkill=i;document.getElementById('payDesc').textContent=SKILLS[i].name+' · 认证费';document.getElementById('payAmount').textContent='¥199';document.getElementById('payNote').textContent='含科目一~四考试各1次机会，重考另收费';document.getElementById('payBtn').textContent='确认支付 ¥199';document.getElementById('payTitle').textContent='确认支付';navTo('pg-pay');}else{navTo('pg-subjects');}}
 
 // ====== PAYMENT ======
 let payTarget='',paySkill=0;
@@ -539,23 +603,31 @@ function doPay(){let btn=document.getElementById('payBtn');btn.textContent='支�
 
 // ====== SUBJECTS ======
 function renderSubjects(){let sk=SKILLS[curSkill];document.getElementById('subSkillName').textContent=sk.name;let c=document.getElementById('subjectList'),h='';
+  let matApproved=allMaterialsApproved();
+  let hasRejected=Object.values(materials).some(m=>m.reviewStatus==='rejected');
+  let hasPending=Object.values(materials).some(m=>m.reviewStatus==='pending');
+  let hasNone=Object.values(materials).some(m=>m.reviewStatus==='none'||!m.uploaded);
+  if(matApproved){h+=`<div style="padding:10px 14px;border-radius:10px;background:#E8F5E9;color:#2E7D32;font-size:13px;margin-bottom:12px;display:flex;align-items:center;gap:6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="#2E7D32" stroke-width="2.5" stroke-linecap="round"/><circle cx="12" cy="12" r="10" stroke="#2E7D32" stroke-width="1.5"/></svg>材料审核已通过，可以开始考试</div>`;}
+  else if(hasRejected){h+=`<div style="padding:10px 14px;border-radius:10px;background:#FFF2F0;color:var(--red);font-size:13px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;">部分材料审核不通过<span style="color:var(--blue);cursor:pointer;font-size:12px;" onclick="switchTab('pg-my')">去修改 ›</span></div>`;}
+  else if(hasNone){h+=`<div style="padding:10px 14px;border-radius:10px;background:#FFF2F0;color:var(--red);font-size:13px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;">部分材料未提交<span style="color:var(--blue);cursor:pointer;font-size:12px;" onclick="switchTab('pg-my')">去补全 ›</span></div>`;}
+  else if(hasPending){h+=`<div style="padding:10px 14px;border-radius:10px;background:#FFFBE6;color:#D48806;font-size:13px;margin-bottom:12px;display:flex;align-items:center;gap:6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#D48806" stroke-width="1.5"/><path d="M12 7v5l3 2" stroke="#D48806" stroke-width="1.5" stroke-linecap="round"/></svg>材料审核中，请等待审核通过后参加考试</div>`;}
   sk.subjects.forEach((s,i)=>{let stMap={waiting:{tag:'tag-gray',t:'待考试'},passed:{tag:'tag-green',t:'已通过'},failed:{tag:'tag-red',t:'未通过'}};let st=stMap[s.status]||stMap.waiting;
   h+=`<div class="card"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;"><span style="font-size:15px;font-weight:600;">${s.name}</span><span class="tag ${st.tag}">${st.t}</span></div>`;
   if(s.status==='passed')h+=`<div style="font-size:13px;color:var(--text3);">得分：<span style="color:var(--blue);font-weight:600;">${s.score}</span> 分</div>`;
   if(s.status==='failed')h+=`<div style="font-size:13px;color:var(--text3);margin-bottom:6px;">得分：<span style="color:var(--red);font-weight:600;">${s.score}</span> 分 | 剩余重考次数：${s.retry} 次</div>`;
-  if(s.status==='waiting')h+=`<button class="btn-primary" style="height:38px;font-size:14px;margin-top:8px;border-radius:19px;" onclick="startExam(${curSkill},${i})">开始考试</button>`;
-  if(s.status==='failed'&&s.retry>0)h+=`<button class="btn-primary" style="height:38px;font-size:14px;margin-top:8px;border-radius:19px;" onclick="startExam(${curSkill},${i})">重新考试</button>`;
+  if(s.status==='waiting'){if(matApproved){h+=`<button class="btn-primary" style="height:38px;font-size:14px;margin-top:8px;border-radius:19px;" onclick="startExam(${curSkill},${i})">开始考试</button>`;}else{h+=`<button style="width:100%;height:38px;font-size:14px;margin-top:8px;border-radius:19px;background:#E5E7EB;color:var(--text3);font-weight:500;cursor:not-allowed;">审核通过后可考试</button>`;}}
+  if(s.status==='failed'&&s.retry>0){if(matApproved){h+=`<button class="btn-primary" style="height:38px;font-size:14px;margin-top:8px;border-radius:19px;" onclick="startExam(${curSkill},${i})">重新考试</button>`;}else{h+=`<button style="width:100%;height:38px;font-size:14px;margin-top:8px;border-radius:19px;background:#E5E7EB;color:var(--text3);font-weight:500;cursor:not-allowed;">审核通过后可考试</button>`;}}
   if(s.status==='failed'&&s.retry<=0)h+=`<button style="width:100%;height:38px;font-size:14px;margin-top:8px;border-radius:19px;background:#FFF3E0;color:var(--orange);font-weight:600;" onclick="payRetry(${i})">支付重考费 ¥50</button>`;
   h+='</div>';});c.innerHTML=h;}
 function payRetry(si){curSubject=si;payTarget='retry';document.getElementById('payDesc').textContent=SKILLS[curSkill].subjects[si].name+' · 重考费';document.getElementById('payAmount').textContent='¥50';document.getElementById('payNote').textContent='支付后重置重考次数为3次';document.getElementById('payBtn').textContent='确认支付 ¥50';navTo('pg-pay');}
 
 // ====== PRACTICE ======
-function startPractice(mode,cat){let qs=[...QBANK];if(mode==='random')qs=shuffle(qs).slice(0,10);else if(mode==='cat')qs=qs.filter(q=>q.cat===cat);else if(mode==='wrong'){let w=JSON.parse(localStorage.getItem('h5_wrongs')||'[]');if(w.length===0){toast('暂无错题');return;}qs=w;}
+function startPractice(mode,cat){let qs=[...QBANK];if(mode==='random')qs=shuffle(qs).slice(0,3);else if(mode==='cat')qs=qs.filter(q=>q.cat===cat);else if(mode==='wrong'){let w=JSON.parse(localStorage.getItem('h5_wrongs')||'[]');if(w.length===0){toast('暂无错题');return;}qs=w;}
   quiz={qs,ans:new Array(qs.length).fill(null),cur:0,ok:0,err:0,mode:'practice',timer:null,timeLeft:0,answered:new Array(qs.length).fill(null)};
   document.getElementById('quizTitle').textContent='题库练习';document.getElementById('quizTimerOrCard').textContent='答题卡';document.getElementById('quizTimerOrCard').style.color='var(--blue)';
   document.getElementById('quizFooter').style.display='flex';
   navTo('pg-quiz');renderQuiz();}
-function startMock(){let qs=shuffle([...QBANK]).slice(0,10);quiz={qs,ans:new Array(qs.length).fill(null),cur:0,ok:0,err:0,mode:'mock',timer:null,timeLeft:1800,answered:new Array(qs.length).fill(null)};
+function startMock(){let qs=shuffle([...QBANK]).slice(0,3);quiz={qs,ans:new Array(qs.length).fill(null),cur:0,ok:0,err:0,mode:'mock',timer:null,timeLeft:1800,answered:new Array(qs.length).fill(null)};
   document.getElementById('quizTitle').textContent='模拟考试';document.getElementById('quizTimerOrCard').innerHTML='<span style="color:var(--red);font-weight:700;">30:00</span>';
   document.getElementById('quizFooter').style.display='none';
   navTo('pg-quiz');renderQuiz();startQuizTimer();}
@@ -571,6 +643,8 @@ function renderQuiz(){let q=quiz.qs[quiz.cur],total=quiz.qs.length;let typeMap={
     else if(isSel){border='var(--blue)';bg='#EBF5FF';tc='var(--blue)';}
     let check=q.type==='multi'?`<div style="width:20px;height:20px;border:2px solid ${isSel?'var(--blue)':'#D1D5DB'};border-radius:4px;display:flex;align-items:center;justify-content:center;margin-right:10px;background:${isSel?'var(--blue)':'#FFF'};flex-shrink:0;">${isSel?'<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 6l2 2 4-4" stroke="#FFF" stroke-width="2" stroke-linecap="round"/></svg>':''}</div>`:`<div style="width:20px;height:20px;border:2px solid ${isSel?'var(--blue)':'#D1D5DB'};border-radius:50%;display:flex;align-items:center;justify-content:center;margin-right:10px;flex-shrink:0;">${isSel?'<div style="width:10px;height:10px;border-radius:50%;background:var(--blue);"></div>':''}</div>`;
     h+=`<div onclick="${isAnswered&&quiz.mode==='practice'?'':'selectQuizOpt('+j+')'}" style="display:flex;align-items:center;padding:12px 14px;margin-bottom:8px;border-radius:10px;border:1.5px solid ${border};background:${bg};cursor:pointer;">${check}<span style="font-size:14px;color:${tc};">${o}</span></div>`;});
+  // Multi-select confirm button (practice mode, not yet answered)
+  if(q.type==='multi'&&quiz.mode==='practice'&&!isAnswered){let sel=quiz.ans[quiz.cur];if(Array.isArray(sel)&&sel.length>0){h+=`<button style="width:100%;height:40px;border-radius:20px;background:var(--grad);color:#FFF;font-size:14px;font-weight:600;margin-top:4px;" onclick="confirmMulti()">确认选择</button>`;}}
   document.getElementById('quizOpts').innerHTML=h;
   // Feedback
   let fb='';
@@ -584,8 +658,8 @@ function selectQuizOpt(j){if(quiz.mode==='practice'&&quiz.answered[quiz.cur]!==n
     quiz.ans[quiz.cur]=j;let correct=q.type==='multi'?JSON.stringify([...q.ans].sort())===JSON.stringify([...(quiz.ans[quiz.cur]||[])].sort()):q.ans===j;
     quiz.answered[quiz.cur]=correct;if(correct){quiz.ok++;saveWrongs();}else{quiz.err++;let wrongs=JSON.parse(localStorage.getItem('h5_wrongs')||'[]');wrongs.push(q);localStorage.setItem('h5_wrongs',JSON.stringify(wrongs));}renderQuiz();
     if(correct)setTimeout(()=>nextQuizQ(),800);
-  }else{// mock or exam mode
-    quiz.ans[quiz.cur]=j;renderQuiz();}}
+  }else{// mock mode
+    if(q.type==='multi'){let cur=quiz.ans[quiz.cur]||[];if(Array.isArray(cur)){if(cur.includes(j))cur=cur.filter(x=>x!==j);else cur.push(j);}else{cur=[j];}quiz.ans[quiz.cur]=cur;}else{quiz.ans[quiz.cur]=j;}renderQuiz();}}
 function confirmMulti(){let q=quiz.qs[quiz.cur];let sel=quiz.ans[quiz.cur]||[];let correct=JSON.stringify([...q.ans].sort())===JSON.stringify([...sel].sort());quiz.answered[quiz.cur]=correct;if(correct)quiz.ok++;else{quiz.err++;let wrongs=JSON.parse(localStorage.getItem('h5_wrongs')||'[]');wrongs.push(q);localStorage.setItem('h5_wrongs',JSON.stringify(wrongs));}renderQuiz();if(correct)setTimeout(()=>nextQuizQ(),800);}
 function nextQuizQ(){if(quiz.cur<quiz.qs.length-1){quiz.cur++;renderQuiz();}else finishQuiz();}
 function quitQuiz(){if(quiz.timer)clearInterval(quiz.timer);goBack();}
@@ -604,19 +678,24 @@ function startQuizTimer(){if(quiz.timer)clearInterval(quiz.timer);quiz.timer=set
 
 // ====== EXAM ======
 function startExam(si,subi){curSkill=si;curSubject=subi;let sub=SKILLS[si].subjects[subi];document.getElementById('examTitle').textContent=sub.name;
-  let qs=shuffle([...QBANK]).slice(0,10);quiz={qs,ans:new Array(qs.length).fill(null),cur:0,ok:0,err:0,mode:'exam',timer:null,timeLeft:1800,answered:new Array(qs.length).fill(null)};
+  let qs=shuffle([...QBANK]).slice(0,3);quiz={qs,ans:new Array(qs.length).fill(null),cur:0,ok:0,err:0,mode:'exam',timer:null,timeLeft:1800,answered:new Array(qs.length).fill(null)};
   navTo('pg-exam');renderExamQ();startExamTimer();buildEGrid();}
 function renderExamQ(){let q=quiz.qs[quiz.cur],total=quiz.qs.length;document.getElementById('examQNum').textContent=`第 ${quiz.cur+1}/${total} 题`;document.getElementById('examQText').textContent=q.q;
-  let h='';q.opts.forEach((o,j)=>{let sel=quiz.ans[quiz.cur]===j;h+=`<div onclick="selectExamOpt(${j})" style="display:flex;align-items:center;padding:13px 14px;margin-bottom:8px;border-radius:10px;border:2px solid ${sel?'var(--blue)':'#E5E7EB'};background:${sel?'#EBF5FF':'#FFF'};cursor:pointer;"><div style="width:24px;height:24px;border-radius:50%;border:2px solid ${sel?'var(--blue)':'#D1D5DB'};display:flex;align-items:center;justify-content:center;margin-right:10px;background:${sel?'var(--blue)':'#FFF'};color:${sel?'#FFF':'#999'};font-size:12px;font-weight:600;">${['A','B','C','D'][j]}</div><span style="font-size:14px;color:${sel?'var(--blue)':'var(--text)'};">${o.replace(/^[A-D]\.\s*/,'')}</span></div>`;});
+  let typeMap={single:'单选',multi:'多选',image:'图片题',judge:'判断'};
+  let h=`<div style="margin-bottom:8px;"><span class="tag tag-blue">${typeMap[q.type]||'单选'}</span></div>`;
+  q.opts.forEach((o,j)=>{let ans=quiz.ans[quiz.cur];let sel=q.type==='multi'?Array.isArray(ans)&&ans.includes(j):ans===j;
+  let isMulti=q.type==='multi';
+  let indicator=isMulti?`<div style="width:22px;height:22px;border:2px solid ${sel?'var(--blue)':'#D1D5DB'};border-radius:4px;display:flex;align-items:center;justify-content:center;margin-right:10px;background:${sel?'var(--blue)':'#FFF'};flex-shrink:0;">${sel?'<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 6l2 2 4-4" stroke="#FFF" stroke-width="2" stroke-linecap="round"/></svg>':''}</div>`:`<div style="width:24px;height:24px;border-radius:50%;border:2px solid ${sel?'var(--blue)':'#D1D5DB'};display:flex;align-items:center;justify-content:center;margin-right:10px;background:${sel?'var(--blue)':'#FFF'};color:${sel?'#FFF':'#999'};font-size:12px;font-weight:600;">${['A','B','C','D'][j]}</div>`;
+  h+=`<div onclick="selectExamOpt(${j})" style="display:flex;align-items:center;padding:13px 14px;margin-bottom:8px;border-radius:10px;border:2px solid ${sel?'var(--blue)':'#E5E7EB'};background:${sel?'#EBF5FF':'#FFF'};cursor:pointer;">${indicator}<span style="font-size:14px;color:${sel?'var(--blue)':'var(--text)'};">${o.replace(/^[A-D]\.\s*/,'')}</span></div>`;});
   document.getElementById('examOpts').innerHTML=h;
   let btn=document.getElementById('examNextBtn');if(quiz.cur===total-1){btn.textContent='交卷';btn.onclick=confirmSubmitExam;}else{btn.textContent='下一题';btn.onclick=examNext;}}
-function selectExamOpt(j){quiz.ans[quiz.cur]=j;renderExamQ();updateEGrid();}
+function selectExamOpt(j){let q=quiz.qs[quiz.cur];if(q.type==='multi'){let cur=quiz.ans[quiz.cur]||[];if(Array.isArray(cur)){if(cur.includes(j))cur=cur.filter(x=>x!==j);else cur.push(j);}else{cur=[j];}quiz.ans[quiz.cur]=cur;}else{quiz.ans[quiz.cur]=j;}renderExamQ();updateEGrid();}
 function examPrev(){if(quiz.cur>0){quiz.cur--;renderExamQ();}}
 function examNext(){if(quiz.cur<quiz.qs.length-1){quiz.cur++;renderExamQ();}}
 function startExamTimer(){if(quiz.timer)clearInterval(quiz.timer);quiz.timer=setInterval(()=>{quiz.timeLeft--;let m=Math.floor(quiz.timeLeft/60),s=quiz.timeLeft%60;document.getElementById('examTimer').textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;if(quiz.timeLeft<=0){clearInterval(quiz.timer);showModal('时间到','考试时间已结束，已自动交卷','查看成绩',()=>{closeModal();submitExam();});}},1000);}
 function confirmQuitExam(){showModal('确认退出','退出考试将不保存答题进度，确定退出吗？','确定退出',()=>{clearInterval(quiz.timer);closeModal();goBack();});}
-function confirmSubmitExam(){let p=document.getElementById('ePanel');if(p.classList.contains('show'))toggleEPanel();let un=quiz.ans.filter(a=>a===null).length;showModal('确认交卷',un>0?`还有 ${un} 题未作答，确认交卷吗？`:'确认交卷吗？','确认交卷',()=>{closeModal();submitExam();});}
-function submitExam(){clearInterval(quiz.timer);let correct=0;quiz.qs.forEach((q,i)=>{if(quiz.ans[i]===q.ans)correct++;});let score=Math.round(correct/quiz.qs.length*100);let passed=score>=60;
+function confirmSubmitExam(){let p=document.getElementById('ePanel');if(p.classList.contains('show'))toggleEPanel();let un=quiz.ans.filter(a=>a===null||(Array.isArray(a)&&a.length===0)).length;showModal('确认交卷',un>0?`还有 ${un} 题未作答，确认交卷吗？`:'确认交卷吗？','确认交卷',()=>{closeModal();submitExam();});}
+function submitExam(){clearInterval(quiz.timer);let correct=0;quiz.qs.forEach((q,i)=>{if(q.type==='multi'){if(Array.isArray(quiz.ans[i])&&JSON.stringify([...quiz.ans[i]].sort())===JSON.stringify([...q.ans].sort()))correct++;}else{if(quiz.ans[i]===q.ans)correct++;}});let score=Math.round(correct/quiz.qs.length*100);let passed=score>=60;
   let sub=SKILLS[curSkill].subjects[curSubject];sub.score=score;if(passed)sub.status='passed';else{sub.retry--;sub.status='failed';}saveSkills();
   let rec={skill:SKILLS[curSkill].name,subject:sub.name,score,passed,time:new Date().toLocaleString('zh-CN'),qs:quiz.qs,ans:[...quiz.ans]};records.unshift(rec);localStorage.setItem('h5_records',JSON.stringify(records));
   showResult(score,passed,sub.retry);
@@ -627,14 +706,23 @@ function showResult(score,passed,retry){stack.push('pg-result');showPage('pg-res
   if(passed){b.innerHTML=`<div style="width:80px;height:80px;border-radius:50%;background:#E8F5E9;display:flex;align-items:center;justify-content:center;margin-bottom:14px;"><svg width="44" height="44" viewBox="0 0 24 24" fill="none"><path d="M8 21h8l-4-4-4 4z" fill="#52C41A"/><path d="M6 3h12v14l-6 4-6-4V3z" stroke="#52C41A" stroke-width="1.5"/></svg></div><div style="font-size:15px;color:var(--text2);margin-bottom:8px;">理论考试</div><div style="font-size:48px;font-weight:700;color:var(--green);margin-bottom:4px;">${score}</div><div style="font-size:14px;color:var(--text3);margin-bottom:16px;">考试分数</div><div style="display:flex;gap:24px;margin-bottom:8px;"><div style="text-align:center;"><div style="font-size:20px;font-weight:700;">${quiz.qs.length}</div><div style="font-size:12px;color:var(--text3);">总题数</div></div><div style="text-align:center;"><div style="font-size:20px;font-weight:700;color:var(--red);">${quiz.qs.length-Math.round(score/100*quiz.qs.length)}</div><div style="font-size:12px;color:var(--text3);">错误</div></div></div><div style="color:var(--green);font-size:14px;margin-bottom:24px;">🎉 非常棒，恭喜你完成了本次考试！</div><button class="btn-primary" style="width:200px;margin-bottom:10px;" onclick="viewDetail(0)">查看答题详情</button><button class="btn-outline" style="width:200px;" onclick="navTo('pg-subjects')">返回科目列表</button>`;}
   else{b.innerHTML=`<div style="width:80px;height:80px;border-radius:50%;background:#FFF3E0;display:flex;align-items:center;justify-content:center;margin-bottom:14px;"><svg width="44" height="44" viewBox="0 0 24 24" fill="none"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="#FF8C00" stroke-width="1.5" fill="none"/><path d="M12 9v4M12 17h.01" stroke="#FF8C00" stroke-width="2" stroke-linecap="round"/></svg></div><div style="font-size:15px;color:var(--text2);margin-bottom:8px;">理论考试</div><div style="font-size:48px;font-weight:700;color:var(--orange);margin-bottom:4px;">${score}</div><div style="font-size:14px;color:var(--text3);margin-bottom:16px;">考试分数</div><div style="display:flex;gap:24px;margin-bottom:8px;"><div style="text-align:center;"><div style="font-size:20px;font-weight:700;">${quiz.qs.length}</div><div style="font-size:12px;color:var(--text3);">总题数</div></div><div style="text-align:center;"><div style="font-size:20px;font-weight:700;color:var(--red);">${quiz.qs.length-Math.round(score/100*quiz.qs.length)}</div><div style="font-size:12px;color:var(--text3);">错误</div></div></div><div style="color:var(--red);font-size:13px;margin-bottom:24px;">考试不通过，建议回顾知识后再来考试</div>${retry>0?`<button style="width:200px;height:46px;border-radius:23px;background:linear-gradient(135deg,#FF8C00,#F59E0B);color:#FFF;font-size:16px;font-weight:600;margin-bottom:10px;box-shadow:0 4px 12px rgba(255,140,0,.3);" onclick="navTo('pg-subjects')">重新考试</button>`:`<button style="width:200px;height:46px;border-radius:23px;background:#FFF3E0;color:var(--orange);font-size:15px;font-weight:600;margin-bottom:10px;" onclick="payRetry(${curSubject})">支付重考费 ¥50</button>`}<button class="btn-outline" style="width:200px;" onclick="navTo('pg-subjects')">返回科目列表</button>`;}}
 function toggleEPanel(){let p=document.getElementById('ePanel'),m=document.getElementById('eMask');p.classList.toggle('show');m.style.display=p.classList.contains('show')?'block':'none';}
-function buildEGrid(){let g=document.getElementById('eGrid'),h='';let count=0;for(let i=0;i<quiz.qs.length;i++){let cls='aq-dot';if(quiz.ans[i]!==null){cls+=' answered';count++;}if(i===quiz.cur)cls+=' current';h+=`<div class="${cls}" onclick="quiz.cur=${i};renderExamQ();toggleEPanel();">${i+1}</div>`;}g.innerHTML=h;document.getElementById('ePanelCount').textContent=`已答 ${count}/${quiz.qs.length}`;}
+function buildEGrid(){let g=document.getElementById('eGrid'),h='';let count=0;for(let i=0;i<quiz.qs.length;i++){let cls='aq-dot';let a=quiz.ans[i];let hasAns=a!==null&&(!Array.isArray(a)||a.length>0);if(hasAns){cls+=' answered';count++;}if(i===quiz.cur)cls+=' current';h+=`<div class="${cls}" onclick="quiz.cur=${i};renderExamQ();toggleEPanel();">${i+1}</div>`;}g.innerHTML=h;document.getElementById('ePanelCount').textContent=`已答 ${count}/${quiz.qs.length}`;}
 function updateEGrid(){buildEGrid();}
 
 // ====== DETAIL ======
 function viewDetail(idx){let r=records[idx];if(!r)return;let c=document.getElementById('detailBody'),h='';
-  r.qs.forEach((q,i)=>{let ua=r.ans[i],ca=q.ans,ok=ua===ca;
-  h+=`<div class="card"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;"><span style="font-weight:600;">第 ${i+1} 题</span><span class="tag ${ok?'tag-green':'tag-red'}">${ok?'正确':'错误'}</span></div><div style="font-size:14px;line-height:1.5;margin-bottom:10px;">${q.q}</div>`;
-  q.opts.forEach((o,j)=>{let bc='#E5E7EB',bg='#FFF',tc='var(--text)',mk='';if(j===ca){bc='var(--green)';bg='#F0FFF0';tc='var(--green)';mk='✓ 正确答案';}if(j===ua&&!ok){bc='var(--red)';bg='#FFF5F5';tc='var(--red)';mk='✗ 你的选择';}if(j===ua&&ok)mk='✓ 你的选择';h+=`<div style="display:flex;align-items:center;padding:8px 10px;margin-bottom:4px;border-radius:8px;border:1.5px solid ${bc};background:${bg};"><span style="flex:1;font-size:13px;color:${tc};">${o}</span><span style="font-size:11px;color:${tc};white-space:nowrap;">${mk}</span></div>`;});h+='</div>';});
+  r.qs.forEach((q,i)=>{let ua=r.ans[i],ca=q.ans;
+  let ok=q.type==='multi'?Array.isArray(ua)&&JSON.stringify([...ua].sort())===JSON.stringify([...ca].sort()):ua===ca;
+  let isMulti=q.type==='multi';
+  let typeMap={single:'单选',multi:'多选',image:'图片题',judge:'判断'};
+  h+=`<div class="card"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;"><span style="font-weight:600;">第 ${i+1} 题 <span class="tag tag-blue" style="font-size:11px;margin-left:4px;">${typeMap[q.type]||'单选'}</span></span><span class="tag ${ok?'tag-green':'tag-red'}">${ok?'正确':'错误'}</span></div><div style="font-size:14px;line-height:1.5;margin-bottom:10px;">${q.q}</div>`;
+  q.opts.forEach((o,j)=>{let bc='#E5E7EB',bg='#FFF',tc='var(--text)',mk='';
+    let isCA=isMulti?ca.includes(j):j===ca;
+    let isUA=isMulti?(Array.isArray(ua)&&ua.includes(j)):j===ua;
+    if(isCA){bc='var(--green)';bg='#F0FFF0';tc='var(--green)';mk='✓ 正确答案';}
+    if(isUA&&!isCA){bc='var(--red)';bg='#FFF5F5';tc='var(--red)';mk='✗ 你的选择';}
+    if(isUA&&isCA)mk='✓ 你的选择';
+    h+=`<div style="display:flex;align-items:center;padding:8px 10px;margin-bottom:4px;border-radius:8px;border:1.5px solid ${bc};background:${bg};"><span style="flex:1;font-size:13px;color:${tc};">${o}</span><span style="font-size:11px;color:${tc};white-space:nowrap;">${mk}</span></div>`;});h+='</div>';});
   c.innerHTML=h;document.getElementById('detailScore').textContent=r.score;navTo('pg-detail');}
 
 // ====== RECORDS ======
@@ -642,19 +730,19 @@ function renderRecords(){let c=document.getElementById('recordsBody');if(records
   let h='';records.forEach((r,i)=>{h+=`<div class="card" style="cursor:pointer;" onclick="viewDetail(${i})"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;"><span style="font-weight:600;">${r.skill}</span><span class="tag ${r.passed?'tag-green':'tag-red'}">${r.passed?'通过':'未通过'}</span></div><div style="font-size:13px;color:var(--text2);margin-bottom:4px;">${r.subject}</div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text3);"><span>${r.time}</span><span>得分：<span style="color:var(--blue);font-weight:600;">${r.score}</span></span></div></div>`;});c.innerHTML=h;}
 
 // ====== LICENSE ======
-function renderLicense(){let c=document.getElementById('licenseBody');let allPass=SKILLS.some(sk=>sk.subjects.every(s=>s.status==='passed'));let hasAvatar=true;let matOk=true;let hasLicense=localStorage.getItem('h5_license')==='1';
+function renderLicense(){let c=document.getElementById('licenseBody');let allPass=SKILLS.some(sk=>sk.subjects.every(s=>s.status==='passed'));let hasAvatar=materials.photo.uploaded;let matOk=allMaterialsApproved();let hasLicense=localStorage.getItem('h5_license')==='1';
   let h='<div class="sec-title">前置条件检查</div><div class="card">';
   h+=`<div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);"><span style="font-size:16px;">${allPass?'✅':'❌'}</span><span style="flex:1;">科目一~四全部通过</span>${!allPass?'<span style="font-size:12px;color:var(--blue);cursor:pointer;" onclick="requireLogin(\'pg-skills\')">去考试 ›</span>':''}</div>`;
-  h+=`<div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);"><span style="font-size:16px;">${matOk?'✅':'❌'}</span><span style="flex:1;">认证材料审核通过</span></div>`;
+  h+=`<div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);"><span style="font-size:16px;">${matOk?'✅':'❌'}</span><span style="flex:1;">认证材料审核通过</span>${!matOk?'<span style="font-size:12px;color:var(--blue);cursor:pointer;" onclick="switchTab(\'pg-my\')">去完善 ›</span>':''}</div>`;
   h+=`<div style="display:flex;align-items:center;gap:8px;padding:8px 0;"><span style="font-size:16px;">${hasAvatar?'✅':'❌'}</span><span style="flex:1;">头像已上传</span>${!hasAvatar?'<span style="font-size:12px;color:var(--blue);cursor:pointer;" onclick="requireLogin(\'pg-account\')">去上传 ›</span>':''}</div>`;
   h+='</div>';
   if(allPass&&matOk&&hasAvatar){
-    if(!hasLicense){h+=`<div class="card" style="text-align:center;margin-top:12px;"><div style="font-size:15px;color:var(--text2);margin-bottom:6px;">执照工本费</div><div style="font-size:32px;font-weight:700;color:var(--blue);margin-bottom:12px;">¥50</div><button class="btn-primary" onclick="payLicense()">支付工本费，申领执照</button></div>`;}
+    if(!hasLicense){h+=`<div class="card" style="text-align:center;margin-top:12px;"><div style="font-size:15px;color:var(--text2);margin-bottom:6px;">执照工本费</div><div style="font-size:32px;font-weight:700;color:var(--blue);margin-bottom:12px;">¥30</div><button class="btn-primary" onclick="payLicense()">支付工本费，申领执照</button></div>`;}
     else{h+=`<div style="margin-top:12px;background:var(--grad);border-radius:16px;padding:24px 20px;color:#FFF;position:relative;overflow:hidden;"><div style="position:absolute;top:8px;right:8px;width:60px;height:60px;border:2px solid rgba(255,255,255,.15);border-radius:50%;"></div><div style="font-size:12px;opacity:.7;margin-bottom:8px;">电子执照</div><div style="font-size:20px;font-weight:700;margin-bottom:12px;">家庭保洁 技能执照</div><div style="display:flex;flex-wrap:wrap;gap:8px 20px;font-size:13px;opacity:.9;"><div>编号：FJ-XM-00001</div><div>姓名：${user?user.name:'--'}</div><div>发证：2026-03-19</div><div>有效期：2027-03-19</div></div></div>`;
     h+=`<div class="card" style="margin-top:12px;display:flex;align-items:center;justify-content:space-between;"><div><div style="font-size:14px;">实体执照</div><div style="font-size:12px;color:var(--text3);margin-top:2px;">制作中，预计5个工作日</div></div><span class="tag tag-yellow">制作中</span></div>`;
     h+=`<button class="btn-outline" style="margin-top:12px;" onclick="remakeLicense()">申请重做实体执照</button>`;}}
   c.innerHTML=h;}
-function payLicense(){payTarget='license';document.getElementById('payDesc').textContent='执照工本费';document.getElementById('payAmount').textContent='¥50';document.getElementById('payNote').textContent='含电子执照开通+实体执照制作';document.getElementById('payBtn').textContent='确认支付 ¥50';document.getElementById('payTitle').textContent='确认支付';navTo('pg-pay');}
+function payLicense(){payTarget='license';document.getElementById('payDesc').textContent='执照工本费';document.getElementById('payAmount').textContent='¥30';document.getElementById('payNote').textContent='含电子执照开通+实体执照制作';document.getElementById('payBtn').textContent='确认支付 ¥50';document.getElementById('payTitle').textContent='确认支付';navTo('pg-pay');}
 function remakeLicense(){payTarget='remake';document.getElementById('payDesc').textContent='实体执照重做费';document.getElementById('payAmount').textContent='¥30';document.getElementById('payNote').textContent='重新制作实体执照';document.getElementById('payBtn').textContent='确认支付 ¥30';document.getElementById('payTitle').textContent='确认支付';navTo('pg-pay');}
 
 // ====== UTILS ======
