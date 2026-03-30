@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>执照认证系统 - H5考生端页面功能说明书</title>
+<style>
+@page{size:A4;margin:20mm 15mm 20mm 15mm;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif;color:#333;font-size:13px;line-height:1.7;background:#fff;padding:40px;}
+@media print{body{padding:0;}  .no-print{display:none!important;} .page-break{page-break-before:always;}}
+
+.cover{text-align:center;padding:120px 40px 60px;page-break-after:always;}
+.cover h1{font-size:36px;font-weight:700;color:#1a1a1a;margin-bottom:12px;}
+.cover h2{font-size:20px;font-weight:400;color:#666;margin-bottom:60px;}
+.cover .meta{font-size:14px;color:#999;line-height:2.2;}
+.cover .line{width:80px;height:4px;background:linear-gradient(135deg,#4A9CF6,#2563EB);margin:40px auto;border-radius:2px;}
+
+.toc{page-break-after:always;}
+.toc h2{font-size:22px;font-weight:700;margin-bottom:20px;padding-bottom:10px;border-bottom:2px solid #3B82F6;}
+.toc-list{list-style:none;counter-reset:toc;}
+.toc-list li{padding:8px 0;border-bottom:1px dashed #e5e5e5;display:flex;justify-content:space-between;font-size:14px;}
+.toc-list .group{font-weight:600;color:#3B82F6;padding-top:16px;border-bottom:none;font-size:15px;}
+
+.section{page-break-inside:avoid;margin-bottom:36px;}
+.section-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid #3B82F6;}
+.section-num{background:linear-gradient(135deg,#4A9CF6,#2563EB);color:#fff;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;flex-shrink:0;}
+.section-title{font-size:20px;font-weight:700;color:#1a1a1a;}
+.section-sub{font-size:13px;color:#999;margin-left:auto;}
+
+.screenshot{width:100%;border:2px solid #e5e7eb;border-radius:12px;background:#f9fafb;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px;margin:16px 0;overflow:hidden;}
+.screenshot img{max-width:100%;height:auto;border-radius:8px;display:block;}
+.screenshot .cap{font-size:11px;color:#999;margin-top:6px;text-align:center;}
+
+.features{background:#f0f7ff;border-radius:10px;padding:16px 20px;margin:12px 0;}
+.features h4{font-size:14px;font-weight:600;color:#1d4ed8;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.features h4::before{content:'';display:block;width:4px;height:16px;background:#3B82F6;border-radius:2px;}
+.features ul{list-style:none;padding-left:0;}
+.features li{position:relative;padding:4px 0 4px 20px;font-size:13px;line-height:1.6;}
+.features li::before{content:'';position:absolute;left:4px;top:11px;width:8px;height:8px;border-radius:50%;background:#93c5fd;}
+
+.interaction{background:#fffbeb;border-radius:10px;padding:14px 20px;margin:12px 0;border-left:4px solid #f59e0b;}
+.interaction h4{font-size:14px;font-weight:600;color:#92400e;margin-bottom:6px;}
+.interaction p,.interaction li{font-size:13px;color:#78350f;}
+.interaction ul{list-style:disc;padding-left:20px;}
+
+.note{background:#f0fdf4;border-radius:10px;padding:12px 20px;margin:12px 0;border-left:4px solid #22c55e;font-size:13px;color:#166534;}
+
+.tag{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:500;margin:0 2px;}
+.tag-green{background:#e8f5e9;color:#4caf50;}.tag-red{background:#fff2f0;color:#ff4d4f;}.tag-blue{background:#ebf5ff;color:#3b82f6;}.tag-gray{background:#f5f5f5;color:#999;}.tag-yellow{background:#fffbe6;color:#d48806;}.tag-orange{background:#fff3e0;color:#ff8c00;}
+
+.print-bar{position:fixed;top:0;left:0;right:0;background:#1a1a1a;color:#fff;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;z-index:9999;box-shadow:0 2px 10px rgba(0,0,0,.2);}
+.print-bar span{font-size:14px;}
+.print-btn{background:linear-gradient(135deg,#4A9CF6,#2563EB);color:#fff;border:none;padding:8px 24px;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;}
+.print-btn:hover{opacity:.9;}
+body{padding-top:60px;}
+html{scroll-behavior:smooth;}
+.toc-list a{color:inherit;text-decoration:none;}
+.toc-list a:hover{color:#3B82F6;text-decoration:underline;}
+.toc-list .group a{color:#3B82F6;}
+.toc-list .group a:hover{text-decoration:underline;}
+@media print{body{padding-top:0;}.print-bar{display:none;}}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media print{.two-col{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+
+<div class="print-bar no-print">
+  <span>执照认证系统 - H5页面功能说明书</span>
+  <button class="print-btn" onclick="window.print()">打印 / 导出 PDF</button>
+</div>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="line"></div>
+  <h1>执照认证系统</h1>
+  <h2>H5 考生端页面功能说明书</h2>
+  <div class="line"></div>
+  <div class="meta">
+    <p>版本：v1.0</p>
+    <p>日期：2026 年 3 月</p>
+    <p>原型文件：prototype-h5.html</p>
+  </div>
+</div>
+
+<!-- TOC -->
+<div class="toc">
+  <h2>目录</h2>
+  <ul class="toc-list">
+    <li class="group"><a href="#section-1">一、练习题库模块</a></li>
+    <li><a href="#section-1">1.1 练习首页</a></li>
+    <li><a href="#section-2">1.2 题库练习页</a></li>
+    <li><a href="#section-3">1.3 练习答题页（即时反馈 + 答题卡）</a></li>
+    <li><a href="#section-4">1.4 模拟考试答题页</a></li>
+    <li><a href="#section-5">1.5 练习/模拟考试结果页</a></li>
+    <li class="group"><a href="#section-6">二、登录与信息完善模块</a></li>
+    <li><a href="#section-6">2.1 登录页</a></li>
+    <li><a href="#section-7">2.2 信息完善引导页（5步）</a></li>
+    <li class="group"><a href="#section-8">三、技能认证模块</a></li>
+    <li><a href="#section-8">3.1 技能选择页</a></li>
+    <li><a href="#section-9">3.2 支付认证费页</a></li>
+    <li><a href="#section-10">3.3 科目列表页</a></li>
+    <li class="group"><a href="#section-11">四、考试模块</a></li>
+    <li><a href="#section-11">4.1 正式考试答题页</a></li>
+    <li><a href="#section-12">4.2 考试结果页</a></li>
+    <li><a href="#section-13">4.3 答题详情页</a></li>
+    <li class="group"><a href="#section-14">五、执照申领模块</a></li>
+    <li><a href="#section-14">5.1 执照申领页</a></li>
+    <li class="group"><a href="#section-15">六、个人中心模块</a></li>
+    <li><a href="#section-15">6.1 个人中心首页</a></li>
+    <li><a href="#section-16">6.2 账号信息页</a></li>
+    <li><a href="#section-17">6.3 证件信息页</a></li>
+    <li><a href="#section-18">6.4 认证材料页</a></li>
+    <li><a href="#section-19">6.5 考试记录页</a></li>
+  </ul>
+</div>
+
+<!-- ===== 1.1 练习首页 ===== -->
+<div class="section" id="section-1">
+  <div class="section-header"><div class="section-num">1</div><div class="section-title">练习首页</div><div class="section-sub">底部Tab「练习题库」| 免登录</div></div>
+  <div class="screenshot"><img src="screenshots/01-练习首页.png" alt="练习首页"><div class="cap">练习首页 — 默认打开页面</div></div>
+  <div class="features"><h4>页面功能</h4><ul>
+    <li><strong>做题进度卡片</strong>：蓝色渐变背景，左侧环形进度图显示做题百分比，右侧展示做题数、累计刷题、正确率统计数据</li>
+    <li><strong>开始做题按钮</strong>：点击进入题库练习页，从全部题目开始顺序做题</li>
+    <li><strong>快捷入口（三宫格）</strong>：随机练习（随机抽题）、错题回顾（仅展示做错的题）、模拟考试（30 分钟限时模拟）</li>
+    <li><strong>科目考试信息卡片</strong>：展示题目总数、模拟考试及格线、正式考试及格线及重考次数限制</li>
+    <li><strong>知识点场景学习</strong>：按场景分类的学习卡片（如厨房清洁、宠物毛发处理），点击进入对应分类的题目练习</li>
+  </ul></div>
+  <div class="note">底部 Tab 导航栏固定显示 4 个入口：练习题库 | 技能认证 | 我的执照 | 个人中心。其中练习题库免登录，其余三个需登录后访问。</div>
+</div>
+
+<!-- ===== 1.2 题库练习页 ===== -->
+<div class="section page-break" id="section-2">
+  <div class="section-header"><div class="section-num">2</div><div class="section-title">题库练习页</div><div class="section-sub">练习首页 → 开始做题</div></div>
+  <div class="screenshot"><img src="screenshots/02-题库练习页.png" alt="题库练习页"><div class="cap">题库练习页 — 按知识点分类选择练习</div></div>
+  <div class="features"><h4>页面功能</h4><ul>
+    <li><strong>统计概览栏</strong>：三个数字卡片横排——总题数（蓝色）、已答题（绿色）、未做题（灰色）</li>
+    <li><strong>全部练习按钮</strong>：蓝色主按钮，点击从第一题开始顺序答题</li>
+    <li><strong>按知识点分类练习</strong>：列表展示各知识点分类（职业认知与规范、文化清洁、业务场景），每项显示子分类、正确/错误统计和题目数量，点击进入该分类题目</li>
+  </ul></div>
+</div>
+
+<!-- ===== 1.3 练习答题页 ===== -->
+<div class="section page-break" id="section-3">
+  <div class="section-header"><div class="section-num">3</div><div class="section-title">练习答题页</div><div class="section-sub">即时反馈 | 无计时</div></div>
+  <div class="two-col">
+    <div class="screenshot"><img src="screenshots/03-练习答题页-未作答.png" alt="未作答"><div class="cap">答题页 — 未作答状态</div></div>
+    <div class="screenshot"><img src="screenshots/04-练习答题页-回答后.png" alt="回答后"><div class="cap">答题页 — 选择答案后反馈</div></div>
+  </div>
+  <div class="screenshot"><img src="screenshots/05-答题卡面板.png" alt="答题卡面板"><div class="cap">答题卡面板 — 底部滑入，颜色区分答题状态</div></div>
+  <div class="features"><h4>页面功能</h4><ul>
+    <li><strong>题目区域</strong>：显示题目类型标签（<span class="tag tag-blue">单选</span><span class="tag tag-green">多选</span><span class="tag tag-orange">图片题</span><span class="tag tag-gray">判断</span>）、题目文本、选项列表</li>
+    <li><strong>即时反馈</strong>：选择答案后立即判定——回答正确选项变绿 + 绿色提示，1秒后自动下一题；回答错误选项变红 + 正确答案变绿 + 红色反馈区域显示正确答案、你的答案和知识点解析</li>
+    <li><strong>底部状态栏</strong>：固定显示正确数（绿色）、错误数（红色）、当前题号/总题数</li>
+    <li><strong>答题卡面板</strong>：底部滑入的网格面板，题号用不同颜色区分——绿色=正确、红色=错误、灰色=未答、蓝色边框=当前题，点击可跳转</li>
+  </ul></div>
+  <div class="interaction"><h4>交互说明</h4><ul>
+    <li>单选题/判断题：点击选项即提交答案</li>
+    <li>多选题：可多次点击勾选，点击「确认」按钮提交</li>
+    <li>完成所有题目后自动跳转到结果页</li>
+  </ul></div>
+</div>
+
+<!-- ===== 1.4 模拟考试 ===== -->
+<div class="section page-break" id="section-4">
+  <div class="section-header"><div class="section-num">4</div><div class="section-title">模拟考试答题页</div><div class="section-sub">30分钟倒计时 | 不显示对错</div></div>
+  <div class="screenshot"><img src="screenshots/06-模拟考试答题页.png" alt="模拟考试"><div class="cap">模拟考试 — 顶部红色倒计时，选中仅高亮不显示对错</div></div>
+  <div class="features"><h4>页面功能</h4><ul>
+    <li><strong>红色倒计时</strong>：顶部右侧显示剩余时间（30:00），实时递减</li>
+    <li><strong>题目展示</strong>：与练习答题页相同的题型和选项布局，但选中后仅高亮，不显示对错</li>
+    <li><strong>答题卡面板</strong>：已答（蓝色）/ 未答（灰色），含「交卷」按钮</li>
+  </ul></div>
+  <div class="interaction"><h4>交互说明</h4><ul>
+    <li>手动交卷：点击后弹出确认弹窗，显示未作答题数</li>
+    <li>超时自动交卷：倒计时归零后弹窗提示"考试时间到"，自动提交</li>
+  </ul></div>
+</div>
+
+<!-- ===== 1.5 结果页 ===== -->
+<div class="section page-break" id="section-5">
+  <div class="section-header"><div class="section-num">5</div><div class="section-title">练习 / 模拟考试结果页</div><div class="section-sub">作答完成后自动跳转</div></div>
+  <div class="screenshot"><img src="screenshots/07-练习结果页.png" alt="结果页"><div class="cap">练习结果页 — 统计答题成绩</div></div>
+  <div class="features"><h4>页面功能</h4><ul>
+    <li><strong>结果图标</strong>：绿色对勾圆形图标 + "本次练习完成"标题</li>
+    <li><strong>统计数据</strong>：三个数字横排——总答题数（蓝）、错误数（红）、正确率（绿）</li>
+    <li><strong>操作按钮</strong>：「回顾错题」回到答题页仅展示做错的题 +「继续答题」继续后续题目</li>
+  </ul></div>
+  <div class="note">模拟考试结果页标题为"模拟考试结果"，根据得分是否达到及格线（90分），显示"通过"或"未通过"状态。</div>
+</div>
+
+<!-- ===== 2.1 登录页 ===== -->
+<div class="section page-break" id="section-6">
+  <div class="section-header"><div class="section-num">6</div><div class="section-title">登录页</div><div class="section-sub">访问需登录页面时自动跳转</div></div>
+  <div class="two-col">
+    <div class="screenshot"><img src="screenshots/08-登录页.png" alt="登录页"><div class="cap">登录页 — 初始状态</div></div>
+    <div class="screenshot"><img src="screenshots/09-登录页-已填写.png" alt="登录页已填写"><div class="cap">登录页 — 已填写手机号和验证码</div></div>
+  </div>
+  <div class="features"><h4>页面功能</h4><ul>
+    <li><strong>品牌展示</strong>：蓝色盾牌图标 + "执照认证平台" + 副标题"职业技能认证一站式服务"</li>
+    <li><strong>手机号输入框</strong>：带手机图标前缀，作为唯一登录标识</li>
+    <li><strong>图形验证码</strong>：Canvas 随机生成 4 位数字 + 干扰线，点击可刷新</li>
+    <li><strong>短信验证码</strong>：输入框 + "获取验证码"按钮，图形验证码正确后可点击，点击后 60 秒倒计时</li>
+    <li><strong>登录按钮</strong>：蓝色渐变主按钮，以手机号为唯一标识——已有账号直接登录，新手机号自动注册</li>
+    <li><strong>协议勾选</strong>：底部「我已阅读并同意《用户服务协议》」，未勾选时点击登录会弹窗提醒</li>
+  </ul></div>
+  <div class="interaction"><h4>登录流程</h4><ul>
+    <li>已有账号 → 验证码校验通过 → 登录成功 Toast → 跳回触发页面</li>
+    <li>新账号 → 注册成功 → 自动进入信息完善引导流程</li>
+  </ul></div>
+</div>
+
+<!-- ===== 2.2 信息完善 ===== -->
+<div class="section page-break" id="section-7">
+  <div class="section-header"><div class="section-num">7</div><div class="section-title">信息完善引导页</div><div class="section-sub">新用户注册后 / 材料补全时</div></div>
+  <div class="two-col">
+    <div class="screenshot"><img src="screenshots/24-信息完善-步骤1-账号信息.png" alt="步骤1"><div class="cap">步骤1：账号信息录入</div></div>
+    <div class="screenshot"><img src="screenshots/25-信息完善-步骤2-身份证.png" alt="步骤2"><div class="cap">步骤2：身份证上传</div></div>
+  </div>
+  <div class="two-col">
+    <div class="screenshot"><img src="screenshots/26-信息完善-步骤3-健康证.png" alt="步骤3"><div class="cap">步骤3：健康证上传</div></div>
+    <div class="screenshot"><img src="screenshots/27-信息完善-步骤4-体检报告.png" alt="步骤4"><div class="cap">步骤4：体检报告上传</div></div>
+  </div>
+  <div class="screenshot"><img src="screenshots/28-信息完善-步骤5-背调验证.png" alt="步骤5"><div class="cap">步骤5：背调验证</div></div>
+  <div class="features"><h4>5 步引导流程</h4><ul>
+    <li><strong>步骤 1 - 账号信息录入</strong>：上传头像、填写昵称、上传个人照片（上传后模拟 AI 人像验证，验证失败提示"未检测到人脸"等原因）</li>
+    <li><strong>步骤 2 - 身份证上传</strong>：上传正反面，OCR 自动识别姓名、证件号、有效期，过期则红色标签提示</li>
+    <li><strong>步骤 3 - 健康证上传</strong>：上传后 OCR 识别有效期，AI 自动审核（90%通过率，1.5秒延迟）</li>
+    <li><strong>步骤 4 - 体检报告上传</strong>：上传后 AI 自动审核，通过显示绿色标签，不通过提示重新上传</li>
+    <li><strong>步骤 5 - 背调验证</strong>：输入姓名 + 身份证号（可从步骤2自动带入），调用第三方接口验证，接口确认即审核通过</li>
+  </ul></div>
+  <div class="note">两种使用模式：<strong>新用户模式</strong>展示全部 5 步；<strong>补全模式</strong>仅展示缺失材料的步骤。顶部有步骤进度条，每步可"跳过"或"下一步"。</div>
+</div>
+
+<!-- ===== 3.1 技能选择 ===== -->
+<div class="section page-break" id="section-8">
+  <div class="section-header"><div class="section-num">8</div><div class="section-title">技能选择页</div><div class="section-sub">底部Tab「技能认证」| 需登录</div></div>
+  <div class="screenshot"><img src="screenshots/10-技能选择页.png" alt="技能选择页"><div class="cap">技能选择页 — 显示各技能报名状态和科目进度</div></div>
+  <div class="features"><h4>页面功能</h4><ul>
+    <li><strong>材料审核状态提示栏</strong>：根据审核状态显示不同颜色卡片——全部通过（绿）、审核中（黄）、有不通过（红）、未提交（红）</li>
+    <li><strong>技能卡片列表</strong>：每个技能卡片显示——左侧彩色图标、技能名称、支付状态标签（<span class="tag tag-gray">未报名</span><span class="tag tag-blue">已报名</span><span class="tag tag-green">已通过</span>）、科目进度条（如"2/4 科目已通过"）</li>
+  </ul></div>
+  <div class="interaction"><h4>点击技能卡片的逻辑</h4><ul>
+    <li>材料未齐全 → 进入"补全材料"引导页，仅展示缺失项</li>
+    <li>材料齐全 + 未支付 → 进入支付认证费页</li>
+    <li>已支付 → 进入科目列表页</li>
+  </ul></div>
+</div>
+
+<!-- ===== 3.2 支付 ===== -->
+<div class="section" id="section-9">
+  <div class="section-header"><div class="section-num">9</div><div class="section-title">支付认证费页</div><div class="section-sub">技能选择 → 点击未支付技能</div></div>
+  <div class="screenshot"><img src="screenshots/23-支付认证费页.png" alt="支付页"><div class="cap">支付认证费页 — 确认支付 ¥199</div></div>
+  <div class="features"><h4>页面功能</h4><ul>
+    <li><strong>订单信息卡片</strong>：技能名称 + 认证费金额（大号蓝色 ¥199）+ 包含内容说明</li>
+    <li><strong>支付方式选择</strong>：微信支付（模拟单选）</li>
+    <li><strong>确认支付按钮</strong>：点击后模拟支付加载，90% 成功率——成功跳转科目列表，失败弹窗可重试</li>
+  </ul></div>
+</div>
+
+<!-- ===== 3.3 科目列表 ===== -->
+<div class="section page-break" id="section-10">
+  <div class="section-header"><div class="section-num">10</div><div class="section-title">科目列表页</div><div class="section-sub">技能选择 → 点击已支付技能</div></div>
+  <div class="screenshot"><img src="screenshots/11-科目列表页.png" alt="科目列表"><div class="cap">科目列表 — 展示4个科目的考试状态和得分</div></div>
+  <div class="features"><h4>页面功能</h4><ul>
+    <li><strong>材料审核状态卡片</strong>：顶部根据状态显示绿色（全部通过）/ 黄色（审核中）/ 红色（有不通过）提示</li>
+    <li><strong>科目卡片（4科）</strong>：每科显示——科目名称、状态标签（<span class="tag tag-gray">待考试</span><span class="tag tag-green">已通过</span><span class="tag tag-red">未通过</span>）、得分、剩余重考次数</li>
+    <li><strong>开始考试按钮</strong>：仅当材料全部审核通过且有考试机会时可点击，否则置灰</li>
+    <li><strong>重考费支付</strong>：重考次数为 0 时显示"支付重考费 ¥50"橙色按钮</li>
+  </ul></div>
+  <div class="note">底部提示："科目一~四全部通过后即可申领执照"</div>
+</div>
+
+<!-- ===== 4.1 正式考试 ===== -->
+<div class="section page-break" id="section-11">
+  <div class="section-header"><div class="section-num">11</div><div class="section-title">正式考试答题页</div><div class="section-sub">科目列表 → 开始考试</div></div>
+  <div class="two-col">
+    <div class="screenshot"><img src="screenshots/12-正式考试答题页.png" alt="考试答题"><div class="cap">正式考试 — 倒计时答题</div></div>
+    <div class="screenshot"><img src="screenshots/13-正式考试-已选答案.png" alt="已选答案"><div class="cap">已选答案 — 仅高亮不显示对错</div></div>
+  </div>
+  <div class="screenshot"><img src="screenshots/14-正式考试-答题卡.png" alt="考试答题卡"><div class="cap">考试答题卡 — 蓝色已答、灰色未答</div></div>
+  <div class="features"><h4>页面功能</h4><ul>
+    <li><strong>考试倒计时</strong>：顶部红色显示剩余时间（30:00），超时自动交卷</li>
+    <li><strong>题目区域</strong>：同练习答题页布局，但<strong>不显示即时对错</strong>，选中后仅蓝色高亮</li>
+    <li><strong>底部操作栏</strong>：「上一题」「答题卡」「下一题」，最后一题变为「交卷」</li>
+    <li><strong>答题卡面板</strong>：已答蓝色、未答灰色、当前蓝色边框，含"已答 X/Y"统计和「交卷」按钮</li>
+  </ul></div>
+  <div class="interaction"><h4>交互说明</h4><ul>
+    <li>手动交卷 → 确认弹窗"确认交卷？还有 X 题未作答"</li>
+    <li>倒计时归零 → 弹窗"考试时间到，已自动交卷" → 自动跳转结果页</li>
+    <li>点击返回 → 确认弹窗"退出考试将不保存答题进度，确定退出吗？"</li>
+  </ul></div>
+</div>
+
+<!-- ===== 4.2 考试结果 ===== -->
+<div class="section page-break" id="section-12">
+  <div class="section-header"><div class="section-num">12</div><div class="section-title">考试结果页</div><div class="section-sub">交卷后自动跳转</div></div>
+  <div class="screenshot"><img src="screenshots/15-考试结果页.png" alt="考试结果"><div class="cap">考试结果页 — 显示得分和通过/未通过状态</div></div>
+  <div class="features"><h4>通过状态</h4><ul>
+    <li>绿色奖杯图标 + 大号绿色分数 + 考试名称</li>
+    <li>统计：总题数 | 错误数 + 鼓励文案</li>
+    <li>按钮：「查看答题详情」+「返回科目列表」</li>
+  </ul></div>
+  <div class="features"><h4>未通过状态</h4><ul>
+    <li>橙色警告图标 + 大号橙色分数 + 提示文案"建议回顾知识后再来考试"</li>
+    <li>剩余重考次数 > 0 →「重新考试」按钮</li>
+    <li>剩余重考次数 = 0 →「支付重考费」按钮 → 支付成功后重置重考次数</li>
+  </ul></div>
+  <div class="note">科目一~四全部通过后，自动弹窗提示"恭喜！所有科目已通过，可前往申领执照"，点击「立即申领」跳转执照申领页。</div>
+</div>
+
+<!-- ===== 4.3 答题详情 ===== -->
+<div class="section page-break" id="section-13">
+  <div class="section-header"><div class="section-num">13</div><div class="section-title">答题详情页</div><div class="section-sub">考试结果 → 查看答题详情</div></div>
+  <div class="screenshot"><img src="screenshots/16-答题详情页.png" alt="答题详情"><div class="cap">答题详情 — 逐题回顾，绿色正确/红色错误标记</div></div>
+  <div class="features"><h4>页面功能</h4><ul>
+    <li><strong>逐题回顾卡片</strong>：每题显示题号 + 正确/错误标签 + 题目文本 + 全部选项</li>
+    <li><strong>答案标记</strong>：正确答案绿色边框 + "✓ 正确答案"、考生选错红色边框 + "✗ 你的选择"、考生选对绿色边框 + "✓ 你的选择"</li>
+    <li><strong>知识点解析</strong>：每题底部显示解析说明</li>
+    <li><strong>底部固定栏</strong>：显示"本次总分：XX 分"</li>
+  </ul></div>
+</div>
+
+<!-- ===== 5.1 执照申领 ===== -->
+<div class="section page-break" id="section-14">
+  <div class="section-header"><div class="section-num">14</div><div class="section-title">执照申领页</div><div class="section-sub">底部Tab「我的执照」| 需登录</div></div>
+  <div class="screenshot"><img src="screenshots/17-执照申领页.png" alt="执照申领"><div class="cap">执照申领页 — 前置条件检查与执照管理</div></div>
+  <div class="features"><h4>前置条件检查</h4><ul>
+    <li>✅ / ❌ 科目一~四全部通过</li>
+    <li>✅ / ❌ 认证材料审核通过</li>
+    <li>✅ / ❌ 头像已上传</li>
+    <li>未满足项显示红色 ❌ + 跳转链接引导补全</li>
+  </ul></div>
+  <div class="features"><h4>条件满足后的执照管理</h4><ul>
+    <li><strong>未开通</strong>：显示执照信息预览 + 工本费金额 +「支付工本费，申领执照」按钮</li>
+    <li><strong>已开通</strong>：蓝色渐变电子执照卡片（编号、姓名、技能、发证日期、有效期、印章装饰）+ 实体执照制作状态 +「申请重做实体执照」按钮</li>
+  </ul></div>
+</div>
+
+<!-- ===== 6.1 个人中心 ===== -->
+<div class="section page-break" id="section-15">
+  <div class="section-header"><div class="section-num">15</div><div class="section-title">个人中心首页</div><div class="section-sub">底部Tab「个人中心」| 需登录</div></div>
+  <div class="screenshot"><img src="screenshots/18-个人中心.png" alt="个人中心"><div class="cap">个人中心 — 头卡、材料状态、功能列表</div></div>
+  <div class="features"><h4>页面功能</h4><ul>
+    <li><strong>蓝色渐变头卡</strong>：品牌标识、圆形头像、姓名、角色标签（如"服务人员"）、手机号、右上角印章装饰</li>
+    <li><strong>认证材料图标栏</strong>：四项横排——身份认证、健康证、体检报告、背调验证。每项显示审核状态标签（<span class="tag tag-gray">未上传</span><span class="tag tag-yellow">审核中</span><span class="tag tag-green">已通过</span><span class="tag tag-red">不通过</span>），点击进入对应上传/编辑页</li>
+    <li><strong>功能列表</strong>：账号信息（查看/编辑个人资料）、考试记录（查看历史成绩）、退出登录（确认弹窗后清除登录态）</li>
+  </ul></div>
+</div>
+
+<!-- ===== 6.2 账号信息 ===== -->
+<div class="section" id="section-16">
+  <div class="section-header"><div class="section-num">16</div><div class="section-title">账号信息页</div><div class="section-sub">个人中心 → 账号信息</div></div>
+  <div class="screenshot"><img src="screenshots/19-账号信息页.png" alt="账号信息"><div class="cap">账号信息 — 编辑头像、昵称、个人照片</div></div>
+  <div class="features"><h4>页面功能</h4><ul>
+    <li><strong>头像</strong>：圆形显示，点击可模拟上传更换</li>
+    <li><strong>昵称</strong>：可编辑文本输入框，修改后自动保存</li>
+    <li><strong>手机号</strong>：脱敏显示（138****1234），不可编辑</li>
+    <li><strong>个人照片</strong>：虚线框上传区域，上传后模拟 AI 人像验证 → 验证通过后提交人工审核 → 显示审核状态标签</li>
+  </ul></div>
+</div>
+
+<!-- ===== 6.3 证件信息 ===== -->
+<div class="section page-break" id="section-17">
+  <div class="section-header"><div class="section-num">17</div><div class="section-title">证件信息页</div><div class="section-sub">个人中心 → 身份认证 / 健康证</div></div>
+  <div class="screenshot"><img src="screenshots/20-证件信息页.png" alt="证件信息"><div class="cap">证件信息 — 身份证上传 + 健康证上传</div></div>
+  <div class="features"><h4>页面功能</h4><ul>
+    <li><strong>身份证模块</strong>：正反面两个上传框，上传后 OCR 自动识别姓名、证件号、有效期。与账号信息交叉校验（防止上传他人证件），有效期过期显示红色"已过期"标签。审核方式：人工审核</li>
+    <li><strong>健康证模块</strong>：单张上传框，上传后 OCR 识别有效期。有效则 AI 自动审核（1.5秒延迟），过期则提示重新上传。审核方式：AI 自动审核</li>
+    <li>任何时候都可重新上传覆盖，重新上传后审核状态重置为"审核中"</li>
+  </ul></div>
+</div>
+
+<!-- ===== 6.4 认证材料 ===== -->
+<div class="section" id="section-18">
+  <div class="section-header"><div class="section-num">18</div><div class="section-title">认证材料页</div><div class="section-sub">个人中心 → 体检报告 / 背调验证</div></div>
+  <div class="screenshot"><img src="screenshots/21-认证材料页.png" alt="认证材料"><div class="cap">认证材料 — 体检报告上传 + 背调验证</div></div>
+  <div class="features"><h4>页面功能</h4><ul>
+    <li><strong>体检报告模块</strong>：上传区域，上传后 AI 自动审核（1.5秒延迟，90%通过率）。状态：<span class="tag tag-gray">未上传</span> → <span class="tag tag-yellow">AI审核中</span> → <span class="tag tag-green">已通过</span> / <span class="tag tag-red">不通过</span></li>
+    <li><strong>背调验证模块</strong>：输入姓名 + 身份证号（可从已上传身份证自动带入），点击"开始验证"调用第三方接口。验证中显示加载动画，验证通过即审核通过（无需人工复核），验证不通过显示原因 + "重新验证"按钮</li>
+  </ul></div>
+</div>
+
+<!-- ===== 6.5 考试记录 ===== -->
+<div class="section page-break" id="section-19">
+  <div class="section-header"><div class="section-num">19</div><div class="section-title">考试记录页</div><div class="section-sub">个人中心 → 考试记录</div></div>
+  <div class="screenshot"><img src="screenshots/22-考试记录页.png" alt="考试记录"><div class="cap">考试记录 — 历史成绩列表</div></div>
+  <div class="features"><h4>页面功能</h4><ul>
+    <li><strong>记录列表</strong>：按时间倒序排列，每条记录显示——技能名称 + 科目名称、考试时间、得分（蓝色大字）、状态标签（<span class="tag tag-green">通过</span> / <span class="tag tag-red">未通过</span>）</li>
+    <li><strong>点击记录</strong>：进入该次考试的答题详情页，逐题回顾</li>
+    <li><strong>空状态</strong>：无记录时居中显示图标 + "暂无考试记录"</li>
+  </ul></div>
+</div>
+
+<!-- ===== 附录 ===== -->
+<div class="section page-break">
+  <div class="section-header"><div class="section-num" style="background:#666;">A</div><div class="section-title">附录：测试账号与操作提示</div></div>
+  <div class="features"><h4>测试账号</h4><ul>
+    <li><strong>13800001111</strong>（张小美）：已有数据，部分科目已通过，可测试科目列表和考试流程</li>
+    <li><strong>13800002222</strong>（李强）：已有数据，失效状态</li>
+    <li><strong>13800003333</strong>（王小红）：已有数据，无执照编号</li>
+    <li><strong>任意新手机号</strong>：新用户注册，触发完整信息完善引导流程</li>
+  </ul></div>
+  <div class="interaction"><h4>导出 PDF 方法</h4><ul>
+    <li>在浏览器中打开本文件</li>
+    <li>点击顶部「打印 / 导出 PDF」按钮，或按 Ctrl+P</li>
+    <li>目标打印机选择「另存为 PDF」，即可导出 PDF 文档</li>
+  </ul></div>
+</div>
+
+</body>
+</html>

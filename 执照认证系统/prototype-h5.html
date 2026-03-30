@@ -268,6 +268,7 @@ input,select,textarea{outline:none;font-family:inherit;font-size:14px;border:non
 <div class="page" id="pg-pay">
   <div class="nav-bar"><div class="back" onclick="goBack()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="#333" stroke-width="2" stroke-linecap="round"/></svg></div><div class="nav-title" id="payTitle">确认支付</div></div>
   <div class="content">
+    <div id="payMatSection"></div>
     <div class="card" style="text-align:center;">
       <div style="font-size:15px;color:var(--text2);margin-bottom:8px;" id="payDesc">家庭保洁 · 认证费</div>
       <div style="font-size:36px;font-weight:700;color:var(--blue);margin-bottom:4px;" id="payAmount">¥199</div>
@@ -281,6 +282,7 @@ input,select,textarea{outline:none;font-family:inherit;font-size:14px;border:non
       </div>
     </div>
     <button class="btn-primary" onclick="doPay()" id="payBtn" style="margin-top:12px;">确认支付 ¥199</button>
+    <div id="payMatTip" style="display:none;text-align:center;margin-top:10px;font-size:12px;color:var(--text3);">完成所有材料上传后即可支付，材料审核不影响支付</div>
   </div>
 </div>
 
@@ -471,11 +473,11 @@ const DEFAULT_MATERIALS={
   photo:{uploaded:true,reviewStatus:'passed'},
   idcard:{uploaded:true,reviewStatus:'passed'},
   health:{uploaded:true,reviewStatus:'passed'},
-  medical:{uploaded:true,reviewStatus:'passed'},
+  medical:{uploaded:true,reviewStatus:'rejected'},
   background:{uploaded:true,reviewStatus:'passed'}
 };
 let materials=JSON.parse(JSON.stringify(DEFAULT_MATERIALS));
-const MAT_VERSION='v3';
+const MAT_VERSION='v4';
 function loadMaterials(){let v=localStorage.getItem('h5_mat_ver');let s=localStorage.getItem('h5_materials');if(v===MAT_VERSION&&s){materials=JSON.parse(s);Object.keys(DEFAULT_MATERIALS).forEach(k=>{if(!materials[k])materials[k]=JSON.parse(JSON.stringify(DEFAULT_MATERIALS[k]));});}else{materials=JSON.parse(JSON.stringify(DEFAULT_MATERIALS));localStorage.setItem('h5_mat_ver',MAT_VERSION);saveMaterials();}}
 function saveMaterials(){localStorage.setItem('h5_materials',JSON.stringify(materials));}
 function allMaterialsUploaded(){return materials.photo.uploaded&&materials.idcard.uploaded&&materials.health.uploaded&&materials.medical.uploaded&&materials.background.uploaded;}
@@ -595,11 +597,85 @@ function renderSkills(){let c=document.getElementById('skillList');let h='';SKIL
     <div style="width:50px;height:50px;border-radius:14px;background:${colors[i%2]};display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z" stroke="#FFF" stroke-width="1.5"/><path d="M9 12l2 2 4-4" stroke="#FFF" stroke-width="1.5" stroke-linecap="round"/></svg></div>
     <div style="flex:1;"><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><span style="font-size:16px;font-weight:600;">${sk.name}</span>${tag}</div><div style="font-size:12px;color:var(--text3);">${passed}/${total} 科目已通过</div><div style="margin-top:6px;height:4px;background:#E5E7EB;border-radius:2px;overflow:hidden;"><div style="width:${passed/total*100}%;height:100%;background:${allPass?'var(--green)':'var(--blue)'};border-radius:2px;"></div></div></div>
     <span style="color:#ccc;font-size:18px;">›</span></div>`;});c.innerHTML=h;}
-function clickSkill(i){curSkill=i;if(!SKILLS[i].paid){if(!allMaterialsUploaded()){navTo('pg-onboard');initOnboard('fix',i);return;}payTarget='cert';paySkill=i;document.getElementById('payDesc').textContent=SKILLS[i].name+' · 认证费';document.getElementById('payAmount').textContent='¥199';document.getElementById('payNote').textContent='含科目一~四考试各1次机会，重考另收费';document.getElementById('payBtn').textContent='确认支付 ¥199';document.getElementById('payTitle').textContent='确认支付';navTo('pg-pay');}else{navTo('pg-subjects');}}
+function clickSkill(i){curSkill=i;if(!SKILLS[i].paid){payTarget='cert';paySkill=i;document.getElementById('payDesc').textContent=SKILLS[i].name+' · 认证费';document.getElementById('payAmount').textContent='¥199';document.getElementById('payNote').textContent='含科目一~四考试各1次机会，重考另收费';document.getElementById('payBtn').textContent='确认支付 ¥199';document.getElementById('payTitle').textContent='确认支付';navTo('pg-pay');renderPayMaterials();}else{navTo('pg-subjects');}}
 
 // ====== PAYMENT ======
 let payTarget='',paySkill=0;
-function doPay(){let btn=document.getElementById('payBtn');btn.textContent='支付中...';btn.style.opacity='.6';setTimeout(()=>{btn.style.opacity='1';if(Math.random()<0.9){toast('支付成功');if(payTarget==='cert'){SKILLS[paySkill].paid=true;saveSkills();stack.pop();navTo('pg-subjects');}else if(payTarget==='license'){localStorage.setItem('h5_license','1');stack.pop();navTo('pg-license');}else if(payTarget==='retry'){SKILLS[curSkill].subjects[curSubject].retry=3;saveSkills();stack.pop();renderSubjects();}else if(payTarget==='remake'){toast('实体执照制作中');stack.pop();navTo('pg-license');}}else{showModal('支付失败','支付遇到问题，请重试','重试',()=>{closeModal();});}btn.textContent='确认支付';},1200);}
+function doPay(){if(payTarget==='cert'){if(!allMaterialsUploaded()){toast('请先完成所有材料上传');return;}if(Object.values(materials).some(m=>m.reviewStatus==='rejected')){toast('请先重新上传审核不通过的材料');return;}}let btn=document.getElementById('payBtn');btn.textContent='支付中...';btn.style.opacity='.6';setTimeout(()=>{btn.style.opacity='1';if(Math.random()<0.9){toast('支付成功');if(payTarget==='cert'){SKILLS[paySkill].paid=true;saveSkills();stack.pop();navTo('pg-subjects');}else if(payTarget==='license'){localStorage.setItem('h5_license','1');stack.pop();navTo('pg-license');}else if(payTarget==='retry'){SKILLS[curSkill].subjects[curSubject].retry=3;saveSkills();stack.pop();renderSubjects();}else if(payTarget==='remake'){toast('实体执照制作中');stack.pop();navTo('pg-license');}}else{showModal('支付失败','支付遇到问题，请重试','重试',()=>{closeModal();});}btn.textContent='确认支付';},1200);}
+
+function renderPayMaterials(){
+  let sec=document.getElementById('payMatSection');
+  let tip=document.getElementById('payMatTip');
+  let btn=document.getElementById('payBtn');
+  // Only show materials checklist for cert payment
+  if(payTarget!=='cert'){sec.innerHTML='';tip.style.display='none';btn.style.opacity='1';btn.style.pointerEvents='auto';return;}
+  let matList=[
+    {key:'photo',name:'个人照片',icon:'📷'},
+    {key:'idcard',name:'身份证',icon:'🪪'},
+    {key:'health',name:'健康证',icon:'📋'},
+    {key:'medical',name:'体检报告',icon:'🏥'},
+    {key:'background',name:'背调验证',icon:'🔍'}
+  ];
+  let allUploaded=allMaterialsUploaded();
+  let hasRejected=Object.values(materials).some(m=>m.reviewStatus==='rejected');
+  let hasPending=Object.values(materials).some(m=>m.reviewStatus==='pending');
+  let hasMissing=matList.some(m=>!materials[m.key].uploaded);
+  // Always show material checklist with real status
+  let h='<div class="card">';
+  // Header: summarize status
+  if(hasMissing){
+    h+='<div style="display:flex;align-items:center;gap:6px;margin-bottom:12px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="var(--orange)" stroke-width="1.5"/><path d="M12 8v4M12 16h.01" stroke="var(--orange)" stroke-width="2" stroke-linecap="round"/></svg><span style="font-size:15px;font-weight:600;color:var(--orange);">请先完成材料上传</span></div>';
+  }else if(hasRejected){
+    h+='<div style="display:flex;align-items:center;gap:6px;margin-bottom:12px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="var(--red)" stroke-width="1.5"/><path d="M15 9l-6 6M9 9l6 6" stroke="var(--red)" stroke-width="2" stroke-linecap="round"/></svg><span style="font-size:15px;font-weight:600;color:var(--red);">部分材料审核不通过，请重新上传</span></div>';
+  }else if(hasPending){
+    h+='<div style="display:flex;align-items:center;gap:6px;margin-bottom:12px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#D48806" stroke-width="1.5"/><path d="M12 7v5l3 2" stroke="#D48806" stroke-width="1.5" stroke-linecap="round"/></svg><span style="font-size:15px;font-weight:600;color:#D48806;">材料已上传，部分审核中，可先支付</span></div>';
+  }else{
+    h+='<div style="display:flex;align-items:center;gap:6px;margin-bottom:12px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round"/><circle cx="12" cy="12" r="10" stroke="var(--green)" stroke-width="1.5"/></svg><span style="font-size:15px;font-weight:600;color:var(--green);">认证材料已完整，可以支付</span></div>';
+  }
+  // Per-item status
+  matList.forEach(m=>{
+    let mat=materials[m.key];
+    let statusIcon,action;
+    if(!mat.uploaded){
+      statusIcon='<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#D1D5DB" stroke-width="1.5"/></svg>';
+      action=`<span style="font-size:12px;color:var(--blue);cursor:pointer;" onclick="payUploadMat('${m.key}')">去上传 ›</span>`;
+    }else if(mat.reviewStatus==='rejected'){
+      statusIcon='<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="var(--red)" stroke-width="1.5"/><path d="M15 9l-6 6M9 9l6 6" stroke="var(--red)" stroke-width="1.5" stroke-linecap="round"/></svg>';
+      action=`<span style="font-size:12px;color:var(--red);">审核不通过</span><span style="font-size:12px;color:var(--blue);cursor:pointer;margin-left:6px;" onclick="payUploadMat('${m.key}')">重新上传 ›</span>`;
+    }else if(mat.reviewStatus==='pending'){
+      statusIcon='<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#D48806" stroke-width="1.5"/><path d="M12 7v5l3 2" stroke="#D48806" stroke-width="1.5" stroke-linecap="round"/></svg>';
+      action='<span style="font-size:12px;color:#D48806;">审核中</span>';
+    }else{
+      statusIcon='<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round"/><circle cx="12" cy="12" r="10" stroke="var(--green)" stroke-width="1.5"/></svg>';
+      action='<span style="font-size:12px;color:var(--green);">已通过</span>';
+    }
+    h+=`<div style="display:flex;align-items:center;gap:10px;padding:10px 0;${m.key!=='background'?'border-bottom:1px solid var(--border);':''}">${statusIcon}<span style="flex:1;font-size:14px;">${m.icon} ${m.name}</span><div style="display:flex;align-items:center;">${action}</div></div>`;
+  });
+  h+='</div>';
+  sec.innerHTML=h;
+  // Payment blocked only when materials not uploaded or rejected
+  let canPay=allUploaded&&!hasRejected;
+  if(!canPay){
+    tip.style.display='block';
+    tip.textContent=hasMissing?'完成所有材料上传后即可支付':hasRejected?'请重新上传审核不通过的材料后再支付':'';
+    btn.style.opacity='.5';btn.style.pointerEvents='auto';
+  }else{
+    tip.style.display='none';
+    btn.style.opacity='1';btn.style.pointerEvents='auto';
+  }
+}
+
+function payUploadMat(key){
+  // Simulate material upload on payment page
+  showModal('上传'+{photo:'个人照片',idcard:'身份证',health:'健康证',medical:'体检报告',background:'背调信息'}[key],'模拟上传材料中...','确认上传',()=>{
+    materials[key].uploaded=true;
+    materials[key].reviewStatus='pending';
+    saveMaterials();
+    closeModal();
+    toast('上传成功');
+    renderPayMaterials();
+  });
+}
 
 // ====== SUBJECTS ======
 function renderSubjects(){let sk=SKILLS[curSkill];document.getElementById('subSkillName').textContent=sk.name;let c=document.getElementById('subjectList'),h='';
@@ -619,7 +695,7 @@ function renderSubjects(){let sk=SKILLS[curSkill];document.getElementById('subSk
   if(s.status==='failed'&&s.retry>0){if(matApproved){h+=`<button class="btn-primary" style="height:38px;font-size:14px;margin-top:8px;border-radius:19px;" onclick="startExam(${curSkill},${i})">重新考试</button>`;}else{h+=`<button style="width:100%;height:38px;font-size:14px;margin-top:8px;border-radius:19px;background:#E5E7EB;color:var(--text3);font-weight:500;cursor:not-allowed;">审核通过后可考试</button>`;}}
   if(s.status==='failed'&&s.retry<=0)h+=`<button style="width:100%;height:38px;font-size:14px;margin-top:8px;border-radius:19px;background:#FFF3E0;color:var(--orange);font-weight:600;" onclick="payRetry(${i})">支付重考费 ¥50</button>`;
   h+='</div>';});c.innerHTML=h;}
-function payRetry(si){curSubject=si;payTarget='retry';document.getElementById('payDesc').textContent=SKILLS[curSkill].subjects[si].name+' · 重考费';document.getElementById('payAmount').textContent='¥50';document.getElementById('payNote').textContent='支付后重置重考次数为3次';document.getElementById('payBtn').textContent='确认支付 ¥50';navTo('pg-pay');}
+function payRetry(si){curSubject=si;payTarget='retry';document.getElementById('payDesc').textContent=SKILLS[curSkill].subjects[si].name+' · 重考费';document.getElementById('payAmount').textContent='¥50';document.getElementById('payNote').textContent='支付后重置重考次数为3次';document.getElementById('payBtn').textContent='确认支付 ¥50';navTo('pg-pay');renderPayMaterials();}
 
 // ====== PRACTICE ======
 function startPractice(mode,cat){let qs=[...QBANK];if(mode==='random')qs=shuffle(qs).slice(0,3);else if(mode==='cat')qs=qs.filter(q=>q.cat===cat);else if(mode==='wrong'){let w=JSON.parse(localStorage.getItem('h5_wrongs')||'[]');if(w.length===0){toast('暂无错题');return;}qs=w;}
@@ -742,8 +818,8 @@ function renderLicense(){let c=document.getElementById('licenseBody');let allPas
     h+=`<div class="card" style="margin-top:12px;display:flex;align-items:center;justify-content:space-between;"><div><div style="font-size:14px;">实体执照</div><div style="font-size:12px;color:var(--text3);margin-top:2px;">制作中，预计5个工作日</div></div><span class="tag tag-yellow">制作中</span></div>`;
     h+=`<button class="btn-outline" style="margin-top:12px;" onclick="remakeLicense()">申请重做实体执照</button>`;}}
   c.innerHTML=h;}
-function payLicense(){payTarget='license';document.getElementById('payDesc').textContent='执照工本费';document.getElementById('payAmount').textContent='¥30';document.getElementById('payNote').textContent='含电子执照开通+实体执照制作';document.getElementById('payBtn').textContent='确认支付 ¥50';document.getElementById('payTitle').textContent='确认支付';navTo('pg-pay');}
-function remakeLicense(){payTarget='remake';document.getElementById('payDesc').textContent='实体执照重做费';document.getElementById('payAmount').textContent='¥30';document.getElementById('payNote').textContent='重新制作实体执照';document.getElementById('payBtn').textContent='确认支付 ¥30';document.getElementById('payTitle').textContent='确认支付';navTo('pg-pay');}
+function payLicense(){payTarget='license';document.getElementById('payDesc').textContent='执照工本费';document.getElementById('payAmount').textContent='¥30';document.getElementById('payNote').textContent='含电子执照开通+实体执照制作';document.getElementById('payBtn').textContent='确认支付 ¥50';document.getElementById('payTitle').textContent='确认支付';navTo('pg-pay');renderPayMaterials();}
+function remakeLicense(){payTarget='remake';document.getElementById('payDesc').textContent='实体执照重做费';document.getElementById('payAmount').textContent='¥30';document.getElementById('payNote').textContent='重新制作实体执照';document.getElementById('payBtn').textContent='确认支付 ¥30';document.getElementById('payTitle').textContent='确认支付';navTo('pg-pay');renderPayMaterials();}
 
 // ====== UTILS ======
 function shuffle(a){for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
