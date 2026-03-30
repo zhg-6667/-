@@ -1,0 +1,1704 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>首页场景预览</title>
+  <style>
+    :root {
+      --bg-1: #f4f7fb;
+      --bg-2: #dbe8f7;
+      --surface: rgba(255, 255, 255, 0.82);
+      --surface-strong: #ffffff;
+      --text-1: #162033;
+      --text-2: #5f6b80;
+      --text-3: #8c96a8;
+      --line: rgba(17, 24, 39, 0.08);
+      --accent: #2f7cf6;
+      --accent-2: #6aa8ff;
+      --accent-soft: rgba(47, 124, 246, 0.12);
+      --success: #18a36d;
+      --warning: #f4a11a;
+      --danger: #ef5350;
+      --shadow-lg: 0 28px 70px rgba(28, 53, 87, 0.16);
+      --shadow-md: 0 14px 32px rgba(37, 63, 103, 0.12);
+      --shadow-sm: 0 8px 18px rgba(43, 62, 92, 0.08);
+      --gradient: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "SF Pro Display", "PingFang SC", "Helvetica Neue", sans-serif;
+      color: var(--text-1);
+      background:
+        radial-gradient(circle at top left, rgba(67, 131, 255, 0.18), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(21, 168, 124, 0.1), transparent 24%),
+        linear-gradient(180deg, #f7f9fc 0%, #eef4fb 48%, #dde8f5 100%);
+      padding: 28px;
+    }
+
+    button {
+      border: 0;
+      background: none;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .app-shell {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 320px minmax(360px, 1fr);
+      gap: 28px;
+      align-items: start;
+      height: calc(100vh - 56px);
+    }
+
+    .panel,
+    .phone-panel {
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: 28px;
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .panel {
+      padding: 24px;
+      position: sticky;
+      top: 28px;
+      max-height: calc(100vh - 56px);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(22, 32, 51, 0.05);
+      color: var(--text-2);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 6px var(--accent-soft);
+    }
+
+    .panel h1 {
+      font-size: 26px;
+      line-height: 1.15;
+      margin-top: 18px;
+    }
+
+    .panel .intro {
+      color: var(--text-2);
+      font-size: 14px;
+      line-height: 1.75;
+      margin-top: 14px;
+    }
+
+    .panel-section {
+      margin-top: 24px;
+    }
+
+    .panel-scroll {
+      margin-top: 6px;
+      overflow-y: auto;
+      padding-right: 4px;
+      min-height: 0;
+    }
+
+    .panel-scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .panel-scroll::-webkit-scrollbar-thumb {
+      background: rgba(22, 32, 51, 0.14);
+      border-radius: 999px;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .section-title h2 {
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .section-title span {
+      color: var(--text-3);
+      font-size: 12px;
+    }
+
+    .scenario-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .scenario-btn {
+      width: 100%;
+      text-align: left;
+      padding: 14px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(15, 23, 42, 0.06);
+      background: rgba(255, 255, 255, 0.84);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .scenario-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .scenario-btn.active {
+      border-color: rgba(47, 124, 246, 0.26);
+      box-shadow: 0 16px 28px rgba(47, 124, 246, 0.16);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(241, 247, 255, 0.96));
+    }
+
+    .scenario-btn small {
+      display: block;
+      color: var(--text-3);
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+
+    .scenario-btn strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .scenario-btn p {
+      color: var(--text-2);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .legend {
+      display: grid;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-2);
+      font-size: 13px;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex: 0 0 auto;
+    }
+
+    .legend-dot.red { background: var(--danger); }
+    .legend-dot.orange { background: var(--warning); }
+    .legend-dot.green { background: var(--success); }
+
+    .helper-box {
+      margin-top: 22px;
+      padding: 16px 18px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(20, 36, 60, 0.94), rgba(31, 76, 152, 0.94));
+      color: rgba(255, 255, 255, 0.88);
+      box-shadow: var(--shadow-md);
+    }
+
+    .helper-box h3 {
+      font-size: 15px;
+      margin-bottom: 10px;
+    }
+
+    .helper-box p {
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .helper-box .ghost-btn {
+      width: 100%;
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .phone-panel {
+      padding: 18px;
+      height: calc(100vh - 56px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      position: sticky;
+      top: 28px;
+    }
+
+    .phone-panel::before,
+    .phone-panel::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(8px);
+      opacity: 0.5;
+    }
+
+    .phone-panel::before {
+      width: 220px;
+      height: 220px;
+      top: -40px;
+      right: -60px;
+      background: rgba(47, 124, 246, 0.12);
+    }
+
+    .phone-panel::after {
+      width: 160px;
+      height: 160px;
+      bottom: 10px;
+      left: -40px;
+      background: rgba(21, 168, 124, 0.1);
+    }
+
+    .phone-frame {
+      width: 390px;
+      max-width: 100%;
+      height: 844px;
+      background: #111827;
+      border-radius: 42px;
+      padding: 12px;
+      box-shadow: 0 40px 90px rgba(9, 16, 29, 0.28);
+      position: relative;
+      z-index: 1;
+    }
+
+    .phone-notch {
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 150px;
+      height: 30px;
+      border-radius: 0 0 20px 20px;
+      background: #111827;
+      z-index: 3;
+    }
+
+    .phone-screen {
+      height: 100%;
+      border-radius: 32px;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, #edf4ff 0%, #f6f8fc 28%, #f6f7fb 100%);
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+    }
+
+    .status-bar {
+      height: 44px;
+      padding: 12px 22px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 2;
+    }
+
+    .status-bar span {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .signal {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+
+    .signal i {
+      display: block;
+      width: 16px;
+      height: 10px;
+      border: 1.4px solid rgba(255, 255, 255, 0.8);
+      border-radius: 3px;
+      position: relative;
+    }
+
+    .signal i::after {
+      content: "";
+      position: absolute;
+      top: 2px;
+      right: -3px;
+      width: 2px;
+      height: 4px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.85);
+    }
+
+    .signal b {
+      width: 18px;
+      height: 10px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.82);
+      display: block;
+    }
+
+    .screen-scroll {
+      height: 100%;
+      overflow-y: auto;
+      padding-bottom: 98px;
+    }
+
+    .screen-scroll::-webkit-scrollbar {
+      width: 0;
+    }
+
+    .hero {
+      position: relative;
+      padding: 56px 20px 28px;
+      color: #fff;
+      background: var(--gradient);
+      overflow: hidden;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .hero::before {
+      width: 160px;
+      height: 160px;
+      top: -44px;
+      right: -28px;
+    }
+
+    .hero::after {
+      width: 86px;
+      height: 86px;
+      bottom: 26px;
+      right: 28px;
+    }
+
+    .hero-top {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-mark {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      opacity: 0.84;
+      margin-bottom: 10px;
+    }
+
+    .hero-title {
+      font-size: 30px;
+      line-height: 1.14;
+      font-weight: 800;
+      max-width: 250px;
+    }
+
+    .hero-subtitle {
+      margin-top: 12px;
+      font-size: 14px;
+      line-height: 1.65;
+      color: rgba(255, 255, 255, 0.9);
+      max-width: 272px;
+    }
+
+    .content {
+      padding: 0 16px;
+      margin-top: -26px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .card {
+      border-radius: 26px;
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 18px 36px rgba(26, 45, 80, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+    }
+
+    .focus-card {
+      padding: 20px;
+    }
+
+    .focus-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .pill::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .pill.blue { background: rgba(47, 124, 246, 0.11); color: #2f7cf6; }
+    .pill.green { background: rgba(24, 163, 109, 0.11); color: #129260; }
+    .pill.orange { background: rgba(244, 161, 26, 0.12); color: #d88700; }
+    .pill.red { background: rgba(239, 83, 80, 0.12); color: #d64240; }
+
+    #alertLevel {
+      flex: 0 0 auto;
+      min-width: 92px;
+      justify-content: center;
+      padding: 10px 16px;
+      border-radius: 999px;
+      white-space: nowrap;
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+    }
+
+    #alertLevel::before {
+      display: none;
+    }
+
+    #alertLevel.orange {
+      color: #d88700;
+      background: rgba(255, 248, 240, 0.96);
+    }
+
+    #alertLevel.red {
+      color: #d64240;
+      background: rgba(255, 244, 244, 0.96);
+    }
+
+    #alertLevel.blue {
+      color: #2f7cf6;
+      background: rgba(243, 248, 255, 0.96);
+    }
+
+    #alertLevel.green {
+      color: #129260;
+      background: rgba(242, 252, 247, 0.96);
+    }
+
+    .focus-card h2 {
+      font-size: 22px;
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+    }
+
+    .focus-card p {
+      margin-top: 10px;
+      color: var(--text-2);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .alert-strip {
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(47, 124, 246, 0.08), rgba(106, 168, 255, 0.14));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .alert-strip strong {
+      font-size: 14px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .alert-strip span {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+
+    .focus-actions {
+      display: grid;
+      grid-template-columns: 1fr 124px;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+      height: 50px;
+      border-radius: 18px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .primary-btn {
+      color: #fff;
+      background: var(--gradient);
+      box-shadow: 0 12px 26px rgba(47, 124, 246, 0.22);
+    }
+
+    .secondary-btn {
+      color: var(--accent);
+      background: rgba(47, 124, 246, 0.08);
+      border: 1px solid rgba(47, 124, 246, 0.12);
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .stat-card {
+      padding: 14px 12px 13px;
+      border-radius: 20px;
+      background: linear-gradient(180deg, #f8fbff, #f4f7fb);
+      border: 1px solid rgba(16, 24, 40, 0.04);
+    }
+
+    .stat-card strong {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+
+    .stat-card span {
+      display: block;
+      color: var(--text-3);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .message-bar {
+      margin-top: 14px;
+      padding: 15px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.96);
+      color: var(--text-1);
+      box-shadow: 0 12px 28px rgba(26, 45, 80, 0.06);
+    }
+
+    .message-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 16px;
+      font-weight: 700;
+      flex: 0 0 auto;
+    }
+
+    .message-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .message-content strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .message-content p {
+      color: var(--text-2);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .message-count {
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(47, 124, 246, 0.08);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .section {
+      margin-top: 14px;
+      padding: 18px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .section-head h3 {
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .section-head span {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    .task-list,
+    .skill-list,
+    .trust-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .task-item,
+    .skill-item,
+    .trust-item {
+      padding: 16px 15px;
+      border-radius: 20px;
+      background: linear-gradient(180deg, #fafcff, #f6f8fc);
+      border: 1px solid rgba(16, 24, 40, 0.05);
+    }
+
+    .task-top,
+    .skill-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .task-priority {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      margin-bottom: 7px;
+    }
+
+    .task-item h4,
+    .skill-item h4,
+    .trust-item h4 {
+      font-size: 16px;
+      line-height: 1.42;
+    }
+
+    .task-item p,
+    .skill-item p,
+    .trust-item p {
+      color: var(--text-2);
+      font-size: 13px;
+      line-height: 1.65;
+      margin-top: 6px;
+    }
+
+    .task-action,
+    .skill-action {
+      flex: 0 0 auto;
+      padding: 9px 12px;
+      border-radius: 14px;
+      background: #fff;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: 0 8px 16px rgba(24, 40, 72, 0.06);
+    }
+
+    .skill-meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .mini-tag {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(47, 124, 246, 0.08);
+      color: var(--text-2);
+      font-size: 11px;
+    }
+
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .trust-badge {
+      padding: 14px 12px;
+      border-radius: 20px;
+      background: linear-gradient(180deg, #f8fbff, #ffffff);
+      border: 1px solid rgba(47, 124, 246, 0.08);
+    }
+
+    .trust-badge strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .trust-badge span {
+      color: var(--text-2);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .entry-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .entry-item {
+      padding: 16px 10px 14px;
+      border-radius: 20px;
+      text-align: center;
+      background: linear-gradient(180deg, #fbfdff, #f4f8ff);
+      border: 1px solid rgba(47, 124, 246, 0.08);
+    }
+
+    .entry-icon {
+      width: 44px;
+      height: 44px;
+      margin: 0 auto 10px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(47, 124, 246, 0.14), rgba(106, 168, 255, 0.24));
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .entry-item strong {
+      display: block;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .entry-item span {
+      display: block;
+      margin-top: 4px;
+      color: var(--text-3);
+      font-size: 11px;
+      line-height: 1.45;
+    }
+
+    .service-item {
+      padding: 16px 8px 14px;
+      border-radius: 20px;
+      text-align: center;
+      background: linear-gradient(180deg, #fafcff, #f6f8fc);
+      border: 1px solid rgba(16, 24, 40, 0.04);
+    }
+
+    .service-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      margin: 0 auto 10px;
+      background: linear-gradient(135deg, rgba(47, 124, 246, 0.14), rgba(106, 168, 255, 0.22));
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .service-item strong {
+      display: block;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .service-item span {
+      display: block;
+      font-size: 11px;
+      color: var(--text-3);
+      margin-top: 4px;
+    }
+
+    .bottom-tab {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 84px;
+      padding: 12px 18px 24px;
+      background: rgba(255, 255, 255, 0.96);
+      border-top: 1px solid rgba(17, 24, 39, 0.06);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .tab-item {
+      text-align: center;
+      color: var(--text-3);
+      font-size: 11px;
+    }
+
+    .tab-item .tab-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 10px;
+      margin: 0 auto 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(22, 32, 51, 0.05);
+      font-weight: 800;
+      font-size: 12px;
+    }
+
+    .tab-item.active {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .tab-item.active .tab-icon {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    @media (max-width: 1100px) {
+      .app-shell {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+
+      .panel {
+        position: static;
+        max-height: none;
+      }
+
+      .phone-panel {
+        min-height: unset;
+        height: auto;
+        position: relative;
+        top: auto;
+      }
+
+      .panel-scroll {
+        overflow: visible;
+      }
+    }
+
+    @media (max-width: 540px) {
+      body {
+        padding: 12px;
+      }
+
+      .panel {
+        padding: 18px;
+        border-radius: 22px;
+      }
+
+      .phone-panel {
+        padding: 10px;
+        border-radius: 22px;
+      }
+
+      .phone-frame {
+        width: 100%;
+        height: 94vh;
+        min-height: 760px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="panel">
+      <div class="eyebrow">HOME SCENES</div>
+      <h1>首页场景预览</h1>
+      <p class="intro">
+        这是一个用于需求演示的首页预览页。左侧可切换不同用户场景，右侧手机画面展示对应首页效果，
+        便于你快速讲状态差异、任务优先级和首页承接方式。
+      </p>
+      <div class="panel-scroll">
+        <div class="panel-section">
+          <div class="section-title">
+            <h2>场景切换</h2>
+            <span id="scenarioCount"></span>
+          </div>
+          <div class="scenario-list" id="scenarioList"></div>
+        </div>
+
+        <div class="panel-section">
+          <div class="section-title">
+            <h2>状态说明</h2>
+            <span>切换时参考</span>
+          </div>
+          <div class="legend">
+            <div class="legend-item"><span class="legend-dot red"></span>高风险态：审核驳回、扣分临界、年审逾期等优先展示</div>
+            <div class="legend-item"><span class="legend-dot orange"></span>强时效态：即将考试、待缴费、待申领等强提醒</div>
+            <div class="legend-item"><span class="legend-dot green"></span>常规管理态：持证管理、学习推荐、增项升级</div>
+          </div>
+        </div>
+
+        <div class="helper-box">
+          <h3>切换提示</h3>
+          <p id="scenarioHint"></p>
+          <button class="ghost-btn" type="button" id="nextScenarioBtn">切到下一个状态</button>
+        </div>
+      </div>
+    </aside>
+
+    <section class="phone-panel">
+      <div class="phone-frame">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="status-bar">
+            <span>9:41</span>
+            <div class="signal"><b></b><i></i></div>
+          </div>
+
+          <div class="screen-scroll">
+            <div class="hero">
+              <div class="hero-top">
+                <div>
+                  <div class="hero-mark" id="heroMark"></div>
+                  <div class="hero-title" id="heroTitle"></div>
+                  <div class="hero-subtitle" id="heroSubtitle"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="content">
+              <div class="focus-card card">
+                <div class="focus-meta">
+                  <div class="pill blue" id="focusTag"></div>
+                </div>
+                <h2 id="focusTitle"></h2>
+                <p id="focusDesc"></p>
+                <div class="alert-strip" id="alertStrip">
+                  <div>
+                    <strong id="alertTitle"></strong>
+                    <span id="alertDesc"></span>
+                  </div>
+                  <div class="pill orange" id="alertLevel"></div>
+                </div>
+                <div class="focus-actions">
+                  <button type="button" class="primary-btn" id="primaryAction"></button>
+                  <button type="button" class="secondary-btn" id="secondaryAction"></button>
+                </div>
+                <div class="stats-row" id="statsRow"></div>
+              </div>
+
+              <div class="message-bar" id="messageBar">
+                <div class="message-icon">信</div>
+                <div class="message-content">
+                  <strong id="messageTitle"></strong>
+                  <p id="messageDesc"></p>
+                </div>
+                <div class="message-count" id="messageCount"></div>
+              </div>
+
+              <div class="section card">
+                <div class="section-head">
+                  <h3>待办任务</h3>
+                  <span>按紧急程度排序</span>
+                </div>
+                <div class="task-list" id="taskList"></div>
+              </div>
+
+              <div class="section card">
+                <div class="section-head">
+                  <h3 id="middleSectionTitle"></h3>
+                  <span id="middleSectionNote"></span>
+                </div>
+                <div id="middleSectionBody"></div>
+              </div>
+
+              <div class="section card" id="extraSection" style="display:none;">
+                <div class="section-head">
+                  <h3 id="extraSectionTitle"></h3>
+                  <span id="extraSectionNote"></span>
+                </div>
+                <div id="extraSectionBody"></div>
+              </div>
+
+              <div class="section card">
+                <div class="section-head">
+                  <h3>常用功能</h3>
+                  <span>快捷入口</span>
+                </div>
+                <div class="service-grid" id="serviceGrid"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bottom-tab">
+            <div class="tab-item active">
+              <div class="tab-icon">首</div>
+              首页
+            </div>
+            <div class="tab-item">
+              <div class="tab-icon">学</div>
+              学习
+            </div>
+            <div class="tab-item">
+              <div class="tab-icon">信</div>
+              消息
+            </div>
+            <div class="tab-item">
+              <div class="tab-icon">我</div>
+              我的
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const baseServices = [
+      { icon: "练", title: "刷题练习", note: "题库练习" },
+      { icon: "法", title: "服务法规", note: "政策查询" },
+      { icon: "客", title: "客服帮助", note: "在线咨询" },
+      { icon: "资", title: "个人资料", note: "资料管理" },
+      { icon: "票", title: "发票订单", note: "订单查询" },
+      { icon: "证", title: "证照管理", note: "电子执照" },
+      { icon: "消", title: "消息中心", note: "最新通知" },
+      { icon: "历", title: "历史记录", note: "办理记录" }
+    ];
+
+    const scenarios = [
+      {
+        id: "guest",
+        label: "游客首页",
+        short: "游客",
+        summary: "突出平台价值、报考流程和免费体验，目标是注册与报考转化。",
+        tip: "适合演示新用户首次进入平台时，首页如何回答“这是什么、能做什么、为什么可信”。",
+        accent: ["#2f7cf6", "#6aa8ff"],
+        badgeValue: "新用户",
+        badgeLabel: "欢迎使用",
+        heroMark: "执照认证平台",
+        heroTitle: "报考、考试、领证，一站办理",
+        heroSubtitle: "先看流程和费用，再选适合你的认证方向。",
+        focusTag: { text: "欢迎使用", tone: "blue" },
+        focusTime: "首次访问",
+        focusTitle: "先了解报考，再决定要不要开始",
+        focusDesc: "热门认证、报考条件和费用说明都能直接查看，也可以先试做几道题。",
+        alert: { title: "流程一目了然", desc: "报名、考试、审核、领证的每一步都能提前看到。", level: { text: "去看看", tone: "orange" } },
+        actions: { primary: "立即报考", secondary: "免费体验" },
+        stats: [
+          { value: "3 类", label: "热门方向", note: "育婴 / 保洁 / 月嫂" },
+          { value: "4 步", label: "办理流程", note: "报名到领证" },
+          { value: "24h", label: "在线服务", note: "客服及时响应" }
+        ],
+        message: { title: "新手服务", desc: "报考指南、常见问题和最新通知都在这里。", count: "2 条" },
+        tasks: [
+          { priority: "先了解", title: "查看报考方向和费用", desc: "先确认考什么、怎么考、多少钱。", action: "去了解" },
+          { priority: "先体验", title: "免费试题体验", desc: "先试做几题，再决定是否报考。", action: "去体验" },
+          { priority: "有疑问", title: "查看常见问题", desc: "平台介绍、流程说明和客服入口都在这里。", action: "去查看" }
+        ],
+        middle: {
+          type: "trust",
+          title: "为什么选这里",
+          note: "省心、省时、可追踪",
+          items: [
+            { title: "流程清晰", desc: "从报名到领证，每一步都能提前看到。" },
+            { title: "信息透明", desc: "报考条件、政策说明和常见问题都能快速查询。" }
+          ],
+          badges: [
+            { title: "合作机构", desc: "培训、考试、审核协同办理" },
+            { title: "全程通知", desc: "重要进度会及时提醒" },
+            { title: "资料指引", desc: "材料要求提前说清楚" },
+            { title: "持证服务", desc: "拿证后还能继续管理证照" }
+          ]
+        },
+        services: baseServices
+      },
+      {
+        id: "to_apply",
+        label: "待报考",
+        short: "待报考",
+        summary: "推动已注册用户继续报考，突出技能推荐、条件、考试时间与报名入口。",
+        tip: "适合演示注册后但还没下单报考的状态，首页应该继续推动流程，而不是展示一堆泛入口。",
+        accent: ["#3479f8", "#7cb4ff"],
+        badgeValue: "推荐",
+        badgeLabel: "优先办理",
+        heroMark: "执照认证平台",
+        heroTitle: "有适合你的认证方向，建议尽快报名",
+        heroSubtitle: "先看条件、时间和费用，再完成报名。",
+        focusTag: { text: "待报考", tone: "blue" },
+        focusTime: "建议今日完成",
+        focusTitle: "推荐你优先报考“育婴师中级认证”",
+        focusDesc: "报名后就能直接查看考试安排、资料要求和后续进度。",
+        alert: { title: "最近一期名额有限", desc: "4 月批次还剩 27 个名额，建议尽快报名。", level: { text: "去报名", tone: "orange" } },
+        actions: { primary: "立即报考", secondary: "看报考条件" },
+        stats: [
+          { value: "4 月 12 日", label: "最近考试", note: "在线报名" },
+          { value: "¥ 980", label: "参考费用", note: "含考试与审核" },
+          { value: "4 科", label: "考试科目", note: "通过后可领证" }
+        ],
+        message: { title: "报名提醒", desc: "报名结果、缴费通知和考试安排都会更新。", count: "5 条" },
+        tasks: [
+          { priority: "先确认", title: "确认报考方向", desc: "看看哪个认证更适合你现在报名。", action: "去确认" },
+          { priority: "提前看", title: "查看考试时间", desc: "提前了解考试日期和科目安排。", action: "去查看" },
+          { priority: "顺手做", title: "准备报名资料", desc: "身份证、照片和基础信息可先补齐。", action: "去准备" }
+        ],
+        middle: {
+          type: "skills",
+          title: "推荐认证",
+          note: "选择适合你的方向",
+          items: [
+            { title: "育婴师中级认证", desc: "适合当前资料与经验，报名后可直接备考。", action: "立即报考", tags: ["4 月开考", "30 天左右拿证"] },
+            { title: "母婴护理增项", desc: "已有服务经验的用户可以优先考虑。", action: "查看详情", tags: ["增项方向", "可继续升级"] },
+            { title: "保洁服务认证", desc: "门槛更低，适合先从入门方向开始。", action: "去了解", tags: ["入门友好", "配套课程"] }
+          ]
+        },
+        services: baseServices
+      },
+      {
+        id: "exam_soon",
+        label: "即将开考",
+        short: "待考试",
+        summary: "距考试 3 天内，首页应突出准考证、证件清单、到场时间和考场导航。",
+        tip: "这个场景体现 PRD 的强时效状态规则，首页必须把最关键动作前置到首屏。",
+        accent: ["#1f74f2", "#59c1ff"],
+        badgeValue: "2 天",
+        badgeLabel: "距离考试",
+        heroMark: "执照认证平台",
+        heroTitle: "考试快到了，先把赴考事项确认好",
+        heroSubtitle: "准考证、证件清单和考场导航都能直接查看。",
+        focusTag: { text: "即将开考", tone: "orange" },
+        focusTime: "距离考试还有 2 天",
+        focusTitle: "育婴师理论考试将于 3 月 22 日 09:00 开考",
+        focusDesc: "请提前确认准考证、身份证原件和考点位置，避免耽误入场。",
+        alert: { title: "到场提醒", desc: "请在 08:20 前到场，并携带身份证原件和准考证。", level: { text: "去查看", tone: "red" } },
+        actions: { primary: "查看准考证", secondary: "考场导航" },
+        stats: [
+          { value: "09:00", label: "开考时间", note: "建议 08:20 到场" },
+          { value: "2 科", label: "本次科目", note: "理论 + 规范" },
+          { value: "A-302", label: "考场教室", note: "上海浦东考点" }
+        ],
+        message: { title: "考前提醒", desc: "准考证下载、交通建议和考前须知都在这里。", count: "3 条" },
+        tasks: [
+          { priority: "先处理", title: "下载并核对准考证", desc: "确认姓名、科目、考点和时间是否正确。", action: "去核对" },
+          { priority: "别遗漏", title: "检查证件清单", desc: "身份证原件、准考证、考试用品请提前备齐。", action: "去检查" },
+          { priority: "提前看", title: "查看考场路线", desc: "避免临场迷路，出发前先看路线。", action: "去导航" }
+        ],
+        middle: {
+          type: "skills",
+          title: "我的技能状态",
+          note: "查看其他技能",
+          items: [
+            { title: "育婴师", desc: "已报考，考试时间已确认。", action: "查看准考证", tags: ["3 月 22 日考试", "已锁定考位"] },
+            { title: "保洁服务", desc: "已持证，可随时查看电子执照。", action: "查看执照", tags: ["有效期至 2027.12", "积分 12 分"] },
+            { title: "月嫂服务", desc: "尚未报名，可继续了解报考信息。", action: "去报考", tags: ["报考入口", "增项方向"] }
+          ]
+        },
+        extra: {
+          title: "考前练习",
+          note: "考前再练一练",
+          items: [
+            { icon: "题", title: "刷题练习", note: "按章节练习" },
+            { icon: "模", title: "模拟考试", note: "提前熟悉节奏" },
+            { icon: "错", title: "错题回顾", note: "集中补弱项" }
+          ]
+        },
+        services: baseServices
+      },
+      {
+        id: "rejected",
+        label: "审核驳回",
+        short: "驳回",
+        summary: "审核驳回属于高风险态，首页需直接展示原因、修改建议和重新提交入口。",
+        tip: "这是典型异常闭环场景，演示时可以突出首页如何降低驳回后的流失率。",
+        accent: ["#f16464", "#ff9f7d"],
+        badgeValue: "待修改",
+        badgeLabel: "资料状态",
+        heroMark: "执照认证平台",
+        heroTitle: "资料还差一点，补充后再提交即可",
+        heroSubtitle: "按提示修改材料，提交后会重新进入审核。",
+        focusTag: { text: "审核驳回", tone: "red" },
+        focusTime: "需在 48 小时内处理",
+        focusTitle: "申领资料被驳回，请重新上传健康证与个人照片",
+        focusDesc: "修改完成后重新提交即可继续审核，如有问题可联系在线客服。",
+        alert: { title: "驳回原因", desc: "健康证有效期不清晰，个人照片背景不符合要求。", level: { text: "去处理", tone: "red" } },
+        actions: { primary: "重新提交", secondary: "联系客服" },
+        stats: [
+          { value: "2 项", label: "待修正材料", note: "健康证 / 个人照片" },
+          { value: "48h", label: "建议完成", note: "避免审核排队重置" },
+          { value: "1 次", label: "本次驳回", note: "支持查看历史记录" }
+        ],
+        message: { title: "审核提醒", desc: "驳回原因、客服回复和重新提交状态都会更新。", count: "1 条" },
+        tasks: [
+          { priority: "先查看", title: "查看驳回原因", desc: "按提示修改，减少再次驳回。", action: "去查看" },
+          { priority: "马上补", title: "重新上传材料", desc: "可对照示例重新拍摄或上传。", action: "去上传" },
+          { priority: "需要帮助", title: "联系在线客服", desc: "如果仍有疑问，可以直接咨询。", action: "去咨询" }
+        ],
+        middle: {
+          type: "skills",
+          title: "待处理材料",
+          note: "按提示补充即可",
+          items: [
+            { title: "健康证", desc: "证件边缘裁切过多，无法识别完整有效期。", action: "重新上传", tags: ["驳回项", "需补正"] },
+            { title: "个人照片", desc: "背景不符合蓝底要求，请重新拍摄上传。", action: "查看示例", tags: ["拍摄规范", "AI 预检"] },
+            { title: "审核记录", desc: "可查看上一次提交时间和审核备注。", action: "查看记录", tags: ["历史记录", "消息同步"] }
+          ]
+        },
+        services: baseServices
+      },
+      {
+        id: "payment_due",
+        label: "待缴费",
+        short: "待缴费",
+        summary: "缴费是强时效节点，首页要把费用明细、截止时间、支付入口与发票选项集中展示。",
+        tip: "这个状态可用于演示首页如何缩短支付路径，并同时保留订单、发票、客服等通用承接。",
+        accent: ["#ff9e2c", "#ffd05d"],
+        badgeValue: "今晚",
+        badgeLabel: "最晚支付",
+        heroMark: "执照认证平台",
+        heroTitle: "还有一笔费用待支付，完成后即可继续办理",
+        heroSubtitle: "支付成功后会继续进入审核和领证流程。",
+        focusTag: { text: "待缴费", tone: "orange" },
+        focusTime: "请于今晚 23:59 前完成",
+        focusTitle: "育婴师申领费用待支付，完成后进入审核流程",
+        focusDesc: "你可以直接完成支付，也可以先核对订单和发票信息。",
+        alert: { title: "费用明细", desc: "申领服务费 680 元，支持电子发票。", level: { text: "去支付", tone: "orange" } },
+        actions: { primary: "立即缴费", secondary: "看订单" },
+        stats: [
+          { value: "¥ 680", label: "待支付金额", note: "支持电子发票" },
+          { value: "23:59", label: "截止时间", note: "超时订单失效" },
+          { value: "2 种", label: "支付方式", note: "微信 / 支付宝" }
+        ],
+        message: { title: "订单通知", desc: "支付结果和发票状态都会及时提醒。", count: "2 条" },
+        tasks: [
+          { priority: "先完成", title: "完成本次支付", desc: "支付成功后会自动进入审核。", action: "去支付" },
+          { priority: "顺手看", title: "确认发票信息", desc: "支持个人和企业发票。", action: "去确认" },
+          { priority: "需要时查", title: "查看订单记录", desc: "历史支付和失败记录都可查看。", action: "去查看" }
+        ],
+        middle: {
+          type: "skills",
+          title: "相关服务",
+          note: "支付后继续办理",
+          items: [
+            { title: "育婴师申领", desc: "支付完成后将进入资料审核。", action: "立即缴费", tags: ["待支付", "审核前置"] },
+            { title: "电子发票", desc: "支持填写个人或企业抬头。", action: "填写抬头", tags: ["电子发票", "订单关联"] },
+            { title: "客服支持", desc: "若遇到支付问题或发票问题，可直接转人工。", action: "在线咨询", tags: ["支付失败支持", "工单追踪"] }
+          ]
+        },
+        services: baseServices
+      },
+      {
+        id: "licensed",
+        label: "常态持证",
+        short: "已持证",
+        summary: "无强风险任务时，首页回归持证管理、学习入口与增值服务承接。",
+        tip: "演示这个状态时可以说明：当用户没有明确待办，首页要进入“管理 + 运营推荐”模式。",
+        accent: ["#0f9e78", "#52d9ae"],
+        badgeValue: "正常",
+        badgeLabel: "证照状态",
+        heroMark: "执照认证平台",
+        heroTitle: "你的证照状态正常，可继续查看和使用",
+        heroSubtitle: "执照有效期、积分和学习记录都能直接查看。",
+        focusTag: { text: "常态持证", tone: "green" },
+        focusTime: "当前无紧急待办",
+        focusTitle: "证照状态正常，当前没有紧急事项",
+        focusDesc: "你可以查看电子执照、学习记录，也可以看看新的认证推荐。",
+        alert: { title: "当前状态良好", desc: "证照有效，积分正常，暂无扣分和异常提醒。", level: { text: "去查看", tone: "blue" } },
+        actions: { primary: "查看我的执照", secondary: "学习提升" },
+        stats: [
+          { value: "2027.12", label: "有效期至", note: "证照状态正常" },
+          { value: "12 分", label: "当前积分", note: "无扣分风险" },
+          { value: "2 项", label: "已认证技能", note: "可继续增项" }
+        ],
+        message: { title: "持证提醒", desc: "年审、积分变化和新的认证推荐都会更新。", count: "4 条" },
+        tasks: [
+          { priority: "先看看", title: "查看电子执照", desc: "证照编号、有效期和详情都能查看。", action: "去查看" },
+          { priority: "继续提升", title: "继续学习", desc: "刷题和课程都可继续使用。", action: "去学习" },
+          { priority: "推荐你看", title: "查看新的认证推荐", desc: "根据当前技能推荐下一张证。", action: "去了解" }
+        ],
+        middle: {
+          type: "skills",
+          title: "我的技能状态",
+          note: "证照与学习",
+          items: [
+            { title: "保洁服务", desc: "已持证，状态正常。", action: "查看执照", tags: ["有效期至 2027.12", "积分 12 分"] },
+            { title: "育婴师", desc: "已持证，可查看学习记录与增项建议。", action: "查看详情", tags: ["学习记录", "升级路径"] },
+            { title: "月嫂服务", desc: "尚未报考，可作为后续推荐。", action: "查看推荐", tags: ["增项入口", "课程推荐"] }
+          ]
+        },
+        services: baseServices
+      },
+      {
+        id: "deduction",
+        label: "扣分预警",
+        short: "扣分预警",
+        summary: "扣分临界是一级优先状态，首页必须突出风险后果、处理方案和申诉入口。",
+        tip: "这个场景可以展示 PRD 的“风险优先”原则，说明为什么它会压过普通的持证信息。",
+        accent: ["#f05f57", "#ff8b6a"],
+        badgeValue: "预警",
+        badgeLabel: "风险状态",
+        heroMark: "执照认证平台",
+        heroTitle: "你的积分接近风险线，请尽快处理",
+        heroSubtitle: "扣分原因、处理方式和申诉入口都能直接查看。",
+        focusTag: { text: "扣分预警", tone: "red" },
+        focusTime: "距离风险阈值仅差 2 分",
+        focusTitle: "月嫂服务证当前累计扣分 8 分，请尽快处理",
+        focusDesc: "请先查看扣分原因和处理方式，如有异议可发起申诉。",
+        alert: { title: "风险提示", desc: "再扣 2 分可能影响接单安排。", level: { text: "去处理", tone: "red" } },
+        actions: { primary: "查看处理方案", secondary: "发起申诉" },
+        stats: [
+          { value: "8 分", label: "当前扣分", note: "接近风险阈值" },
+          { value: "2 分", label: "剩余安全空间", note: "需立即干预" },
+          { value: "1 条", label: "待处理工单", note: "申诉可查看进度" }
+        ],
+        message: { title: "风险提醒", desc: "扣分通知和申诉进度都会及时推送。", count: "6 条" },
+        tasks: [
+          { priority: "先查看", title: "查看扣分原因", desc: "时间、原因和分值都能看到。", action: "去查看" },
+          { priority: "马上处理", title: "选择处理方式", desc: "处理入口已经为你准备好。", action: "去处理" },
+          { priority: "需要时查", title: "查看申诉进度", desc: "已提交申诉可随时查看进度。", action: "去查看" }
+        ],
+        middle: {
+          type: "skills",
+          title: "相关技能状态",
+          note: "查看各证照情况",
+          items: [
+            { title: "月嫂服务", desc: "当前存在扣分记录，可查看详情和申诉进度。", action: "立即处理", tags: ["累计 8 分", "申诉处理中"] },
+            { title: "保洁服务", desc: "证照状态正常，可继续查看电子执照。", action: "查看执照", tags: ["状态正常", "积分正常"] },
+            { title: "育婴师", desc: "近期需要关注年审时间，可提前准备。", action: "去查看", tags: ["年审提醒", "提前准备"] }
+          ]
+        },
+        services: baseServices
+      },
+      {
+        id: "annual_review",
+        label: "年审复训",
+        short: "年审",
+        summary: "年审临近属于高风险态，首页要突出倒计时、复训入口、办理说明和后果提醒。",
+        tip: "适合演示持证后阶段的核心运营场景：不是卖功能，而是推动用户完成合规动作。",
+        accent: ["#0a8d96", "#63d0de"],
+        badgeValue: "7 天",
+        badgeLabel: "年审剩余",
+        heroMark: "执照认证平台",
+        heroTitle: "你的证照快到年审时间了，请尽快办理",
+        heroSubtitle: "年审入口、复训课程和材料上传都能直接查看。",
+        focusTag: { text: "需年审 / 复训", tone: "orange" },
+        focusTime: "距离截止还有 7 天",
+        focusTitle: "保洁服务证需在 3 月 27 日前完成年审与复训",
+        focusDesc: "请先完成复训，再按要求上传资料并提交年审申请。",
+        alert: { title: "逾期提醒", desc: "未及时完成可能影响证照状态。", level: { text: "去办理", tone: "red" } },
+        actions: { primary: "立即年审", secondary: "开始复训" },
+        stats: [
+          { value: "7 天", label: "剩余时间", note: "建议本周完成" },
+          { value: "2 节", label: "复训课程", note: "支持断点学习" },
+          { value: "1 项", label: "待上传资料", note: "近期证明文件" }
+        ],
+        message: { title: "年审提醒", desc: "倒计时、课程进度和资料缺失都会及时更新。", count: "5 条" },
+        tasks: [
+          { priority: "先完成", title: "开始复训课程", desc: "完成学习后再提交年审。", action: "去学习" },
+          { priority: "马上补", title: "上传年审资料", desc: "资料缺失会影响办理进度。", action: "去上传" },
+          { priority: "有疑问", title: "查看办理说明", desc: "流程、资料和时效都能快速查看。", action: "去查看" }
+        ],
+        middle: {
+          type: "skills",
+          title: "我的技能状态",
+          note: "查看其他证照",
+          items: [
+            { title: "保洁服务", desc: "当前需要完成年审和复训。", action: "立即年审", tags: ["3 月 27 日截止", "需完成复训"] },
+            { title: "育婴师", desc: "已持证，状态稳定。", action: "查看执照", tags: ["状态正常", "有效期充足"] },
+            { title: "月嫂服务", desc: "待报考，可后续推荐。", action: "去报考", tags: ["增项推荐", "运营机会"] }
+          ]
+        },
+        services: baseServices
+      },
+      {
+        id: "mixed",
+        label: "复合身份",
+        short: "多技能",
+        summary: "同一用户存在多个技能状态时，首页顶部只保留一个最高优先级主状态，中部展示全部技能卡。",
+        tip: "这个场景最适合向团队说明 PRD 的核心设计原则：一个主状态，多技能并列。",
+        accent: ["#5258ea", "#74a2ff"],
+        badgeValue: "3 项",
+        badgeLabel: "我的技能",
+        heroMark: "执照认证平台",
+        heroTitle: "你有多个技能正在办理或使用中",
+        heroSubtitle: "先处理最紧急的一项，其余状态也能统一查看。",
+        focusTag: { text: "复合身份", tone: "blue" },
+        focusTime: "当前先处理考试准备",
+        focusTitle: "育婴师考试还有 2 天，优先处理准考证与赴考准备",
+        focusDesc: "其他技能的办理进度也已整理在下方，方便你一起查看。",
+        alert: { title: "你还有其他待办", desc: "保洁服务需年审，月嫂服务可查看申诉进度。", level: { text: "去查看", tone: "blue" } },
+        actions: { primary: "查看准考证", secondary: "查看全部" },
+        stats: [
+          { value: "3 个", label: "并行技能", note: "持证 / 考试 / 风险" },
+          { value: "2 条", label: "高优先任务", note: "考试与年审" },
+          { value: "1 条", label: "风险事项", note: "月嫂扣分处理中" }
+        ],
+        message: { title: "全部消息", desc: "不同技能的考试、年审和处理进度都会汇总。", count: "8 条" },
+        tasks: [
+          { priority: "先处理", title: "育婴师考试准备", desc: "准考证、证件清单和考场路线。", action: "去准备" },
+          { priority: "接着办", title: "保洁服务年审", desc: "距截止还有 7 天，需完成复训和提交资料。", action: "去年审" },
+          { priority: "别忘了", title: "查看月嫂服务进度", desc: "当前有申诉处理中记录，需要继续关注。", action: "去查看" }
+        ],
+        middle: {
+          type: "skills",
+          title: "我的技能状态",
+          note: "全部状态一页查看",
+          items: [
+            { title: "育婴师", desc: "已报考，考试时间已确认。", action: "查看准考证", tags: ["2 天后开考", "待赴考"] },
+            { title: "保洁服务", desc: "已持证，距离年审截止还有 7 天。", action: "立即年审", tags: ["倒计时 7 天", "需完成复训"] },
+            { title: "月嫂服务", desc: "扣分处理中，可查看申诉进度。", action: "查看进度", tags: ["风险状态", "申诉处理中"] }
+          ]
+        },
+        extra: {
+          title: "考前练习",
+          note: "先把考试内容过一遍",
+          items: [
+            { icon: "题", title: "刷题练习", note: "巩固重点考点" },
+            { icon: "模", title: "模拟考试", note: "练答题节奏" },
+            { icon: "错", title: "错题回顾", note: "优先补薄弱项" }
+          ]
+        },
+        services: baseServices
+      }
+    ];
+
+    const scenarioList = document.getElementById("scenarioList");
+    const scenarioHint = document.getElementById("scenarioHint");
+    const scenarioCount = document.getElementById("scenarioCount");
+    const nextScenarioBtn = document.getElementById("nextScenarioBtn");
+
+    let currentIndex = 0;
+
+    function buildScenarioSwitchers() {
+      scenarioCount.textContent = `${scenarios.length} 个状态`;
+
+      scenarioList.innerHTML = scenarios.map((item, index) => `
+        <button class="scenario-btn${index === currentIndex ? " active" : ""}" data-index="${index}" type="button">
+          <small>${item.short}</small>
+          <strong>${item.label}</strong>
+          <p>${item.summary}</p>
+        </button>
+      `).join("");
+
+      document.querySelectorAll(".scenario-btn").forEach((node) => {
+        node.addEventListener("click", () => setScenario(Number(node.dataset.index)));
+      });
+    }
+
+    function renderStats(stats) {
+      return stats.map((item) => `
+        <div class="stat-card">
+          <strong>${item.value}</strong>
+          <span>${item.label}</span>
+          <span>${item.note}</span>
+        </div>
+      `).join("");
+    }
+
+    function renderTasks(tasks) {
+      return tasks.map((item) => `
+        <div class="task-item">
+          <div class="task-top">
+            <div>
+              <div class="task-priority">${item.priority}</div>
+              <h4>${item.title}</h4>
+              <p>${item.desc}</p>
+            </div>
+            <button type="button" class="task-action">${item.action}</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function renderMiddleSection(middle) {
+      if (middle.type === "trust") {
+        return `
+          <div class="trust-list">
+            ${middle.items.map((item) => `
+              <div class="trust-item">
+                <h4>${item.title}</h4>
+                <p>${item.desc}</p>
+              </div>
+            `).join("")}
+          </div>
+          <div class="trust-grid">
+            ${middle.badges.map((item) => `
+              <div class="trust-badge">
+                <strong>${item.title}</strong>
+                <span>${item.desc}</span>
+              </div>
+            `).join("")}
+          </div>
+        `;
+      }
+
+      return `
+        <div class="skill-list">
+          ${middle.items.map((item) => `
+            <div class="skill-item">
+              <div class="skill-top">
+                <div>
+                  <h4>${item.title}</h4>
+                  <p>${item.desc}</p>
+                </div>
+                <button type="button" class="skill-action">${item.action}</button>
+              </div>
+              <div class="skill-meta">
+                ${item.tags.map((tag) => `<span class="mini-tag">${tag}</span>`).join("")}
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function renderServices(services) {
+      return services.map((item) => `
+        <div class="service-item">
+          <div class="service-icon">${item.icon}</div>
+          <strong>${item.title}</strong>
+          <span>${item.note}</span>
+        </div>
+      `).join("");
+    }
+
+    function renderExtraSection(extra) {
+      return `
+        <div class="entry-grid">
+          ${extra.items.map((item) => `
+            <div class="entry-item">
+              <div class="entry-icon">${item.icon}</div>
+              <strong>${item.title}</strong>
+              <span>${item.note}</span>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function setPill(el, config) {
+      el.className = `pill ${config.tone}`;
+      el.textContent = config.text;
+    }
+
+    function setScenario(index) {
+      currentIndex = index;
+      const data = scenarios[index];
+
+      document.documentElement.style.setProperty("--accent", data.accent[0]);
+      document.documentElement.style.setProperty("--accent-2", data.accent[1]);
+      document.documentElement.style.setProperty("--accent-soft", hexToRgba(data.accent[0], 0.12));
+
+      document.getElementById("heroMark").textContent = data.heroMark;
+      document.getElementById("heroTitle").textContent = data.heroTitle;
+      document.getElementById("heroSubtitle").textContent = data.heroSubtitle;
+
+      setPill(document.getElementById("focusTag"), data.focusTag);
+      document.getElementById("focusTitle").textContent = data.focusTitle;
+      document.getElementById("focusDesc").textContent = data.focusDesc;
+
+      document.getElementById("alertTitle").textContent = data.alert.title;
+      document.getElementById("alertDesc").textContent = data.alert.desc;
+      setPill(document.getElementById("alertLevel"), data.alert.level);
+
+      document.getElementById("primaryAction").textContent = data.actions.primary;
+      document.getElementById("secondaryAction").textContent = data.actions.secondary;
+      document.getElementById("statsRow").innerHTML = renderStats(data.stats);
+
+      document.getElementById("messageTitle").textContent = data.message.title;
+      document.getElementById("messageDesc").textContent = data.message.desc;
+      document.getElementById("messageCount").textContent = data.message.count;
+
+      document.getElementById("taskList").innerHTML = renderTasks(data.tasks);
+      document.getElementById("middleSectionTitle").textContent = data.middle.title;
+      document.getElementById("middleSectionNote").textContent = data.middle.note;
+      document.getElementById("middleSectionBody").innerHTML = renderMiddleSection(data.middle);
+
+      const extraSection = document.getElementById("extraSection");
+      if (data.extra) {
+        extraSection.style.display = "block";
+        document.getElementById("extraSectionTitle").textContent = data.extra.title;
+        document.getElementById("extraSectionNote").textContent = data.extra.note;
+        document.getElementById("extraSectionBody").innerHTML = renderExtraSection(data.extra);
+      } else {
+        extraSection.style.display = "none";
+        document.getElementById("extraSectionBody").innerHTML = "";
+      }
+
+      document.getElementById("serviceGrid").innerHTML = renderServices(data.services);
+
+      scenarioHint.textContent = data.tip;
+      buildScenarioSwitchers();
+    }
+
+    function hexToRgba(hex, alpha) {
+      const value = hex.replace("#", "");
+      const chunk = value.length === 3
+        ? value.split("").map((char) => char + char).join("")
+        : value;
+      const num = parseInt(chunk, 16);
+      const r = (num >> 16) & 255;
+      const g = (num >> 8) & 255;
+      const b = num & 255;
+      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    }
+
+    nextScenarioBtn.addEventListener("click", () => {
+      const next = (currentIndex + 1) % scenarios.length;
+      setScenario(next);
+    });
+
+    setScenario(0);
+  </script>
+</body>
+</html>

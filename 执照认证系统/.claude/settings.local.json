@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \"import docx; print\\(''''python-docx available''''\\)\")",
+      "Bash(pip install:*)",
+      "Bash(cmd.exe /c start \"\" \"C:\\\\Project\\\\执照认证系统\\\\prototype.html\")",
+      "WebFetch(domain:license.homeking365.com)",
+      "Bash(npm install:*)",
+      "Bash(echo \"EXIT:$?\")",
+      "Bash(npx @playwright/mcp --help)",
+      "Bash(npx playwright:*)",
+      "Bash(cd:*)",
+      "Bash(node take-screenshots.js)",
+      "Bash(node take-screenshots-2.js)"
+    ]
+  }
+}
