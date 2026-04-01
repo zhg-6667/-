@@ -11,7 +11,8 @@
       "Bash(npx playwright:*)",
       "Bash(cd:*)",
       "Bash(node take-screenshots.js)",
-      "Bash(node take-screenshots-2.js)"
+      "Bash(node take-screenshots-2.js)",
+      "Bash(find /c/Project/执照认证系统 -type f \\\\\\(-name *.vue -o -name *.tsx -o -name *.jsx -o -name *.ts -o -name *.js \\\\\\) ! -path */node_modules/*)"
     ]
   }
 }

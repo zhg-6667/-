@@ -376,7 +376,7 @@ const LS_LICENSES='lc_licenses';
 const LS_VIOLATIONS='lc_violations';
 const LS_REVIEWS='lc_reviews';
 const LS_QUESTIONS='lc_questions';
-const LS_EXAMS='lc_exams';
+const LS_EXAM_RECORDS='lc_exam_records';
 const LS_REGISTRATIONS='lc_registrations';
 const LS_SCORES='lc_scores';
 const LS_STUDENTS='lc_students';
@@ -415,9 +415,19 @@ const DEFAULT_QUESTIONS=[
   {id:"Q010",type:"single",category:"职业认知与规范",difficulty:"困难",question:"家政服务人员的职业道德核心是？",options:["A. 速度优先","B. 诚信为本、客户至上","C. 利润最大化","D. 减少工作量"],answer:1,analysis:"家政服务行业的职业道德核心是诚信为本、客户至上，为客户提供优质可信赖的服务。",score:3,creator:"管理员A",createTime:"2026-02-20",status:"失效"}
 ];
 
-const DEFAULT_EXAMS=[
-  {id:"EX-001",name:"家庭保洁认证考试",desc:"家庭保洁技能认证理论考试",questionCount:100,totalScore:100,passScore:90,duration:120,retryLimit:3,passRate:0.75,examCount:156,createTime:"2026-01-20",status:"启用"},
-  {id:"EX-002",name:"母婴护理认证考试",desc:"母婴护理技能认证理论考试",questionCount:100,totalScore:100,passScore:90,duration:120,retryLimit:3,passRate:0.68,examCount:89,createTime:"2026-02-15",status:"启用"}
+const DEFAULT_EXAM_RECORDS=[
+  {id:"ER-001",name:"张伟",phone:"13800001111",skill:"家庭保洁",subject:"科目一：理论基础",score:92,total:100,pass:90,result:"通过",time:"2026-03-15 09:00"},
+  {id:"ER-002",name:"张伟",phone:"13800001111",skill:"家庭保洁",subject:"科目一：理论基础",score:68,total:100,pass:90,result:"未通过",time:"2026-03-10 14:00"},
+  {id:"ER-003",name:"张伟",phone:"13800001111",skill:"家庭保洁",subject:"科目二：实操技能",score:85,total:100,pass:90,result:"未通过",time:"2026-03-12 10:00"},
+  {id:"ER-004",name:"张伟",phone:"13800001111",skill:"母婴护理",subject:"科目一：理论基础",score:95,total:100,pass:90,result:"通过",time:"2026-03-16 14:00"},
+  {id:"ER-005",name:"张伟",phone:"13800001111",skill:"母婴护理",subject:"科目二：实操技能",score:78,total:100,pass:90,result:"未通过",time:"2026-03-10 09:00"},
+  {id:"ER-006",name:"王小芳",phone:"13800002222",skill:"家庭保洁",subject:"科目一：理论基础",score:58,total:100,pass:90,result:"未通过",time:"2026-03-15 09:00"},
+  {id:"ER-007",name:"王小芳",phone:"13800002222",skill:"家庭保洁",subject:"科目一：理论基础",score:91,total:100,pass:90,result:"通过",time:"2026-03-20 09:00"},
+  {id:"ER-008",name:"王小芳",phone:"13800002222",skill:"家庭保洁",subject:"科目二：实操技能",score:93,total:100,pass:90,result:"通过",time:"2026-03-18 14:00"},
+  {id:"ER-009",name:"李明",phone:"13800003333",skill:"家庭保洁",subject:"科目一：理论基础",score:85,total:100,pass:90,result:"未通过",time:"2026-03-14 09:00"},
+  {id:"ER-010",name:"李明",phone:"13800003333",skill:"母婴护理",subject:"科目一：理论基础",score:92,total:100,pass:90,result:"通过",time:"2026-03-17 10:00"},
+  {id:"ER-011",name:"李明",phone:"13800003333",skill:"母婴护理",subject:"科目二：实操技能",score:60,total:100,pass:90,result:"未通过",time:"2026-03-19 14:00"},
+  {id:"ER-012",name:"李明",phone:"13800003333",skill:"母婴护理",subject:"科目三：综合评定",score:88,total:100,pass:90,result:"未通过",time:"2026-03-22 09:00"}
 ];
 
 const DEFAULT_REGISTRATIONS=[
@@ -447,13 +457,13 @@ function loadData(key,def){
 }
 function saveData(key,data){localStorage.setItem(key,JSON.stringify(data));}
 
-let licenses, violations, reviews, questions, exams, registrations, scores, students;
+let licenses, violations, reviews, questions, examRecords, registrations, scores, students;
 function initData(){
   licenses=loadData(LS_LICENSES,DEFAULT_LICENSES);
   violations=loadData(LS_VIOLATIONS,DEFAULT_VIOLATIONS);
   reviews=loadData(LS_REVIEWS,DEFAULT_REVIEWS);
   questions=loadData(LS_QUESTIONS,DEFAULT_QUESTIONS);
-  exams=loadData(LS_EXAMS,DEFAULT_EXAMS);
+  examRecords=loadData(LS_EXAM_RECORDS,DEFAULT_EXAM_RECORDS);
   registrations=loadData(LS_REGISTRATIONS,DEFAULT_REGISTRATIONS);
   scores=loadData(LS_SCORES,DEFAULT_SCORES);
   students=loadData(LS_STUDENTS,DEFAULT_STUDENTS);
@@ -479,7 +489,7 @@ document.getElementById('sideMenu').addEventListener('click',e=>{
 });
 
 function renderPage(page){
-  const fn={dashboard:renderDashboard,license:renderLicense,students:renderStudents,reviews:renderReviews,questions:renderQuestions,exams:renderExams,registrations:renderRegistrations,scores:renderScores,violations:renderViolations};
+  const fn={dashboard:renderDashboard,license:renderLicense,students:renderStudents,reviews:renderReviews,questions:renderQuestions,exams:renderExamRecords,registrations:renderRegistrations,scores:renderScores,violations:renderViolations};
   if(fn[page])fn[page]();
 }
 
@@ -654,8 +664,9 @@ function revokeLicense(no){
 }
 
 // ========== A3: STUDENTS ==========
-let stuPage=1;
+let stuPage=1;let studentFormView=false;let studentFormId='';
 function renderStudents(){
+  if(studentFormView)return renderStudentForm();
   const el=document.getElementById('pg-students');
   const kw=(document.getElementById('stu_kw')||{}).value||'';
   const st=(document.getElementById('stu_st')||{}).value||'';
@@ -675,7 +686,7 @@ function renderStudents(){
         <select id="stu_ct" onchange="stuPage=1;renderStudents()"><option value="">全部城市</option>${['厦门','福州','泉州','杭州','北京'].map(c=>`<option value="${c}" ${ct===c?'selected':''}>${c}</option>`).join('')}</select>
         <button class="btn btn-primary" onclick="stuPage=1;renderStudents()">查询</button>
         <button class="btn btn-default" onclick="document.getElementById('stu_kw').value='';document.getElementById('stu_st').value='';document.getElementById('stu_ct').value='';stuPage=1;renderStudents()">重置</button>
-        <div class="search-right"><button class="btn btn-primary" onclick="showStudentModal()">+ 添加考生</button></div>
+        <div class="search-right"><button class="btn btn-primary" onclick="showStudentForm()">+ 添加考生</button></div>
       </div>
       <div class="table-wrap">
         <table>
@@ -687,7 +698,7 @@ function renderStudents(){
             <td style="font-size:12px">${s.licenseNo}</td>
             <td><span class="tag ${s.status==='有效'?'tag-green':'tag-gray'}">${s.status}</span></td>
             <td>${s.phone}</td><td>${s.city}</td>
-            <td><button class="btn-link" onclick="showStudentModal('${s.id}')">编辑</button><button class="btn-link" onclick="switchPage('exams')">考试管理</button></td>
+            <td><button class="btn-link" onclick="showStudentForm('${s.id}')">编辑</button><button class="btn-link" onclick="switchPage('exams')">考试管理</button></td>
           </tr>`).join(''):'<tr><td colspan="9" class="empty-state">暂无数据</td></tr>'}</tbody>
         </table>
       </div>
@@ -697,19 +708,72 @@ function renderStudents(){
 }
 function stuPageTo(p){stuPage=p;renderStudents();}
 
-function showStudentModal(id){
-  const s=id?students.find(x=>x.id===id):null;
+function showStudentForm(id){studentFormView=true;studentFormId=id||'';renderStudents();}
+
+function renderStudentForm(){
+  const el=document.getElementById('pg-students');
+  const s=studentFormId?students.find(x=>x.id===studentFormId):null;
   const title=s?'编辑考生':'添加考生';
-  const body=`
-    <div class="form-group"><label class="form-label"><span class="req">*</span>昵称</label><input class="form-input" id="sf_nick" value="${s?s.nickname:''}"></div>
-    <div class="form-group"><label class="form-label"><span class="req">*</span>姓名</label><input class="form-input" id="sf_name" value="${s?s.name:''}"></div>
-    <div class="form-group"><label class="form-label"><span class="req">*</span>手机号</label><input class="form-input" id="sf_phone" value="${s?s.phone:''}" maxlength="11"></div>
-    <div class="form-group"><label class="form-label">微信号</label><input class="form-input" id="sf_wechat" value="${s?s.wechat||'':''}"></div>
-    <div class="form-group"><label class="form-label"><span class="req">*</span>城市</label><select class="form-select" id="sf_city">${['厦门','福州','泉州','杭州','北京'].map(c=>`<option value="${c}" ${s&&s.city===c?'selected':''}>${c}</option>`).join('')}</select></div>
-    ${s?`<div class="form-group"><label class="form-label">状态</label><select class="form-select" id="sf_status"><option value="有效" ${s.status==='有效'?'selected':''}>有效</option><option value="失效" ${s.status==='失效'?'selected':''}>失效</option></select></div>`:''}
+  el.innerHTML=`
+    <div style="margin-bottom:16px"><button class="btn btn-default" onclick="studentFormView=false;renderStudents()">&lt; 返回考生列表</button></div>
+    <div class="card">
+      <h3 style="margin:0 0 20px;font-size:16px;font-weight:600">${title}</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px 24px;max-width:720px">
+        <div class="form-group"><label class="form-label"><span class="req">*</span>昵称</label><input class="form-input" id="sf_nick" value="${s?s.nickname:''}"></div>
+        <div class="form-group"><label class="form-label"><span class="req">*</span>姓名</label><input class="form-input" id="sf_name" value="${s?s.name:''}"></div>
+        <div class="form-group"><label class="form-label"><span class="req">*</span>手机号</label><input class="form-input" id="sf_phone" value="${s?s.phone:''}" maxlength="11"></div>
+        <div class="form-group"><label class="form-label">微信号</label><input class="form-input" id="sf_wechat" value="${s?s.wechat||'':''}"></div>
+        <div class="form-group"><label class="form-label"><span class="req">*</span>城市</label><select class="form-select" id="sf_city">${['厦门','福州','泉州','杭州','北京'].map(c=>`<option value="${c}" ${s&&s.city===c?'selected':''}>${c}</option>`).join('')}</select></div>
+        ${s?`<div class="form-group"><label class="form-label">状态</label><select class="form-select" id="sf_status"><option value="有效" ${s.status==='有效'?'selected':''}>有效</option><option value="失效" ${s.status==='失效'?'selected':''}>失效</option></select></div>`:`<div></div>`}
+      </div>
+      ${s?`<div style="margin:16px 0 0"><label class="form-label">执照编号</label><div style="padding:8px 12px;background:#F5F7FA;border-radius:6px;font-size:13px;color:#666;display:inline-block">${s.licenseNo}</div></div>`:''}
+      <div style="margin-top:24px;border-top:1px solid #E8E8E8;padding-top:20px">
+        <h4 style="margin:0 0 16px;font-size:14px;font-weight:600">证件资料上传</h4>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;max-width:720px">
+          <div class="form-group">
+            <label class="form-label">身份证（正面）</label>
+            <div style="border:2px dashed #D9D9D9;border-radius:8px;padding:24px;text-align:center;cursor:pointer;background:#FAFBFC" onclick="toast('上传功能演示')">
+              <div style="color:#999;font-size:24px">+</div>
+              <div style="color:#999;font-size:12px;margin-top:4px">点击上传</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">身份证（反面）</label>
+            <div style="border:2px dashed #D9D9D9;border-radius:8px;padding:24px;text-align:center;cursor:pointer;background:#FAFBFC" onclick="toast('上传功能演示')">
+              <div style="color:#999;font-size:24px">+</div>
+              <div style="color:#999;font-size:12px;margin-top:4px">点击上传</div>
+            </div>
+          </div>
+          <div></div>
+          <div class="form-group">
+            <label class="form-label">健康证</label>
+            <div style="border:2px dashed #D9D9D9;border-radius:8px;padding:24px;text-align:center;cursor:pointer;background:#FAFBFC" onclick="toast('上传功能演示')">
+              <div style="color:#999;font-size:24px">+</div>
+              <div style="color:#999;font-size:12px;margin-top:4px">点击上传</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">体检报告</label>
+            <div style="border:2px dashed #D9D9D9;border-radius:8px;padding:24px;text-align:center;cursor:pointer;background:#FAFBFC" onclick="toast('上传功能演示')">
+              <div style="color:#999;font-size:24px">+</div>
+              <div style="color:#999;font-size:12px;margin-top:4px">点击上传</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:24px;border-top:1px solid #E8E8E8;padding-top:20px">
+        <h4 style="margin:0 0 12px;font-size:14px;font-weight:600">背调验证</h4>
+        <div style="display:flex;align-items:center;gap:8px;font-size:13px">
+          <span class="tag ${s?'tag-green':'tag-gray'}">${s?'已通过':'待验证'}</span>
+          <span style="color:#999">${s?'背调验证已完成':'提交后系统将自动发起背调验证'}</span>
+        </div>
+      </div>
+      <div style="margin-top:32px;display:flex;gap:12px">
+        <button class="btn btn-primary" onclick="saveStudent('${studentFormId}')">保存</button>
+        <button class="btn btn-default" onclick="studentFormView=false;renderStudents()">取消</button>
+      </div>
+    </div>
   `;
-  const footer=`<button class="btn btn-default" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="saveStudent('${id||''}')">保存</button>`;
-  openModal(title,body,footer);
 }
 
 function saveStudent(id){
@@ -740,7 +804,7 @@ function saveStudent(id){
     saveData(LS_LICENSES,licenses);
   }
   saveData(LS_STUDENTS,students);
-  closeModal();toast(id?'修改成功':'添加成功');renderStudents();
+  studentFormView=false;toast(id?'修改成功':'添加成功');renderStudents();
 }
 
 // ========== A4: REVIEWS ==========
@@ -936,160 +1000,66 @@ function deleteQuestion(id){
   },true);
 }
 
-// ========== A6: EXAMS ==========
-let exPage=1;let examDetailView=false;let examDetailId='';
-function renderExams(){
-  if(examDetailView)return renderExamDetail();
+// ========== A6: EXAM RECORDS ==========
+let erPage=1;
+function renderExamRecords(){
   const el=document.getElementById('pg-exams');
-  const kw=(document.getElementById('ex_kw')||{}).value||'';
-  const st=(document.getElementById('ex_st')||{}).value||'';
-  let list=exams.filter(e=>{
-    if(kw&&!e.name.includes(kw))return false;
-    if(st&&e.status!==st)return false;
+  const kw=(document.getElementById('er_kw')||{}).value||'';
+  const sk=(document.getElementById('er_skill')||{}).value||'';
+  const sub=(document.getElementById('er_subject')||{}).value||'';
+  const res=(document.getElementById('er_result')||{}).value||'';
+  let list=examRecords.filter(e=>{
+    if(kw&&!e.name.includes(kw)&&!e.phone.includes(kw))return false;
+    if(sk&&e.skill!==sk)return false;
+    if(sub&&e.subject!==sub)return false;
+    if(res&&e.result!==res)return false;
     return true;
   });
-  const pg=paginate(list,exPage,5);
+  const skills=[...new Set(examRecords.map(e=>e.skill))];
+  const subjects=[...new Set(examRecords.map(e=>e.subject))];
+  const pg=paginate(list,erPage,10);
   el.innerHTML=`
     <div class="card">
       <div class="search-bar">
-        <select id="ex_st" onchange="exPage=1;renderExams()"><option value="">所有状态</option><option value="启用" ${st==='启用'?'selected':''}>启用</option><option value="未启用" ${st==='未启用'?'selected':''}>未启用</option></select>
-        <input type="text" id="ex_kw" placeholder="考试名称搜索" value="${kw}" onkeyup="if(event.key==='Enter'){exPage=1;renderExams();}">
-        <button class="btn btn-primary" onclick="exPage=1;renderExams()">查询</button>
-        <button class="btn btn-default" onclick="document.getElementById('ex_kw').value='';document.getElementById('ex_st').value='';exPage=1;renderExams()">重置</button>
+        <input type="text" id="er_kw" placeholder="学员姓名/手机号搜索" value="${kw}" onkeyup="if(event.key==='Enter'){erPage=1;renderExamRecords();}">
+        <select id="er_skill" onchange="erPage=1;renderExamRecords()"><option value="">全部技能</option>${skills.map(s=>`<option value="${s}" ${sk===s?'selected':''}>${s}</option>`).join('')}</select>
+        <select id="er_subject" onchange="erPage=1;renderExamRecords()"><option value="">全部科目</option>${subjects.map(s=>`<option value="${s}" ${sub===s?'selected':''}>${s}</option>`).join('')}</select>
+        <select id="er_result" onchange="erPage=1;renderExamRecords()"><option value="">全部结果</option><option value="通过" ${res==='通过'?'selected':''}>通过</option><option value="未通过" ${res==='未通过'?'selected':''}>未通过</option></select>
+        <button class="btn btn-primary" onclick="erPage=1;renderExamRecords()">查询</button>
+        <button class="btn btn-default" onclick="document.getElementById('er_kw').value='';document.getElementById('er_skill').value='';document.getElementById('er_subject').value='';document.getElementById('er_result').value='';erPage=1;renderExamRecords()">重置</button>
         <div class="search-right">
           <button class="btn btn-default" onclick="toast('导出功能演示')">导出</button>
-          <button class="btn btn-primary" onclick="showExamModal()">+ 新建考试</button>
         </div>
       </div>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>序号</th><th>考试编号</th><th>考试名称</th><th>题目数</th><th>总分</th><th>及格分</th><th>通过率</th><th>考试人数</th><th>创建时间</th><th>状态</th><th>操作</th></tr></thead>
+          <thead><tr><th>序号</th><th>考试编号</th><th>学员姓名</th><th>手机号</th><th>认证技能</th><th>考试科目</th><th>得分</th><th>及格分</th><th>结果</th><th>考试时间</th><th>操作</th></tr></thead>
           <tbody>${pg.data.length?pg.data.map((e,i)=>`<tr>
-            <td>${(pg.page-1)*5+i+1}</td><td style="font-size:12px">${e.id}</td><td>${e.name}</td>
-            <td>${e.questionCount}</td><td>${e.totalScore}</td>
-            <td style="color:var(--red);font-weight:600">${e.passScore}</td>
-            <td>${Math.round(e.passRate*100)}%<div class="progress-bar"><div class="progress-fill" style="width:${Math.round(e.passRate*100)}%"></div></div></td>
-            <td>${e.examCount}</td><td>${e.createTime}</td>
-            <td><span class="tag ${e.status==='启用'?'tag-green':'tag-gray'}">${e.status}</span></td>
-            <td style="white-space:nowrap">
-              <button class="btn-link" onclick="showExamModal('${e.id}')">编辑</button>
-              <button class="btn-link" onclick="showExamDetailView('${e.id}')">查看详情</button>
-              <button class="btn-link${e.status==='启用'?'-red':'-green'}" onclick="toggleExam('${e.id}')">${e.status==='启用'?'禁用':'启用'}</button>
-            </td>
+            <td>${(pg.page-1)*10+i+1}</td>
+            <td style="font-size:12px">${e.id}</td>
+            <td>${e.name}</td>
+            <td>${e.phone}</td>
+            <td>${e.skill}</td>
+            <td>${e.subject}</td>
+            <td style="font-weight:600;color:${e.score>=e.pass?'var(--blue)':'var(--red)'}">${e.score}/${e.total}</td>
+            <td style="color:var(--red);font-weight:600">${e.pass}</td>
+            <td><span class="tag ${e.result==='通过'?'tag-green':'tag-red'}">${e.result}</span></td>
+            <td>${e.time}</td>
+            <td><button class="btn-link" onclick="showAnswerDetail('${e.id}')">答题详情</button></td>
           </tr>`).join(''):'<tr><td colspan="11" class="empty-state">暂无数据</td></tr>'}</tbody>
         </table>
       </div>
-      <div class="pagination">${renderPagination(pg,'exPageTo')}</div>
+      <div class="pagination">${renderPagination(pg,'erPageTo')}</div>
     </div>
   `;
 }
-function exPageTo(p){exPage=p;renderExams();}
-function toggleExam(id){
-  const e=exams.find(x=>x.id===id);if(e){e.status=e.status==='启用'?'未启用':'启用';saveData(LS_EXAMS,exams);toast('状态已更新');renderExams();}
-}
+function erPageTo(p){erPage=p;renderExamRecords();}
 
-function showExamModal(id){
-  const e=id?exams.find(x=>x.id===id):null;
-  const body=`
-    <div class="form-group"><label class="form-label"><span class="req">*</span>考试名称</label><input class="form-input" id="ef_name" value="${e?e.name:''}"></div>
-    <div class="form-group"><label class="form-label">考试描述</label><textarea class="form-textarea" id="ef_desc" rows="2">${e?e.desc:''}</textarea></div>
-    <div class="form-row">
-      <div class="form-group"><label class="form-label">总分</label><input class="form-input" type="number" id="ef_total" value="${e?e.totalScore:100}"></div>
-      <div class="form-group"><label class="form-label">及格分</label><input class="form-input" type="number" id="ef_pass" value="${e?e.passScore:90}"></div>
-    </div>
-    <div class="form-row">
-      <div class="form-group"><label class="form-label">考试时长（分钟）</label><input class="form-input" type="number" id="ef_dur" value="${e?e.duration:120}"></div>
-      <div class="form-group"><label class="form-label">考试次数限制</label><input class="form-input" type="number" id="ef_retry" value="${e?e.retryLimit:3}"></div>
-    </div>
-    <div class="form-group"><label class="form-label">状态</label>
-      <div class="form-radio-group"><label><input type="radio" name="ef_status" value="启用" ${!e||e.status==='启用'?'checked':''}>启用</label><label><input type="radio" name="ef_status" value="未启用" ${e&&e.status==='未启用'?'checked':''}>暂不启用</label></div>
-    </div>
-  `;
-  openModal(e?'编辑考试':'新建考试',body,`<button class="btn btn-default" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="saveExam('${id||''}')">保存考试</button>`,true);
-}
-
-function saveExam(id){
-  const name=document.getElementById('ef_name').value.trim();
-  if(!name){toast('请输入考试名称');return;}
-  const desc=document.getElementById('ef_desc').value.trim();
-  const totalScore=parseInt(document.getElementById('ef_total').value)||100;
-  const passScore=parseInt(document.getElementById('ef_pass').value)||90;
-  const duration=parseInt(document.getElementById('ef_dur').value)||120;
-  const retryLimit=parseInt(document.getElementById('ef_retry').value)||3;
-  const status=document.querySelector('input[name="ef_status"]:checked').value;
-  if(id){
-    const e=exams.find(x=>x.id===id);if(e)Object.assign(e,{name,desc,totalScore,passScore,duration,retryLimit,status});
-  }else{
-    const newId='EX-'+String(exams.length+1).padStart(3,'0');
-    exams.push({id:newId,name,desc,questionCount:0,totalScore,passScore,duration,retryLimit,passRate:0,examCount:0,createTime:new Date().toISOString().slice(0,10),status});
-  }
-  saveData(LS_EXAMS,exams);closeModal();toast(id?'修改成功':'创建成功');renderExams();
-}
-
-function showExamDetailView(id){
-  examDetailView=true;examDetailId=id;renderExamDetail();
-}
-
-function renderExamDetail(){
-  const el=document.getElementById('pg-exams');
-  const exam=exams.find(x=>x.id===examDetailId);
-  if(!exam){examDetailView=false;renderExams();return;}
-  // Simulated skill-subject data
-  const skillData=[
-    {name:'家庭保洁',status:'认证中',subjects:[
-      {name:'科目一：理论基础',status:'已通过',lastTime:'2026-03-15',bestScore:92,count:1,limit:3},
-      {name:'科目二：实操技能',status:'待考试',lastTime:'-',bestScore:0,count:0,limit:3},
-      {name:'科目三：综合评定',status:'待考试',lastTime:'-',bestScore:0,count:0,limit:3}
-    ]},
-    {name:'母婴护理',status:'未开始',subjects:[
-      {name:'科目一：理论基础',status:'已通过',lastTime:'2026-03-16',bestScore:95,count:1,limit:3},
-      {name:'科目二：实操技能',status:'未通过',lastTime:'2026-03-10',bestScore:78,count:2,limit:3}
-    ]}
-  ];
-
-  el.innerHTML=`
-    <div style="margin-bottom:16px"><button class="btn btn-default" onclick="examDetailView=false;renderExams()">&lt; 返回考试列表</button></div>
-    <div class="card">
-      <div class="student-info-card">
-        <div class="student-avatar-lg">张</div>
-        <div class="student-info-text">
-          <h4>张伟 <span class="tag tag-green" style="margin-left:8px;font-size:11px">正常</span></h4>
-          <p>手机：13800001111 | 执照编号：350200001</p>
-        </div>
-      </div>
-      ${skillData.map((sk,si)=>`
-        <div class="accordion-item ${si===0?'open':''}" id="acc_${si}">
-          <div class="accordion-header" onclick="document.getElementById('acc_${si}').classList.toggle('open')">
-            <div class="flex-center">
-              <span style="font-weight:600">${sk.name}</span>
-              <span class="tag ${sk.status==='认证中'?'tag-blue':sk.status==='已通过'?'tag-green':'tag-gray'}">${sk.status}</span>
-              <span style="font-size:12px;color:#999;margin-left:8px">${sk.subjects.filter(s=>s.status==='已通过').length}/${sk.subjects.length} 科目已通过</span>
-            </div>
-            <span class="acc-arrow">▼</span>
-          </div>
-          <div class="accordion-body">
-            <table style="font-size:13px">
-              <thead><tr><th>科目名称</th><th>状态</th><th>最近考试</th><th>最高分</th><th>次数/上限</th><th>操作</th></tr></thead>
-              <tbody>${sk.subjects.map(sub=>`<tr>
-                <td>${sub.name}</td>
-                <td><span class="tag ${sub.status==='已通过'?'tag-green':sub.status==='未通过'?'tag-red':'tag-gray'}">${sub.status}</span></td>
-                <td>${sub.lastTime}</td>
-                <td style="font-weight:600;color:${sub.bestScore>=90?'var(--blue)':'var(--red)'}">${sub.bestScore||'-'}</td>
-                <td>${sub.count}/${sub.limit}</td>
-                <td>${sub.count>0?`<button class="btn-link" onclick="showAnswerDetail()">查看详情</button>`:'<span style="color:#999">-</span>'}</td>
-              </tr>`).join('')}</tbody>
-            </table>
-          </div>
-        </div>
-      `).join('')}
-    </div>
-  `;
-}
-
-function showAnswerDetail(){
+function showAnswerDetail(recordId){
+  const rec=examRecords.find(x=>x.id===recordId)||{name:'--',skill:'--',subject:'--',time:'--',score:0,total:100,result:'--'};
   const qs=questions.slice(0,3);
   const simAnswers=[1,0,[0,1,2]];
-  let html='<div style="margin-bottom:12px;font-size:13px;color:#666">考试时间：2026-03-15 09:00 ~ 10:25 | 得分：<strong style="color:var(--blue)">92</strong>/100 | <span class="tag tag-green">通过</span></div>';
+  let html=`<div style="margin-bottom:12px;font-size:13px;color:#666">学员：<strong>${rec.name}</strong> | 技能：${rec.skill} | 科目：${rec.subject}<br>考试时间：${rec.time} | 得分：<strong style="color:${rec.result==='通过'?'var(--blue)':'var(--red)'}">${rec.score}</strong>/${rec.total} | <span class="tag ${rec.result==='通过'?'tag-green':'tag-red'}">${rec.result}</span></div>`;
   qs.forEach((q,i)=>{
     const userAns=simAnswers[i];
     html+=`<div class="answer-item"><div class="answer-q">${i+1}. ${q.question}</div>`;
@@ -1104,7 +1074,7 @@ function showAnswerDetail(){
     });
     html+=`<div class="answer-analysis">解析：${q.analysis}</div></div>`;
   });
-  openModal('答题详情',html,'<button class="btn btn-default" onclick="closeModal()">关闭</button>',true);
+  openModal('答题详情 - '+rec.name+' - '+rec.subject,html,'<button class="btn btn-default" onclick="closeModal()">关闭</button>',true);
 }
 
 // ========== A7: REGISTRATIONS ==========
