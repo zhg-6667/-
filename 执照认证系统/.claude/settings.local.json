@@ -12,7 +12,15 @@
       "Bash(cd:*)",
       "Bash(node take-screenshots.js)",
       "Bash(node take-screenshots-2.js)",
-      "Bash(find /c/Project/执照认证系统 -type f \\\\\\(-name *.vue -o -name *.tsx -o -name *.jsx -o -name *.ts -o -name *.js \\\\\\) ! -path */node_modules/*)"
+      "Bash(find /c/Project/执照认证系统 -type f \\\\\\(-name *.vue -o -name *.tsx -o -name *.jsx -o -name *.ts -o -name *.js \\\\\\) ! -path */node_modules/*)",
+      "Bash(lark-cli im:*)",
+      "Bash(lark-cli schema:*)",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); msgs=d.get\\('data',{}\\).get\\('messages',[]\\); [print\\(json.dumps\\(m, ensure_ascii=False, indent=2\\)\\) for m in msgs[:1]]\")",
+      "Bash(python -c ':*)",
+      "WebSearch",
+      "WebFetch(domain:open.feishu.cn)",
+      "Bash(npx vite:*)",
+      "Bash(unzip -p \"C:/Users/Downloads/2026-04-03 考执照认证平台相关会议整合纪要（详细版）.docx\" word/document.xml)"
     ]
   }
 }
